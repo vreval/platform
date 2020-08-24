@@ -16,7 +16,7 @@ class ProjectManagementTests extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
         $this->get('/projects/create')->assertStatus(200);
 
@@ -48,19 +48,18 @@ class ProjectManagementTests extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->be(factory('App\User')->create());
+        $this->signIn();
 
         $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
 
         $this->get($project->path())
-            ->assertSee($project->name)
-            ->assertSee($project->description);
+            ->assertSee($project->name);
     }
 
     /** @test */
     public function an_authenticated_user_cannot_view_the_projects_of_others()
     {
-        $this->be(factory('App\User')->create());
+        $this->signIn();
 
         $project = factory('App\Project')->create();
 
@@ -70,7 +69,7 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function a_project_requires_a_name()
     {
-        $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
         $this->post('/projects', factory('App\Project')->raw(['name' => '']))
             ->assertSessionHasErrors('name');
@@ -80,6 +79,7 @@ class ProjectManagementTests extends TestCase
     public function a_project_name_must_have_at_least_3_characters()
     {
         $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
         $this->post('/projects', factory('App\Project')->raw(['name' => str_repeat('?', 2)]))
             ->assertSessionHasErrors('name');
@@ -92,6 +92,7 @@ class ProjectManagementTests extends TestCase
     public function a_project_name_must_have_at_most_150_characters()
     {
         $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
         $this->post('/projects', factory('App\Project')->raw(['name' => str_repeat('?', 151)]))
             ->assertSessionHasErrors('name');
@@ -104,6 +105,7 @@ class ProjectManagementTests extends TestCase
     public function a_project_requires_a_description()
     {
         $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
         $this->post('/projects', factory('App\Project')->raw(['description' => '']))
             ->assertSessionHasErrors('description');
@@ -113,6 +115,7 @@ class ProjectManagementTests extends TestCase
     public function a_project_description_must_have_at_least_3_characters()
     {
         $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
         $this->post('/projects', factory('App\Project')->raw(['description' => str_repeat('?', 2)]))
             ->assertSessionHasErrors('description');
@@ -125,6 +128,7 @@ class ProjectManagementTests extends TestCase
     public function a_project_description_must_have_at_most_500_characters()
     {
         $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
         $this->post('/projects', factory('App\Project')->raw(['description' => str_repeat('?', 501)]))
             ->assertSessionHasErrors('description');

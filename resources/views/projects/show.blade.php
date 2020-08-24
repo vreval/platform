@@ -9,9 +9,11 @@
         <section class="w-full lg:w-3/4 px-2">
             <div class="mb-8">
                 <h3 class="text-gray-400 font-bold mb-4">Scenarios</h3>
-                <div class="card mb-4">Scenario 1</div>
-                <div class="card mb-4">Scenario 2</div>
-                <div class="card mb-4">Scenario 3</div>
+                @forelse ($project->scenarios as $scenario)
+                <div class="card mb-4">{{ $scenario->name }}</div>
+                @empty
+                <p>No scenarios yet.</p>
+                @endforelse
             </div>
             <div class="mb-8">
                 <h3 class="text-gray-400 font-bold mb-4">Checkpoints</h3>

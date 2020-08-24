@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -24,5 +25,18 @@ class ProjectTest extends TestCase
         $project = factory('App\Project')->create(['owner_id' => $user->id]);
 
         $this->assertEquals($user->id, $project->owner->id);
+    }
+
+    /** @test */
+    public function it_can_add_scenario()
+    {
+        $this->withoutExceptionHandling();
+
+        $project = factory(Project::class)->create();
+
+        $scenario = $project->addScenario('Test scenario');
+
+        $this->assertCount(1, \App\Scenario::all());
+        $this->assertTrue($project->scenarios->contains($scenario));
     }
 }

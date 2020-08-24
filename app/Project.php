@@ -17,4 +17,14 @@ class Project extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function addScenario(string $name)
+    {
+        return $this->scenarios()->create(['name' => $name]);
+    }
+
+    public function scenarios()
+    {
+        return $this->hasMany(Scenario::class);
+    }
 }
