@@ -1,16 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-
-<body>
-    <h2>{{ $project->name }}</h2>
-    <p>{{ $project->description }}</p>
-</body>
-
-</html>
+@section('content')
+<main>
+    <p class="mb-8 text-gray-500">
+        <a href="/projects">My Projects</a> / {{ $project->name }}
+    </p>
+    <div class="flex flex-wrap -mx-2">
+        <section class="w-full lg:w-3/4 px-2">
+            <div class="mb-8">
+                <h3 class="text-gray-400 font-bold mb-4">Scenarios</h3>
+                <div class="card mb-4">Scenario 1</div>
+                <div class="card mb-4">Scenario 2</div>
+                <div class="card mb-4">Scenario 3</div>
+            </div>
+            <div class="mb-8">
+                <h3 class="text-gray-400 font-bold mb-4">Checkpoints</h3>
+            </div>
+            <div class="mb-8">
+                <h3 class="text-gray-400 font-bold mb-4">Forms</h3>
+            </div>
+        </section>
+        <aside class="w-full lg:w-1/4 px-2">
+            @include('projects.card')
+            <footer class="flex justify-end mt-4">
+                <a class="btn btn-gray" href="/projects">Go back</a>
+            </footer>
+        </aside>
+    </div>
+</main>
+@endsection

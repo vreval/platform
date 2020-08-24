@@ -1,29 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Projects Index</title>
-</head>
-
-<body>
-    <h1>Projects</h1>
-    <ul>
+@section('content')
+<header class="flex justify-between items-end mb-4">
+    <h2 class="text-gray-400">Projects</h2>
+    <a class="btn btn-green" href="/projects/create">New</a>
+</header>
+<main>
+    <div class="flex flex-wrap -mx-2">
         @forelse ($projects as $project)
-        <li>
-            <a href="{{ $project->path() }}">
-                <h2>{{ $project->name }}</h2>
-            </a>
-            <p>{{ $project->description }}</p>
-        </li>
+        <div class="p-2 w-full sm:w-1/2 lg:w-1/4">
+            @include('projects.card')
+        </div>
         @empty
-        <li>
+        <div>
             <p>No Projects yet.</p>
-        </li>
+        </div>
         @endforelse
-    </ul>
-</body>
-
-</html>
+    </div>
+</main>
+@endsection

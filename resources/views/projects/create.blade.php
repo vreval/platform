@@ -1,29 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-
-<body>
-    <h1>Create a new Project</h1>
-    <form action="/projects" method="post">
-        @csrf
+@section('content')
+<h2>Create a new Project</h2>
+<form class="" action="/projects" method="post">
+    @csrf
+    <div class="mb-4">
+        <label for="name">Name</label>
         <div>
-            <label for="name">Name</label>
-            <input type="text" name="name">
+            <input class="w-full rounded-lg p-4" type="text" name="name">
         </div>
+    </div>
+    <div class="mb-4">
+        <label for="description">Description</label>
         <div>
-            <label for="description">Description</label>
-            <textarea name="description" rows="5"></textarea>
+            <textarea class="w-full rounded-lg p-4" name="description" rows="5"></textarea>
         </div>
-        <div>
-            <button type="submit">Create</button>
-        </div>
-    </form>
-</body>
-
-</html>
+    </div>
+    <div>
+        <button class="btn btn-green" type="submit">Create</button>
+        <a href="/projects">Cancel</a>
+    </div>
+</form>
+@endsection
