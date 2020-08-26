@@ -8,28 +8,12 @@ use Illuminate\Http\Request;
 
 class ProjectScenariosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     public function store(Project $project)
     {
+        if (auth()->user()->isNot($project->owner)) {
+            abort(403);
+        }
+
         request()->validate([
             'name' => ['required', 'min:3', 'max:150']
         ]);
@@ -39,48 +23,27 @@ class ProjectScenariosController extends Controller
         return redirect($project->path());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Scenario  $scenario
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Scenario $scenario)
+    public function update(Project $project, Scenario $scenario)
     {
-        //
+        if (auth()->user()->isNot($scenario->project->owner)) {
+            abort(403);
+        }
+
+        $scenario->update([
+            'name' => request('name')
+        ]);
+
+        return redirect($project->path());
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Scenario  $scenario
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Scenario $scenario)
+    public function destroy(Project $project, Scenario $scenario)
     {
-        //
-    }
+        if (auth()->user()->isNot($scenario->project->owner)) {
+            abort(403);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Scenario  $scenario
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Scenario $scenario)
-    {
-        //
-    }
+        $scenario->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Scenario  $scenario
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Scenario $scenario)
-    {
-        //
+        return redirect($project->path());
     }
 }

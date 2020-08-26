@@ -23,7 +23,7 @@
 <body class="bg-gray-200">
     <div id="app">
         <nav class="bg-white">
-            <div class="container flex justify-between items-center py-4 mx-auto">
+            <div class="container flex justify-between items-center p-4 mx-auto">
                 <a class="font-bold text-lg" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -55,7 +55,7 @@
             </div>
         </nav>
 
-        <main class="container mx-auto py-4">
+        <main class="container mx-auto p-4">
             @yield('content')
         </main>
     </div>

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -25,7 +26,9 @@ class ProjectManagementTests extends TestCase
             'description' => $this->faker->paragraph
         ];
 
-        $this->post('/projects', $attributes)->assertRedirect('/projects');
+        $response = $this->post('/projects', $attributes);
+
+        $response->assertRedirect(Project::first()->path());
 
         $this->assertDatabaseHas('projects', $attributes);
 
@@ -33,14 +36,17 @@ class ProjectManagementTests extends TestCase
     }
 
     /** @test */
-    public function guests_cannot_manage_projects()
+    public function a_user_can_update_their_project()
     {
-        $project = factory('App\Project')->create();
+        $this->withoutExceptionHandling();
 
-        $this->get('/projects')->assertRedirect('/login');
-        $this->get('/projects/create')->assertRedirect('/login');
-        $this->get($project->path())->assertRedirect('/login');
-        $this->post('/projects', $project->toArray())->assertRedirect('/login');
+        $this->signIn();
+
+        $project = factory(Project::class)->create(['owner_id' => auth()->id()]);
+
+        $this->patch($project->path(), ['name' => 'Updated']);
+
+        $this->assertDatabaseHas('projects', ['name' => 'Updated']);
     }
 
     /** @test */
@@ -57,6 +63,18 @@ class ProjectManagementTests extends TestCase
     }
 
     /** @test */
+    public function guests_cannot_manage_projects()
+    {
+        $project = factory('App\Project')->create();
+
+        $this->get('/projects')->assertRedirect('/login');
+        $this->get('/projects/create')->assertRedirect('/login');
+        $this->get($project->path())->assertRedirect('/login');
+        $this->patch($project->path(), ['name' => 'Updated'])->assertRedirect('/login');
+        $this->post('/projects', $project->toArray())->assertRedirect('/login');
+    }
+
+    /** @test */
     public function an_authenticated_user_cannot_view_the_projects_of_others()
     {
         $this->signIn();
@@ -64,6 +82,19 @@ class ProjectManagementTests extends TestCase
         $project = factory('App\Project')->create();
 
         $this->get($project->path())->assertStatus(403);
+    }
+
+    /** @test */
+    public function an_authenticated_user_cannot_update_the_projects_of_others()
+    {
+        $this->signIn();
+
+        $project = factory('App\Project')->create();
+
+        $this->patch($project->path(), ['name' => 'Updated'])
+            ->assertStatus(403);
+
+        $this->assertDatabaseMissing('projects', ['name' => 'Updated']);
     }
 
     /** @test */

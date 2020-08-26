@@ -9,11 +9,25 @@
         <section class="w-full lg:w-3/4 px-2">
             <div class="mb-8">
                 <h3 class="text-gray-400 font-bold mb-4">Scenarios</h3>
-                @forelse ($project->scenarios as $scenario)
-                <div class="card mb-4">{{ $scenario->name }}</div>
-                @empty
-                <p>No scenarios yet.</p>
-                @endforelse
+                @foreach ($project->scenarios as $scenario)
+                <div class="flex justify-between items-center w-full card mb-4">
+                    <form action="{{ $scenario->path() }}" method="post">
+                        @csrf
+                        @method('PATCH')
+                        <input type="text" name="name" value="{{ $scenario->name }}">
+                    </form>
+                    <form action="{{ $scenario->path() }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-gray text-xs" type="submit">Remove</button>
+                    </form>
+                </div>
+                @endforeach
+                <form action="{{ $project->path() }}/scenarios" method="post">
+                    @csrf
+                    <input type="text" name="name" class="card w-full mb-4"
+                        placeholder="Type new scenario name here...">
+                </form>
             </div>
             <div class="mb-8">
                 <h3 class="text-gray-400 font-bold mb-4">Checkpoints</h3>
@@ -23,6 +37,7 @@
             </div>
         </section>
         <aside class="w-full lg:w-1/4 px-2">
+            <h3 class="text-gray-400 font-bold mb-4">About</h3>
             @include('projects.card')
             <footer class="flex justify-end mt-4">
                 <a class="btn btn-gray" href="/projects">Go back</a>

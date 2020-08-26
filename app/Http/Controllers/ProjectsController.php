@@ -25,6 +25,22 @@ class ProjectsController extends Controller
         return view('projects.create');
     }
 
+    public function update(Project $project)
+    {
+        if (auth()->user()->isNot($project->owner)) {
+            abort(403);
+        }
+
+        $validatedAttributes = request()->validate([
+            'name' => ['min:3', 'max:150'],
+            'description' => ['min:3', 'max:500'],
+        ]);
+
+        $project->update($validatedAttributes);
+
+        return redirect($project->path());
+    }
+
     public function store()
     {
         $validatedAttributes = request()->validate([
@@ -32,8 +48,8 @@ class ProjectsController extends Controller
             'description' => ['required', 'min:3', 'max:500'],
         ]);
 
-        auth()->user()->projects()->create($validatedAttributes);
+        $project = auth()->user()->projects()->create($validatedAttributes);
 
-        return redirect('/projects');
+        return redirect($project->path());
     }
 }

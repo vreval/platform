@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Scenario::class, function (Faker $faker) {
     return [
-        'name' => $faker->sentence
+        'name' => $faker->sentence,
+        'project_id' => factory('App\Project')
     ];
 });
