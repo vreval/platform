@@ -37,13 +37,22 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function a_user_can_update_their_project()
     {
+        $this->withoutExceptionHandling();
+
         $project = app(ProjectFactory::class)
             ->ownedBy($this->signIn())
             ->create();
 
-        $this->patch($project->path(), ['name' => 'Updated']);
+        $this->get($project->path() . '/edit')->assertStatus(200);
 
-        $this->assertDatabaseHas('projects', ['name' => 'Updated']);
+        $newAttributes = [
+            'name' => 'Updated',
+            'description' => 'Updated',
+        ];
+
+        $this->patch($project->path(), $newAttributes);
+
+        $this->assertDatabaseHas('projects', $newAttributes);
     }
 
     /** @test */

@@ -23,6 +23,11 @@ class ProjectsController extends Controller
         return view('projects.create');
     }
 
+    public function edit(Project $project)
+    {
+        return view('projects.edit', ['project' => $project]);
+    }
+
     public function update(Project $project)
     {
         $this->authorize('manage', $project);

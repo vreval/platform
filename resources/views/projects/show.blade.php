@@ -2,19 +2,22 @@
 
 @section('content')
 <main>
-    <p class="mb-8 text-gray-500">
-        <a href="/projects">My Projects</a> / {{ $project->name }}
-    </p>
+    <div class="flex justify-between items-center mb-8">
+        <div class="text-gray-500">
+            <a href="/projects">My Projects</a> / {{ $project->name }}
+        </div>
+        <a href="{{ $project->path() . '/edit' }}" class="btn btn-green">Edit</a>
+    </div>
     <div class="flex flex-wrap -mx-2">
         <section class="w-full lg:w-3/4 px-2">
             <div class="mb-8">
                 <h3 class="text-gray-400 font-bold mb-4">Scenarios</h3>
                 @foreach ($project->scenarios as $scenario)
-                <div class="flex justify-between items-center w-full card mb-4">
-                    <form action="{{ $scenario->path() }}" method="post">
+                <div class="flex items-center w-full card mb-4">
+                    <form class="w-full mr-2" action="{{ $scenario->path() }}" method="post">
                         @csrf
                         @method('PATCH')
-                        <input type="text" name="name" value="{{ $scenario->name }}">
+                        <input class="w-full" type="text" name="name" value="{{ $scenario->name }}">
                     </form>
                     <form action="{{ $scenario->path() }}" method="post">
                         @csrf
@@ -23,10 +26,9 @@
                     </form>
                 </div>
                 @endforeach
-                <form action="{{ $project->path() }}/scenarios" method="post">
+                <form class="card mb-4" action="{{ $project->path() }}/scenarios" method="post">
                     @csrf
-                    <input type="text" name="name" class="card w-full mb-4"
-                        placeholder="Type new scenario name here...">
+                    <input class="w-full" type="text" name="name" placeholder="Type new scenario name here...">
                 </form>
             </div>
             <div class="mb-8">
