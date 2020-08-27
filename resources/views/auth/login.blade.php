@@ -3,12 +3,12 @@
 @section('content')
 <div class="container">
     <div class="card max-w-lg mx-auto">
-        <div class="mb-4">Login</div>
+        <h3 class="text-2xl text-center">Login</h3>
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="mb-4">
-                <label for="email" class="text-xs font-bold font-gray-600">{{ __('E-Mail Address') }}</label>
+                <label for="email" class="text-xs">{{ __('E-Mail Address') }}</label>
 
                 <div class="col-md-6">
                     <input id="email" type="email" class="px-3 py-1 border border-gray-400 w-full rounded-lg"
@@ -23,7 +23,7 @@
             </div>
 
             <div class="mb-4">
-                <label for="password" class="text-xs font-bold font-gray-600">{{ __('Password') }}</label>
+                <label for="password" class="text-xs">{{ __('Password') }}</label>
 
                 <input id="password" type="password" class="px-3 py-1 border border-gray-400 w-full rounded-lg"
                     name="password" required autocomplete="current-password">
