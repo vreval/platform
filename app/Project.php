@@ -23,6 +23,11 @@ class Project extends Model
         return $this->scenarios()->create(['name' => $name]);
     }
 
+    public function activity()
+    {
+        return $this->hasMany(Activity::class);
+    }
+
     public function scenarios()
     {
         return $this->hasMany(Scenario::class);
