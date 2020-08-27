@@ -13,9 +13,7 @@ class ProjectsController extends Controller
 
     public function show(Project $project)
     {
-        if (auth()->user()->isNot($project->owner)) {
-            abort(403);
-        }
+        $this->authorize('manage', $project);
 
         return view('projects.show', ['project' => $project]);
     }
@@ -27,9 +25,7 @@ class ProjectsController extends Controller
 
     public function update(Project $project)
     {
-        if (auth()->user()->isNot($project->owner)) {
-            abort(403);
-        }
+        $this->authorize('manage', $project);
 
         $validatedAttributes = request()->validate([
             'name' => ['min:3', 'max:150'],

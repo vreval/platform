@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Scenario;
-use Illuminate\Http\Request;
 
 class ProjectScenariosController extends Controller
 {
     public function store(Project $project)
     {
-        if (auth()->user()->isNot($project->owner)) {
-            abort(403);
-        }
+        $this->authorize('manage', $project);
 
         request()->validate([
             'name' => ['required', 'min:3', 'max:150']
@@ -25,22 +22,18 @@ class ProjectScenariosController extends Controller
 
     public function update(Project $project, Scenario $scenario)
     {
-        if (auth()->user()->isNot($scenario->project->owner)) {
-            abort(403);
-        }
+        $this->authorize('manage', $scenario->project);
 
         $scenario->update([
             'name' => request('name')
         ]);
 
-        return redirect($project->path());
+        return redirect($scenario->project->path());
     }
 
     public function destroy(Project $project, Scenario $scenario)
     {
-        if (auth()->user()->isNot($scenario->project->owner)) {
-            abort(403);
-        }
+        $this->authorize('manage', $scenario->project);
 
         $scenario->delete();
 

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 
 class ProjectManagementTests extends TestCase
@@ -15,8 +16,6 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function a_user_can_create_a_project()
     {
-        $this->withoutExceptionHandling();
-
         $this->signIn();
 
         $this->get('/projects/create')->assertStatus(200);
@@ -38,11 +37,9 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function a_user_can_update_their_project()
     {
-        $this->withoutExceptionHandling();
-
-        $this->signIn();
-
-        $project = factory(Project::class)->create(['owner_id' => auth()->id()]);
+        $project = app(ProjectFactory::class)
+            ->ownedBy($this->signIn())
+            ->create();
 
         $this->patch($project->path(), ['name' => 'Updated']);
 
@@ -52,11 +49,10 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function a_user_can_view_a_project()
     {
-        $this->withoutExceptionHandling();
-
-        $this->signIn();
-
-        $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
+        $project = app(ProjectFactory::class)
+            ->ownedBy($this->signIn())
+            ->withScenarios(1)
+            ->create();
 
         $this->get($project->path())
             ->assertSee($project->name);
@@ -65,7 +61,7 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function guests_cannot_manage_projects()
     {
-        $project = factory('App\Project')->create();
+        $project = app(ProjectFactory::class)->create();
 
         $this->get('/projects')->assertRedirect('/login');
         $this->get('/projects/create')->assertRedirect('/login');
@@ -79,7 +75,7 @@ class ProjectManagementTests extends TestCase
     {
         $this->signIn();
 
-        $project = factory('App\Project')->create();
+        $project = app(ProjectFactory::class)->create();
 
         $this->get($project->path())->assertStatus(403);
     }
@@ -89,7 +85,7 @@ class ProjectManagementTests extends TestCase
     {
         $this->signIn();
 
-        $project = factory('App\Project')->create();
+        $project = app(ProjectFactory::class)->create();
 
         $this->patch($project->path(), ['name' => 'Updated'])
             ->assertStatus(403);
@@ -109,33 +105,38 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function a_project_name_must_have_at_least_3_characters()
     {
-        $this->actingAs(factory('App\User')->create());
-        $this->signIn();
+        $project = app(ProjectFactory::class)
+            ->ownedBy($this->signIn())
+            ->create();
 
-        $this->post('/projects', factory('App\Project')->raw(['name' => str_repeat('?', 2)]))
+        $project->name = str_repeat('?', 2);
+        $this->post('/projects', $project->toArray())
             ->assertSessionHasErrors('name');
 
-        $this->post('/projects', factory('App\Project')->raw(['name' => str_repeat('?', 3)]))
+        $project->name = str_repeat('?', 3);
+        $this->post('/projects', $project->toArray())
             ->assertSessionDoesntHaveErrors('name');
     }
 
     /** @test */
     public function a_project_name_must_have_at_most_150_characters()
     {
-        $this->actingAs(factory('App\User')->create());
-        $this->signIn();
+        $project = app(ProjectFactory::class)
+            ->ownedBy($this->signIn())
+            ->create();
 
-        $this->post('/projects', factory('App\Project')->raw(['name' => str_repeat('?', 151)]))
+        $project->name = str_repeat('?', 151);
+        $this->post('/projects', $project->toArray())
             ->assertSessionHasErrors('name');
 
-        $this->post('/projects', factory('App\Project')->raw(['name' => str_repeat('?', 150)]))
+        $project->name = str_repeat('?', 150);
+        $this->post('/projects', $project->toArray())
             ->assertSessionDoesntHaveErrors('name');
     }
 
     /** @test */
     public function a_project_requires_a_description()
     {
-        $this->actingAs(factory('App\User')->create());
         $this->signIn();
 
         $this->post('/projects', factory('App\Project')->raw(['description' => '']))
@@ -145,26 +146,32 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function a_project_description_must_have_at_least_3_characters()
     {
-        $this->actingAs(factory('App\User')->create());
-        $this->signIn();
+        $project = app(ProjectFactory::class)
+            ->ownedBy($this->signIn())
+            ->create();
 
-        $this->post('/projects', factory('App\Project')->raw(['description' => str_repeat('?', 2)]))
+        $project->description = str_repeat('?', 2);
+        $this->post('/projects', $project->toArray())
             ->assertSessionHasErrors('description');
 
-        $this->post('/projects', factory('App\Project')->raw(['description' => str_repeat('?', 3)]))
+        $project->description = str_repeat('?', 3);
+        $this->post('/projects', $project->toArray())
             ->assertSessionDoesntHaveErrors('description');
     }
 
     /** @test */
     public function a_project_description_must_have_at_most_500_characters()
     {
-        $this->actingAs(factory('App\User')->create());
-        $this->signIn();
+        $project = app(ProjectFactory::class)
+            ->ownedBy($this->signIn())
+            ->create();
 
-        $this->post('/projects', factory('App\Project')->raw(['description' => str_repeat('?', 501)]))
+        $project->description = str_repeat('?', 501);
+        $this->post('/projects', $project->toArray())
             ->assertSessionHasErrors('description');
 
-        $this->post('/projects', factory('App\Project')->raw(['description' => str_repeat('?', 500)]))
+        $project->description = str_repeat('?', 500);
+        $this->post('/projects', $project->toArray())
             ->assertSessionDoesntHaveErrors('description');
     }
 }

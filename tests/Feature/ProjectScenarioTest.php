@@ -6,6 +6,7 @@ use App\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
+use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 
 class ProjectScenarioTest extends TestCase
@@ -15,13 +16,10 @@ class ProjectScenarioTest extends TestCase
     /** @test */
     public function a_project_can_have_scenarios()
     {
-        $this->withoutExceptionHandling();
+        $project = app(ProjectFactory::class)->create();
 
-        $this->signIn();
-
-        $project = auth()->user()->projects()->create(factory(Project::class)->raw());
-
-        $this->post($project->path() . '/scenarios', ['name' => 'Test scenario']);
+        $this->actingAs($project->owner)
+            ->post($project->path() . '/scenarios', ['name' => 'Test scenario']);
 
         $this->get($project->path())->assertSee('Test scenario');
     }
@@ -44,12 +42,12 @@ class ProjectScenarioTest extends TestCase
     {
         $this->signIn();
 
-        $scenario = factory('App\Scenario')->create(['name' => 'Test scenario']);
+        $project = app(ProjectFactory::class)->withScenarios(1)->create();
 
-        $this->patch($scenario->path(), ['name' => 'Updated'])
+        $this->patch($project->scenarios->first()->path(), ['name' => 'Updated'])
             ->assertStatus(403);
 
-        $this->assertDatabaseHas('scenarios', ['name' => 'Test scenario']);
+        $this->assertDatabaseMissing('scenarios', ['name' => 'Updated']);
     }
 
     /** @test */
@@ -67,14 +65,10 @@ class ProjectScenarioTest extends TestCase
     /** @test */
     public function a_scenario_can_be_updated()
     {
-        $this->withoutExceptionHandling();
+        $project = app(ProjectFactory::class)->withScenarios(1)->create();
 
-        $this->signIn();
-
-        $project = auth()->user()->projects()->create(factory(Project::class)->raw());
-        $scenario = $project->addScenario('Lorem ipsum');
-
-        $this->patch($scenario->path(), ['name' => 'Updated scenario name'])
+        $this->actingAs($project->owner)
+            ->patch($project->scenarios->first()->path(), ['name' => 'Updated scenario name'])
             ->assertSessionHasNoErrors();
 
         $this->assertEquals('Updated scenario name', $project->scenarios()->first()->name);
@@ -85,19 +79,19 @@ class ProjectScenarioTest extends TestCase
     }
 
     /** @test */
-    public function a_scenario_can_be_deleted()
+    public function a_user_can_delete_their_scenarios()
     {
-        $this->withoutExceptionHandling();
+        $project = app(ProjectFactory::class)
+            ->ownedBy($this->signIn())
+            ->withScenarios(1)
+            ->create();
+        $scenario = $project->scenarios->first();
 
-        $this->signIn();
+        $this->assertDatabaseCount('scenarios', 1);
 
-        $project = auth()->user()->projects()->create(factory(Project::class)->raw());
-        $scenario = $project->addScenario('Lorem ipsum');
+        $this->delete($scenario->path())
+            ->assertRedirect($project->path());
 
-        $this->assertDatabaseHas('scenarios', ['name' => 'Lorem ipsum']);
-
-        $this->delete($scenario->path());
-
-        $this->assertDatabaseMissing('scenarios', ['name' => 'Lorem ipsum']);
+        $this->assertDatabaseCount('scenarios', 0);
     }
 }
