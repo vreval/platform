@@ -10,19 +10,6 @@ class Scenario extends Model
 
     protected $touches = ['project'];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($scenario) {
-            $scenario->project->recordActivity('scenario_created');
-        });
-
-        static::updated(function ($scenario) {
-            $scenario->project->recordActivity('scenario_updated');
-        });
-    }
-
     public function path()
     {
         return "/projects/{$this->project->id}/scenarios/{$this->id}";

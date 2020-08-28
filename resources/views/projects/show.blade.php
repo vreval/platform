@@ -41,6 +41,20 @@
         <aside class="w-full lg:w-1/4 px-2">
             <h3 class="text-gray-400 font-bold mb-4">About</h3>
             @include('projects.card')
+            <div class="card mt-8">
+                <ul>
+                    @foreach ($project->activity as $activity)
+                    <li class="{{ $loop->last ? '' : 'mb-1' }} text-xs flex justify-between">
+                        <div>
+                            @include("projects.activity.{$activity->description}")
+                        </div>
+                        <div class="text-gray-400">
+                            {{ $activity->created_at->diffForHumans() }}
+                        </div>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
             <footer class="flex justify-end mt-4">
                 <a class="btn btn-gray" href="/projects">Go back</a>
             </footer>

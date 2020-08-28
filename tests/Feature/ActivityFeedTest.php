@@ -54,4 +54,17 @@ class ActivityFeedTest extends TestCase
         $this->assertCount(3, $project->activity);
         $this->assertEquals('scenario_updated', $project->activity->last()->description);
     }
+
+    /** @test */
+    public function deleting_a_scenario_records_project_activity()
+    {
+        $project = app(ProjectFactory::class)->create();
+
+        $scenario = $project->addScenario('Some scenario');
+
+        $scenario->delete();
+
+        $this->assertCount(3, $project->activity);
+        $this->assertEquals('scenario_deleted', $project->activity->last()->description);
+    }
 }
