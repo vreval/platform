@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Scenario;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Setup\ProjectFactory;
@@ -34,12 +35,18 @@ class ActivityFeedTest extends TestCase
     /** @test */
     public function creating_a_new_scenario_records_project_activity()
     {
+        $this->withoutExceptionHandling();
         $project = app(ProjectFactory::class)->create();
 
         $project->addScenario('Some scenario');
 
         $this->assertCount(2, $project->activity);
-        $this->assertEquals('scenario_created', $project->activity->last()->description);
+
+        tap($project->activity->last(), function ($activity) {
+            $this->assertEquals('scenario_created', $activity->description);
+            $this->assertInstanceOf(Scenario::class, $activity->subject);
+            $this->assertEquals('Some scenario', $activity->subject->name);
+        });
     }
 
     /** @test */
@@ -52,7 +59,12 @@ class ActivityFeedTest extends TestCase
         $scenario->update(['name' => 'Updated']);
 
         $this->assertCount(3, $project->activity);
-        $this->assertEquals('scenario_updated', $project->activity->last()->description);
+
+        tap($project->activity->last(), function ($activity) {
+            $this->assertEquals('scenario_updated', $activity->description);
+            $this->assertInstanceOf(Scenario::class, $activity->subject);
+            $this->assertEquals('Updated', $activity->subject->name);
+        });
     }
 
     /** @test */

@@ -19,4 +19,17 @@ class Scenario extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    public function activity()
+    {
+        return $this->morphMany(Activity::class, 'subject')->latest();
+    }
+
+    public function recordActivity($description)
+    {
+        $this->activity()->create([
+            'project_id' => $this->project_id,
+            'description' => $description
+        ]);
+    }
 }

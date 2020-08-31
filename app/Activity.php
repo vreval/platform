@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    protected $fillable = ['description'];
+    protected $fillable = ['project_id', 'description'];
+
+    public function subject()
+    {
+        return $this->morphTo();
+    }
 }

@@ -1,1 +1,1 @@
-Updated a scenario
+Updated scenario "{{ $activity->subject->name }}"

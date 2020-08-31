@@ -14,7 +14,7 @@ class ScenarioObserver
      */
     public function created(Scenario $scenario)
     {
-        $scenario->project->recordActivity('scenario_created');
+        $scenario->recordActivity('scenario_created');
     }
 
     /**
@@ -25,7 +25,7 @@ class ScenarioObserver
      */
     public function updated(Scenario $scenario)
     {
-        $scenario->project->recordActivity('scenario_updated');
+        $scenario->recordActivity('scenario_updated');
     }
 
     /**
@@ -36,7 +36,7 @@ class ScenarioObserver
      */
     public function deleted(Scenario $scenario)
     {
-        $scenario->project->recordActivity('scenario_deleted');
+        $scenario->recordActivity('scenario_deleted');
     }
 
     /**
