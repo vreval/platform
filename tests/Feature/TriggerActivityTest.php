@@ -4,11 +4,10 @@ namespace Tests\Feature;
 
 use App\Scenario;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 
-class ActivityFeedTest extends TestCase
+class TriggerActivityTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -18,18 +17,32 @@ class ActivityFeedTest extends TestCase
         $project = app(ProjectFactory::class)->create();
 
         $this->assertCount(1, $project->activity);
-        $this->assertEquals('created', $project->activity->first()->description);
+
+        tap($project->activity->last(), function($activity) {
+            $this->assertEquals('created', $activity->description);
+            $this->assertNull($activity->changes);
+        });
     }
 
     /** @test */
     public function updating_a_project_records_activity()
     {
         $project = app(ProjectFactory::class)->create();
+        $originalName = $project->name;
 
         $project->update(['name' => 'Updated']);
 
         $this->assertCount(2, $project->activity);
-        $this->assertEquals('updated', $project->activity->last()->description);
+        tap($project->activity->last(), function ($activity) use ($originalName) {
+            $this->assertEquals('updated', $activity->description);
+
+            $expected = [
+                'before' => ['name' => $originalName],
+                'after' => ['name' => 'Updated']
+            ];
+
+            $this->assertEquals($expected, $activity->changes);
+        });
     }
 
     /** @test */
@@ -78,5 +91,9 @@ class ActivityFeedTest extends TestCase
 
         $this->assertCount(3, $project->activity);
         $this->assertEquals('scenario_deleted', $project->activity->last()->description);
+
+        tap($project->activity->last(), function ($activity) {
+            $this->assertEquals('scenario_deleted', $activity->description);
+        });
     }
 }
