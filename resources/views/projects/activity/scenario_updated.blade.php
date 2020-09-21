@@ -1,1 +1,1 @@
-Updated scenario "{{ $activity->subject->name }}"
+{{ $activity->user->name }} updated scenario "{{ $activity->subject->name }}"

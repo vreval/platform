@@ -1,1 +1,1 @@
-Deleted a scenario
+{{ $activity->user->name }} deleted a scenario
