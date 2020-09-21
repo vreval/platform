@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    use RecordsActivity;
+
     protected $fillable = ['name', 'description', 'owner_id'];
 
-    public $old = [];
+    protected $recordableEvents = ['created', 'updated'];
 
     public function path()
     {
@@ -25,30 +27,13 @@ class Project extends Model
         return $this->scenarios()->create(['name' => $name]);
     }
 
-    public function activity()
-    {
-        return $this->hasMany(Activity::class)->latest();
-    }
-
-    public function recordActivity($description)
-    {
-        $this->activity()->create([
-            'description' => $description,
-            'changes' => $this->activityChanges($description)
-        ]);
-    }
-
-    protected function activityChanges($description) {
-        if ($description === 'updated') {
-            return [
-                'before' => array_diff($this->old, $this->getAttributes()),
-                'after' => $this->getChanges(),
-            ];
-        }
-    }
-
     public function scenarios()
     {
         return $this->hasMany(Scenario::class);
+    }
+
+    public function activity()
+    {
+        return $this->hasMany(Activity::class)->latest();
     }
 }

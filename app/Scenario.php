@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Scenario extends Model
 {
+    use RecordsActivity;
+
     protected $fillable = ['name'];
 
     protected $touches = ['project'];
@@ -18,18 +20,5 @@ class Scenario extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
-    }
-
-    public function activity()
-    {
-        return $this->morphMany(Activity::class, 'subject')->latest();
-    }
-
-    public function recordActivity($description)
-    {
-        $this->activity()->create([
-            'project_id' => $this->project_id,
-            'description' => $description
-        ]);
     }
 }
