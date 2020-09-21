@@ -8,9 +8,8 @@ class Project extends Model
 {
     use RecordsActivity;
 
+    protected static $recordableEvents = ['created', 'updated'];
     protected $fillable = ['name', 'description', 'owner_id'];
-
-    protected $recordableEvents = ['created', 'updated'];
 
     public function path()
     {
