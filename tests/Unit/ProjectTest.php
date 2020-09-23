@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Project;
+use App\Scenario;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -36,7 +38,19 @@ class ProjectTest extends TestCase
 
         $scenario = $project->addScenario('Test scenario');
 
-        $this->assertCount(1, \App\Scenario::all());
+        $this->assertCount(1, Scenario::all());
         $this->assertTrue($project->scenarios->contains($scenario));
+    }
+
+    /** @test */
+    public function it_can_invite_a_user()
+    {
+        $this->withoutExceptionHandling();
+
+        $project = factory(Project::class)->create();
+
+        $project->invite($user = factory(User::class)->create());
+
+        $this->assertTrue($project->members->contains($user));
     }
 }
