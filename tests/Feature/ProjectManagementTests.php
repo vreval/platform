@@ -37,6 +37,14 @@ class ProjectManagementTests extends TestCase
     }
 
     /** @test */
+    public function a_user_can_see_all_project_they_have_been_invited_to_on_their_dashboard()
+    {
+        $project = tap(Project::factory()->create())->invite($this->signIn());
+
+        $this->get('/projects')->assertSee($project->name);
+    }
+
+    /** @test */
     public function a_user_can_update_their_project()
     {
         $this->withoutExceptionHandling();
