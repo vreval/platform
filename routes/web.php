@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProjectInvitationsController;
 use App\Http\Controllers\ProjectScenariosController;
 use App\Http\Controllers\ProjectsController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/projects/{project}/scenarios', [ProjectScenariosController::class, 'store']);
     Route::patch('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'update']);
     Route::delete('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'destroy']);
+
+    Route::post('/projects/{project}/invitations', [ProjectInvitationsController::class, 'store']);
 });
 
 Auth::routes();
