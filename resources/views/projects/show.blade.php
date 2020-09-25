@@ -10,13 +10,17 @@
             <img
                 class="mr-2 rounded-full w-12 border-4 border-green-400"
                 src="{{ gravatar_url($project->owner) }}"
-                alt="{{ $project->owner->name }}'s avatar">
+                alt="{{ $project->owner->name }}'s avatar"
+                title="{{ $project->owner->name }}"
+            >
 
             @foreach($project->members as $member)
                 <img
                     class="mr-2 rounded-full w-12 border-4 border-gray-600"
                     src="{{ gravatar_url($member) }}"
-                    alt="{{ $member->name }}'s avatar">
+                    alt="{{ $member->name }}'s avatar"
+                    title="{{ $member->name }}"
+                >
             @endforeach
 
             <a href="{{ $project->path() . '/edit' }}" class="btn btn-green ml-6">Edit</a>
@@ -51,24 +55,16 @@
             <div class="mb-8">
                 <h3 class="text-gray-400 font-bold mb-4">Forms</h3>
             </div>
+            @include('errors')
         </section>
         <aside class="w-full lg:w-1/4 px-2">
             <h3 class="text-gray-400 font-bold mb-4">About</h3>
             @include('projects.card')
-            <div class="card mt-8">
-                <ul>
-                    @foreach ($project->activity as $activity)
-                    <li class="{{ $loop->last ? '' : 'mb-1' }} text-xs flex justify-between">
-                        <div>
-                            @include("projects.activity.{$activity->description}")
-                        </div>
-                        <div class="text-gray-400">
-                            {{ $activity->created_at->diffForHumans() }}
-                        </div>
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
+            @include('projects.activity.card')
+
+            @can('administer', $project)
+                @include('projects.invite')
+            @endcan
             <footer class="flex justify-end mt-4">
                 <a class="btn btn-gray" href="/projects">Go back</a>
             </footer>
