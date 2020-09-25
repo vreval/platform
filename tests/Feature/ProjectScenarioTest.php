@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Project;
+use App\Scenario;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Setup\ProjectFactory;
@@ -28,7 +29,7 @@ class ProjectScenarioTest extends TestCase
     {
         $this->signIn();
 
-        $project = factory(Project::class)->create();
+        $project = Project::factory()->create();
 
         $this->post($project->path() . '/scenarios', ['name' => 'Test scenario'])
             ->assertStatus(403);
@@ -54,9 +55,9 @@ class ProjectScenarioTest extends TestCase
     {
         $this->signIn();
 
-        $project = auth()->user()->projects()->create(factory(Project::class)->raw());
+        $project = auth()->user()->projects()->create(Project::factory()->raw());
 
-        $scenario = factory('App\Scenario')->raw(['name' => '']);
+        $scenario = Scenario::factory()->raw(['name' => '']);
 
         $this->post($project->path() . '/scenarios', $scenario)->assertSessionHasErrors('name');
     }

@@ -15,7 +15,7 @@ class ProjectTest extends TestCase
     /** @test */
     public function it_has_a_path()
     {
-        $project = factory('App\Project')->create();
+        $project = Project::factory()->create();
 
         $this->assertEquals('/projects/' . $project->id, $project->path());
     }
@@ -23,8 +23,8 @@ class ProjectTest extends TestCase
     /** @test */
     public function it_belongs_to_an_owner()
     {
-        $user = factory('App\User')->create();
-        $project = factory('App\Project')->create(['owner_id' => $user->id]);
+        $user = User::factory()->create();
+        $project = Project::factory()->create(['owner_id' => $user->id]);
 
         $this->assertEquals($user->id, $project->owner->id);
     }
@@ -34,7 +34,7 @@ class ProjectTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $project = factory(Project::class)->create();
+        $project = Project::factory()->create();
 
         $scenario = $project->addScenario('Test scenario');
 
@@ -47,9 +47,9 @@ class ProjectTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $project = factory(Project::class)->create();
+        $project = Project::factory()->create();
 
-        $project->invite($user = factory(User::class)->create());
+        $project->invite($user = User::factory()->create());
 
         $this->assertTrue($project->members->contains($user));
     }

@@ -16,7 +16,7 @@ class ActivityTest extends TestCase
     {
         $user = $this->signIn();
 
-        $project = factory(Project::class)->create();
+        $project = Project::factory()->create();
         $project->user = $user;
 
         $this->assertInstanceOf(User::class, $project->activity->first()->user);

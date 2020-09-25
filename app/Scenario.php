@@ -2,10 +2,12 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Scenario extends Model
 {
+    use HasFactory;
     use RecordsActivity;
 
     protected $fillable = ['name'];

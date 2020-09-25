@@ -27,11 +27,11 @@ class ProjectFactory
 
     public function create()
     {
-        $project = factory(Project::class)->create([
-            'owner_id' => $this->user ?? factory(User::class)
+        $project = Project::factory()->create([
+            'owner_id' => $this->user ?? User::factory()
         ]);
 
-        factory(Scenario::class, $this->scenariosCount)->create([
+        Scenario::factory()->count($this->scenariosCount)->create([
             'project_id' => $project->id
         ]);
 

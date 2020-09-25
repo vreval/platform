@@ -14,7 +14,7 @@ class ScenarioTest extends TestCase
     /** @test */
     public function it_belongs_to_a_project()
     {
-        $scenario = factory(Scenario::class)->create();
+        $scenario = Scenario::factory()->create();
 
         $this->assertInstanceOf(Project::class, $scenario->project);
     }
@@ -22,7 +22,7 @@ class ScenarioTest extends TestCase
     /** @test */
     public function it_has_a_path()
     {
-        $scenario = factory(Scenario::class)->create();
+        $scenario = Scenario::factory()->create();
 
         $this->assertEquals('/projects/' . $scenario->project->id . '/scenarios/' . $scenario->id, $scenario->path());
     }

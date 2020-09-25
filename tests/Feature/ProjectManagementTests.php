@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Project;
+use App\Scenario;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Setup\ProjectFactory;
@@ -62,8 +64,8 @@ class ProjectManagementTests extends TestCase
 
         $user = $this->signIn();
 
-        $project = app(ProjectFactory::class)->create();
-
+        $project = Project::factory()->create();
+        $this->assertDatabaseHas('projects', ['name' => $project->name]);
         $project->invite($user);
 
         $this->get('/projects')->assertSee($project->name);
@@ -71,7 +73,7 @@ class ProjectManagementTests extends TestCase
 
     /** @test */
     public function unauthorized_cannot_delete_a_project() {
-        $project = app(ProjectFactory::class)->create();
+        $project = Project::factory()->create();
 
         $this->delete($project->path())
             ->assertRedirect('/login');
@@ -83,7 +85,7 @@ class ProjectManagementTests extends TestCase
 
     /** @test */
     public function a_user_can_delete_a_project() {
-        $project = app(ProjectFactory::class)->create();
+        $project = Project::factory()->create();
 
         $this->actingAs($project->owner)
             ->delete($project->path())
@@ -95,13 +97,15 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function a_user_can_view_a_project()
     {
-        $project = app(ProjectFactory::class)
-            ->ownedBy($this->signIn())
-            ->withScenarios(1)
+        $project = Project::factory()
+            ->for(User::factory(), 'owner')
+            ->has(Scenario::factory())
             ->create();
 
-        $this->get($project->path())
-            ->assertSee($project->name);
+        $this->signIn($project->owner);
+
+        $this->get($project->path())->assertStatus(200);
+        $this->get($project->path())->assertSee($project->name);
     }
 
     /** @test */
@@ -144,7 +148,7 @@ class ProjectManagementTests extends TestCase
     {
         $this->signIn();
 
-        $this->post('/projects', factory('App\Project')->raw(['name' => '']))
+        $this->post('/projects', Project::factory('App\Project')->raw(['name' => '']))
             ->assertSessionHasErrors('name');
     }
 
@@ -185,7 +189,7 @@ class ProjectManagementTests extends TestCase
     {
         $this->signIn();
 
-        $this->post('/projects', factory('App\Project')->raw(['description' => '']))
+        $this->post('/projects', Project::factory('App\Project')->raw(['description' => '']))
             ->assertSessionHasErrors('description');
     }
 

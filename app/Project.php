@@ -2,11 +2,13 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
     use RecordsActivity;
+    use HasFactory;
 
     protected static $recordableEvents = ['created', 'updated'];
     protected $fillable = ['name', 'description', 'owner_id'];

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProjectScenariosController;
+use App\Http\Controllers\ProjectsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,12 +22,11 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
-//    Route::resource('projects', \App\Http\Controllers\ProjectsController::class);
-    Route::resource('projects', 'ProjectsController');
+    Route::resource('projects', ProjectsController::class);
 
-    Route::post('/projects/{project}/scenarios', 'ProjectScenariosController@store');
-    Route::patch('/projects/{project}/scenarios/{scenario}', 'ProjectScenariosController@update');
-    Route::delete('/projects/{project}/scenarios/{scenario}', 'ProjectScenariosController@destroy');
+    Route::post('/projects/{project}/scenarios', [ProjectScenariosController::class, 'store']);
+    Route::patch('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'update']);
+    Route::delete('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'destroy']);
 });
 
 Auth::routes();
