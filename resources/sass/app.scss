@@ -5,3 +5,17 @@
 @import "cards";
 
 @import "tailwindcss/utilities";
+
+.dropdown-toggle {
+    > button:focus {
+        outline: 0;
+    }
+}
+
+.dropdown-menu-link {
+    @apply block text-sm py-2 px-4 w-full text-left;
+
+    &:hover {
+        @apply bg-gray-200;
+    }
+}

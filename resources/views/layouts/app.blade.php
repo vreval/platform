@@ -21,44 +21,51 @@
 </head>
 
 <body class="bg-gray-200">
-    <div id="app">
-        <nav class="bg-white">
-            <div class="container flex justify-between items-center p-4 mx-auto">
-                <a class="font-bold text-lg" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <div>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
+<div id="app">
+    <nav class="bg-white">
+        <div class="container flex justify-between items-center p-4 mx-auto">
+            <a class="font-bold text-lg" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+            <div>
+                <!-- Right Side Of Navbar -->
+                <ul class="ml-auto">
+                    <!-- Authentication Links -->
+                    @guest
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
                         @endif
-                        @else
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
+                    @else
+                        <dropdown>
+                            <template v-slot:trigger>
+                                <button class="dropdown-item block flex items-center bg-gray-200 rounded-full p-1">
+                                    <img class="w-8 rounded-full" src="{{ gravatar_url(auth()->user()) }}" alt="{{ auth()->user()->name }}">
+                                    <span class="mx-3">{{ auth()->user()->name }}</span>
+                                </button>
+                            </template>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                        @endguest
-                    </ul>
-                </div>
+                            <a href="#" class="dropdown-menu-link">Settings</a>
+                            <form class="w-full" id="logout-form" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="dropdown-menu-link">Logout</button>
+                            </form>
+                        </dropdown>
+
+                    @endguest
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-        <main class="container mx-auto p-4">
-            @yield('content')
-        </main>
-    </div>
+    <main class="container mx-auto p-4">
+        @yield('content')
+    </main>
+</div>
 </body>
 
 </html>
