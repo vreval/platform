@@ -22,18 +22,11 @@ class ProjectManagementTests extends TestCase
 
         $this->get('/projects/create')->assertStatus(200);
 
-        $attributes = [
-            'name' => $this->faker->sentence,
-            'description' => $this->faker->paragraph
-        ];
+        $this->followingRedirects()
+            ->post('/projects', $attributes = Project::factory()->make()->attributesToArray())
+            ->assertSee($attributes['name'])
+            ->assertSee($attributes['description']);
 
-        $response = $this->post('/projects', $attributes);
-
-        $response->assertRedirect(Project::first()->path());
-
-        $this->assertDatabaseHas('projects', $attributes);
-
-        $this->get('/projects')->assertSee($attributes['name']);
     }
 
     /** @test */
@@ -86,9 +79,13 @@ class ProjectManagementTests extends TestCase
         $this->delete($project->path())
             ->assertRedirect('/login');
 
-        $this->signIn();
+        $user = $this->signIn();
 
         $this->delete($project->path())->assertStatus(403);
+
+        $project->invite($user);
+
+        $this->actingAs($user)->delete($project->path())->assertStatus(403);
     }
 
     /** @test */
