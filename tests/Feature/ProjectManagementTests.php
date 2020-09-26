@@ -30,6 +30,26 @@ class ProjectManagementTests extends TestCase
     }
 
     /** @test */
+    public function members_can_be_included_as_part_of_project_creation()
+    {
+        $this->withoutExceptionHandling();
+        $this->signIn();
+        $john = User::factory()->create();
+        $sally = User::factory()->create();
+
+        $attributes = Project::factory()->make()->attributesToArray();
+
+        $attributes['members'] = [
+            ['email' => $john->email],
+            ['email' => $sally->email],
+        ];
+
+        $this->post('/projects', $attributes);
+
+        $this->assertCount(2, Project::first()->members);
+    }
+
+    /** @test */
     public function a_user_can_see_all_project_they_have_been_invited_to_on_their_dashboard()
     {
         $project = tap(Project::factory()->create())->invite($this->signIn());

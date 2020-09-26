@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\User;
 
 class ProjectsController extends Controller
 {
@@ -32,24 +33,25 @@ class ProjectsController extends Controller
     {
         $this->authorize('manage', $project);
 
-        $validatedAttributes = request()->validate([
-            'name' => ['min:3', 'max:150'],
-            'description' => ['min:3', 'max:500'],
-        ]);
-
-        $project->update($validatedAttributes);
+        $project->update($this->validateRequest());
 
         return redirect($project->path());
     }
 
     public function store()
     {
-        $validatedAttributes = request()->validate([
-            'name' => ['required', 'min:3', 'max:150'],
-            'description' => ['required', 'min:3', 'max:500'],
-        ]);
+        $project = auth()->user()->projects()->create($this->validateRequest());
 
-        $project = auth()->user()->projects()->create($validatedAttributes);
+        if ($members = request('members')) {
+            foreach($members as $member) {
+                $userToInvite = User::whereEmail($member['email'])->first();
+                $project->invite($userToInvite);
+            }
+        }
+
+        if (request()->wantsJson()) {
+            return ['message' => $project->path()];
+        }
 
         return redirect($project->path());
     }
@@ -61,5 +63,16 @@ class ProjectsController extends Controller
         $project->delete();
 
         return redirect('/projects');
+    }
+
+    /**
+     * @return array
+     */
+    protected function validateRequest(): array
+    {
+        return request()->validate([
+            'name' => ['required', 'min:3', 'max:150'],
+            'description' => ['required', 'min:3', 'max:500'],
+        ]);
     }
 }
