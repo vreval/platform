@@ -36,7 +36,7 @@ class ProjectTest extends TestCase
 
         $project = Project::factory()->create();
 
-        $scenario = $project->addScenario('Test scenario');
+        $scenario = $project->addScenario(['name' => 'Test scenario']);
 
         $this->assertCount(1, Scenario::all());
         $this->assertTrue($project->scenarios->contains($scenario));

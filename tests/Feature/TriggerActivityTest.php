@@ -51,7 +51,7 @@ class TriggerActivityTest extends TestCase
         $this->withoutExceptionHandling();
         $project = app(ProjectFactory::class)->create();
 
-        $project->addScenario('Some scenario');
+        $project->addScenario(['name' => 'Some scenario']);
 
         $this->assertCount(2, $project->activity);
 
@@ -67,7 +67,7 @@ class TriggerActivityTest extends TestCase
     {
         $project = app(ProjectFactory::class)->create();
 
-        $scenario = $project->addScenario('Some scenario');
+        $scenario = $project->addScenario(['name' => 'Some scenario']);
 
         $scenario->update(['name' => 'Updated']);
 
@@ -85,7 +85,7 @@ class TriggerActivityTest extends TestCase
     {
         $project = app(ProjectFactory::class)->create();
 
-        $scenario = $project->addScenario('Some scenario');
+        $scenario = $project->addScenario(['name' => 'Some scenario']);
 
         $scenario->delete();
 

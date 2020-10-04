@@ -10,7 +10,7 @@ class Scenario extends Model
     use HasFactory;
     use RecordsActivity;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description'];
 
     protected $touches = ['project'];
 

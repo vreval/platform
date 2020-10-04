@@ -63,6 +63,33 @@ class ProjectScenarioTest extends TestCase
     }
 
     /** @test */
+    public function a_scenario_can_have_a_description()
+    {
+        $user = $this->signIn();
+
+        $project = app(ProjectFactory::class)->ownedBy($user)->create();
+
+        $scenario = Scenario::factory()->make([
+            'project_id' => $project->id,
+            'name' => 'Test Name',
+            'description' => 'Test Description'
+        ]);
+
+        $this->post($project->path() . '/scenarios', $scenario->attributesToArray())->assertSessionDoesntHaveErrors();
+
+        $this->assertEquals('Test Description', Scenario::first()->description);
+    }
+
+//    /** @test */
+//    public function checkpoints_can_be_included_as_part_of_scenario_creation()
+//    {
+//        $user = $this->signIn();
+//
+//        $project = app(ProjectFactory::class)->ownedBy($user)->create();
+//
+//    }
+
+    /** @test */
     public function a_scenario_can_be_updated()
     {
         $project = app(ProjectFactory::class)->withScenarios(1)->create();

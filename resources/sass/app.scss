@@ -6,6 +6,14 @@
 
 @import "tailwindcss/utilities";
 
+.input {
+    @apply appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 leading-tight;
+
+    &:focus {
+        @apply outline-none bg-white;
+    }
+}
+
 .dropdown-toggle {
     > button:focus {
         outline: 0;

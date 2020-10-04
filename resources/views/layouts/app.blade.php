@@ -50,6 +50,7 @@
                             </template>
 
                             <a href="#" class="dropdown-menu-link">Settings</a>
+                            <a href="/projects" class="dropdown-menu-link">Projects</a>
                             <form class="w-full" id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="dropdown-menu-link">Logout</button>

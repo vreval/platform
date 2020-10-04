@@ -11,11 +11,10 @@ class ProjectScenariosController extends Controller
     {
         $this->authorize('manage', $project);
 
-        request()->validate([
-            'name' => ['required', 'min:3', 'max:150']
-        ]);
-
-        $project->addScenario(request('name'));
+        $project->addScenario(request()->validate([
+            'name' => ['required', 'min:3', 'max:150'],
+            'description' => ['min:3', 'max:500']
+        ]));
 
         return redirect($project->path());
     }

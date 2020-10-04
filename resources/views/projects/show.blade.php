@@ -35,7 +35,7 @@
                     <form class="w-full mr-2" action="{{ $scenario->path() }}" method="post">
                         @csrf
                         @method('PATCH')
-                        <input class="w-full" type="text" name="name" value="{{ $scenario->name }}">
+                        <input class="input" type="text" name="name" value="{{ $scenario->name }}">
                     </form>
                     <form action="{{ $scenario->path() }}" method="post">
                         @csrf
@@ -46,15 +46,18 @@
                 @endforeach
                 <form class="card mb-4" action="{{ $project->path() }}/scenarios" method="post">
                     @csrf
-                    <input class="w-full" type="text" name="name" placeholder="Type new scenario name here...">
+                    <input class="input" type="text" name="name" placeholder="Type new scenario name here...">
                 </form>
             </div>
+
             <div class="mb-8">
                 <h3 class="text-gray-400 font-bold mb-4">Checkpoints</h3>
             </div>
+
             <div class="mb-8">
                 <h3 class="text-gray-400 font-bold mb-4">Forms</h3>
             </div>
+
             @include('errors')
         </section>
         <aside class="w-full lg:w-1/4 px-2">

@@ -23,9 +23,9 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function addScenario(string $name)
+    public function addScenario(array $data)
     {
-        return $this->scenarios()->create(['name' => $name]);
+        return $this->scenarios()->create($data);
     }
 
     public function scenarios()
