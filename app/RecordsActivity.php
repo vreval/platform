@@ -46,6 +46,9 @@ trait RecordsActivity
     }
 
     protected function activityOwner() {
+        if ($user = auth()->user()) {
+            return $user;
+        }
         return ($this->project ?? $this)->owner;
     }
 

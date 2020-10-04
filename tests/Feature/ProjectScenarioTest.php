@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Checkpoint;
 use App\Project;
 use App\Scenario;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -80,14 +81,6 @@ class ProjectScenarioTest extends TestCase
         $this->assertEquals('Test Description', Scenario::first()->description);
     }
 
-//    /** @test */
-//    public function checkpoints_can_be_included_as_part_of_scenario_creation()
-//    {
-//        $user = $this->signIn();
-//
-//        $project = app(ProjectFactory::class)->ownedBy($user)->create();
-//
-//    }
 
     /** @test */
     public function a_scenario_can_be_updated()

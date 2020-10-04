@@ -52,6 +52,11 @@
 
             <div class="mb-8">
                 <h3 class="text-gray-400 font-bold mb-4">Checkpoints</h3>
+                <ul>
+                    @foreach($project->checkpoints as $checkpoint)
+                        <li>{{ $checkpoint->name }}</li>
+                    @endforeach
+                </ul>
             </div>
 
             <div class="mb-8">

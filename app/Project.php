@@ -28,9 +28,24 @@ class Project extends Model
         return $this->scenarios()->create($data);
     }
 
+    public function addCheckpoint(array $data)
+    {
+        return $this->checkpoints()->create($data);
+    }
+
     public function scenarios()
     {
         return $this->hasMany(Scenario::class);
+    }
+
+    public function checkpoints()
+    {
+        return $this->hasMany(Checkpoint::class);
+    }
+
+    public function forms()
+    {
+        return $this->hasMany(Form::class);
     }
 
     public function activity()

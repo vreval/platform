@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProjectCheckpointsController;
+use App\Http\Controllers\ProjectFormsController;
 use App\Http\Controllers\ProjectInvitationsController;
 use App\Http\Controllers\ProjectScenariosController;
 use App\Http\Controllers\ProjectsController;
@@ -29,6 +31,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/projects/{project}/scenarios', [ProjectScenariosController::class, 'store']);
     Route::patch('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'update']);
     Route::delete('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'destroy']);
+
+    Route::post('/projects/{project}/checkpoints', [ProjectCheckpointsController::class, 'store']);
+    Route::post('/projects/{project}/forms', [ProjectFormsController::class, 'store']);
 
     Route::post('/projects/{project}/invitations', [ProjectInvitationsController::class, 'store']);
 });
