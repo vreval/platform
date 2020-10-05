@@ -29,7 +29,7 @@ services:
             - ./db:/var/lib/mysql
         environment:
             - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
-            - "MYSQL_DATABSE=laravel"
+            - "MYSQL_DATABASE=vreval"
             - "MYSQL_USER=root"
             - "MYSQL_PASSWORD="
             - "MYSQL_ROOT_PASSWORD="
