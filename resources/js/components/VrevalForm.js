@@ -12,22 +12,22 @@ export default class VrevalForm {
         return Object.keys(this.originalData).reduce((data, attribute) => {
             data[attribute] = this[attribute];
             return data;
-        }, {})
+        }, {});
     }
 
     patch(endpoint) {
-        this.submit(endpoint, 'patch');
+        return this.submit(endpoint, "patch");
     }
 
     delete(endpoint) {
-        this.submit(endpoint, 'delete');
+        return this.submit(endpoint, "delete");
     }
 
     post(endpoint) {
-        this.submit(endpoint);
+        return this.submit(endpoint);
     }
 
-    submit(endpoint, requestType = 'post') {
+    submit(endpoint, requestType = "post") {
         return axios[requestType](endpoint, this.data())
             .then(this.onSuccess.bind(this))
             .catch(this.onFail.bind(this));
