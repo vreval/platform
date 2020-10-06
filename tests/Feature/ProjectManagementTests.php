@@ -32,21 +32,35 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function members_can_be_included_as_part_of_project_creation()
     {
-        $this->withoutExceptionHandling();
         $this->signIn();
+
         $john = User::factory()->create();
         $sally = User::factory()->create();
 
         $attributes = Project::factory()->make()->attributesToArray();
 
-        $attributes['members'] = [
-            ['email' => $john->email],
-            ['email' => $sally->email],
-        ];
-
+        $attributes['members'] = [$john, $sally];
         $this->post('/projects', $attributes);
+        $this->assertCount(2, Project::first()->members);
+    }
+
+    /** @test */
+    public function members_can_be_removed_completely_by_supplying_an_empty_array ()
+    {
+        $user = $this->signIn();
+
+        $john = User::factory()->create();
+        $sally = User::factory()->create();
+        $project = app(ProjectFactory::class)->ownedBy($user)->create();
+        $project->invite($john);
+        $project->invite($sally);
 
         $this->assertCount(2, Project::first()->members);
+
+        $attributes = $project->attributesToArray();
+        $attributes['members'] = [];
+        $this->patch($project->path(), $attributes);
+        $this->assertCount(0, Project::first()->members);
     }
 
     /** @test */

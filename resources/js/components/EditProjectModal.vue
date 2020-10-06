@@ -1,7 +1,7 @@
 <template>
-    <modal name="new-project" classes="p-10 bg-white rounded-lg" height="auto">
+    <modal name="edit-project" classes="p-10 bg-white rounded-lg" height="auto">
         <h1 class="font-normal text-2xl mb-8 text-center">
-            Create a new Project
+            Edit Project
         </h1>
         <form @submit.prevent="submit">
             <div class="flex">
@@ -53,9 +53,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex-1 ml-4">
+                <div class="flex-1 ml-4" v-if="canAdminister">
                     <div class="mb-4">
-                        <label class="input-label">Invite some members</label>
+                        <label class="input-label">Manage Members</label>
                         <div
                             class="flex mb-2"
                             v-for="(member, index) in form.members"
@@ -80,12 +80,12 @@
             <button
                 type="button"
                 class="btn btn-gray mr-2"
-                @click="$modal.hide('new-project')"
+                @click="$modal.hide('edit-project')"
             >
                 Cancel
             </button>
             <button type="button" class="btn btn-green" @click="submit">
-                Create Project
+                Update Project
             </button>
         </footer>
     </modal>
@@ -94,30 +94,42 @@
 <script>
 import Form from "./VrevalForm";
 export default {
-    name: "NewProjectModal",
+    name: "EditProjectModal",
+    props: {
+        canAdminister: {
+            type: Boolean,
+            default: false
+        },
+        project: {
+            type: Object,
+            required: true
+        }
+    },
     data() {
         return {
             form: new Form({
-                name: "",
-                description: "",
-                members: [{ email: "" }]
+                name: this.project.name,
+                description: this.project.description,
+                members: this.project.members.map(member => ({
+                    id: member.id,
+                    name: member.name,
+                    email: member.email
+                }))
             })
         };
     },
     methods: {
         addMember() {
-            this.form.members.push({ email: "" });
+            this.form.members.push({});
         },
         removeMember(index) {
             this.form.members.splice(index, 1);
         },
         submit() {
-            if (!this.form.members[0].email) {
-                delete this.form.originalData.members;
-            }
+            this.form.members = this.form.members.filter(member => member.hasOwnProperty('id'));
 
             this.form
-                .submit("/projects")
+                .patch(`/projects/${this.project.id}`)
                 .then(response => (location = response.data.message));
         }
     }

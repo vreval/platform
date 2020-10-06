@@ -58,6 +58,15 @@ class Project extends Model
         return $this->members()->attach($user);
     }
 
+    public function syncMembers($members)
+    {
+        if (empty($members)) {
+            $this->members()->detach();
+        } else {
+            $this->members()->sync($members);
+        }
+    }
+
     public function members()
     {
         return $this->belongsToMany(User::class, 'project_members')->withTimestamps();

@@ -35,6 +35,15 @@ class ProjectsController extends Controller
 
         $project->update($this->validateRequest());
 
+        $members = request('members');
+        if (isset($members)) {
+            $project->syncMembers(collect($members)->pluck('id')->toArray());
+        }
+
+        if (request()->wantsJson()) {
+            return ['message' => $project->path()];
+        }
+
         return redirect($project->path());
     }
 
@@ -42,11 +51,9 @@ class ProjectsController extends Controller
     {
         $project = auth()->user()->projects()->create($this->validateRequest());
 
-        if ($members = request('members')) {
-            foreach($members as $member) {
-                $userToInvite = User::whereEmail($member['email'])->first();
-                $project->invite($userToInvite);
-            }
+        $members = request('members');
+        if (isset($members)) {
+            $project->syncMembers(collect($members)->pluck('id')->toArray());
         }
 
         if (request()->wantsJson()) {
@@ -73,6 +80,8 @@ class ProjectsController extends Controller
         return request()->validate([
             'name' => ['required', 'min:3', 'max:150'],
             'description' => ['required', 'min:3', 'max:500'],
+            'members' => ['array'],
+            // 'members.*' => ['numberic']
         ]);
     }
 }

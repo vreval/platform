@@ -2058,6 +2058,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EditProjectModal",
   props: {
+    canAdminister: {
+      type: Boolean,
+      "default": false
+    },
     project: {
       type: Object,
       required: true
@@ -2086,15 +2090,9 @@ __webpack_require__.r(__webpack_exports__);
       this.form.members.splice(index, 1);
     },
     submit: function submit() {
-      // if (this.form.members.length === 0) {
-      //     this.form.originalData.members = [];
-      // } else if (!this.form.members[0].email) {
-      //     delete this.form.originalData.members;
-      // }
       this.form.members = this.form.members.filter(function (member) {
         return member.hasOwnProperty('id');
       });
-      console.log(this.form.members);
       this.form.patch("/projects/".concat(this.project.id)).then(function (response) {
         return location = response.data.message;
       });
@@ -2203,6 +2201,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewProjectModal",
@@ -2222,6 +2224,9 @@ __webpack_require__.r(__webpack_exports__);
       this.form.members.push({
         email: ""
       });
+    },
+    removeMember: function removeMember(index) {
+      this.form.members.splice(index, 1);
     },
     submit: function submit() {
       if (!this.form.members[0].email) {
@@ -20190,68 +20195,70 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "flex-1 ml-4" }, [
-              _c(
-                "div",
-                { staticClass: "mb-4" },
-                [
-                  _c("label", { staticClass: "input-label" }, [
-                    _vm._v("Manage Members")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.form.members, function(member, index) {
-                    return _c(
-                      "div",
-                      { key: index, staticClass: "flex mb-2" },
-                      [
-                        _c("user-search", {
-                          model: {
-                            value: _vm.form.members[index],
-                            callback: function($$v) {
-                              _vm.$set(_vm.form.members, index, $$v)
-                            },
-                            expression: "form.members[index]"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                return _vm.removeMember(index)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            x\n                        "
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  }),
-                  _vm._v(" "),
+            _vm.canAdminister
+              ? _c("div", { staticClass: "flex-1 ml-4" }, [
                   _c(
-                    "button",
-                    {
-                      staticClass: "btn",
-                      attrs: { type: "button" },
-                      on: { click: _vm.addMember }
-                    },
+                    "div",
+                    { staticClass: "mb-4" },
                     [
-                      _vm._v(
-                        "\n                        (+) Add member\n                    "
+                      _c("label", { staticClass: "input-label" }, [
+                        _vm._v("Manage Members")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.form.members, function(member, index) {
+                        return _c(
+                          "div",
+                          { key: index, staticClass: "flex mb-2" },
+                          [
+                            _c("user-search", {
+                              model: {
+                                value: _vm.form.members[index],
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form.members, index, $$v)
+                                },
+                                expression: "form.members[index]"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.removeMember(index)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            x\n                        "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn",
+                          attrs: { type: "button" },
+                          on: { click: _vm.addMember }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        (+) Add member\n                    "
+                          )
+                        ]
                       )
-                    ]
+                    ],
+                    2
                   )
-                ],
-                2
-              )
-            ])
+                ])
+              : _vm._e()
           ])
         ]
       ),
@@ -20445,28 +20452,39 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _vm._l(_vm.form.members, function(member, index) {
-                    return _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: member.email,
-                          expression: "member.email"
-                        }
-                      ],
-                      key: index,
-                      staticClass: "input mb-2",
-                      attrs: { type: "email", placeholder: "Member E-Mail" },
-                      domProps: { value: member.email },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                    return _c(
+                      "div",
+                      { key: index, staticClass: "flex mb-2" },
+                      [
+                        _c("user-search", {
+                          model: {
+                            value: _vm.form.members[index],
+                            callback: function($$v) {
+                              _vm.$set(_vm.form.members, index, $$v)
+                            },
+                            expression: "form.members[index]"
                           }
-                          _vm.$set(member, "email", $event.target.value)
-                        }
-                      }
-                    })
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.removeMember(index)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            x\n                        "
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
                   }),
                   _vm._v(" "),
                   _c(

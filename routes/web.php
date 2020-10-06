@@ -6,6 +6,7 @@ use App\Http\Controllers\ProjectFormsController;
 use App\Http\Controllers\ProjectInvitationsController;
 use App\Http\Controllers\ProjectScenariosController;
 use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\UserSearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/projects/{project}/forms', [ProjectFormsController::class, 'store']);
 
     Route::post('/projects/{project}/invitations', [ProjectInvitationsController::class, 'store']);
+    Route::get('/users', [UserSearchController::class, 'show']);
 });
 
 Auth::routes();
