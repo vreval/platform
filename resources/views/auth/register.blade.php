@@ -6,11 +6,10 @@
         <h3 class="text-2xl text-center">Register</h3>
         <form method="POST" action="{{ route('register') }}">
             @csrf
-
-            <div class="field mb-4">
-                <label for="name" class="text-xs">{{ __('Name') }}</label>
-                <input id="name" type="text" class="px-3 py-1 border border-gray-400 w-full rounded-lg" name="name"
-                    value="{{ old('name') }}" required autocomplete="name" autofocus>
+            <div class="mb-4">
+                <label for="name" class="input-label">Name</label>
+                <input id="name" type="text" class="input" name="name" value="{{ old('name') }}" required
+                    autocomplete="name" autofocus>
 
                 @error('name')
                 <span class="invalid-feedback" role="alert">
@@ -19,11 +18,10 @@
                 @enderror
             </div>
 
-            <div class="field mb-4">
-                <label for="email" class="text-xs">{{ __('E-Mail Address') }}</label>
-
-                <input id="email" type="email" class="px-3 py-1 border border-gray-400 w-full rounded-lg" name="email"
-                    value="{{ old('email') }}" required autocomplete="email">
+            <div class="mb-4">
+                <label for="email" class="input-label">E-Mail Addresse</label>
+                <input id="email" type="email" class="input" name="email" value="{{ old('email') }}" required
+                    autocomplete="email">
 
                 @error('email')
                 <span class="invalid-feedback" role="alert">
@@ -32,10 +30,9 @@
                 @enderror
             </div>
 
-            <div class="field mb-4">
-                <label for="password" class="text-xs">{{ __('Password') }}</label>
-                <input id="password" type="password" class="px-3 py-1 border border-gray-400 w-full rounded-lg"
-                    name="password" required autocomplete="new-password">
+            <div class="mb-4">
+                <label for="password" class="input-label">Password</label>
+                <input id="password" type="password" class="input" name="password" required autocomplete="new-password">
 
                 @error('password')
                 <span class="invalid-feedback" role="alert">
@@ -44,15 +41,13 @@
                 @enderror
             </div>
 
-            <div class="field mb-4">
-                <label for="password-confirm" class="text-xs">{{ __('Confirm Password') }}</label>
-                <input id="password-confirm" type="password" class="px-3 py-1 border border-gray-400 w-full rounded-lg"
-                    name="password_confirmation" required autocomplete="new-password">
+            <div class="mb-4">
+                <label for="password-confirm" class="input-label">Confirm Password</label>
+                <input id="password-confirm" type="password" class="input" name="password_confirmation" required
+                    autocomplete="new-password">
             </div>
 
-            <button type="submit" class="btn btn-green mt-8">
-                {{ __('Register') }}
-            </button>
+            <button type="submit" class="btn btn-green mt-8">Register</button>
         </form>
     </div>
 </div>

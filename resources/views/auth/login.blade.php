@@ -5,28 +5,24 @@
     <div class="card max-w-lg mx-auto">
         <h3 class="text-2xl text-center">Login</h3>
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="/login">
             @csrf
             <div class="mb-4">
-                <label for="email" class="text-xs">{{ __('E-Mail Address') }}</label>
+                <label for="email" class="input-label">E-Mail Address</label>
+                <input id="email" type="email" class="input" name="email" value="{{ old('email') }}" required
+                    autocomplete="email" autofocus>
 
-                <div class="col-md-6">
-                    <input id="email" type="email" class="px-3 py-1 border border-gray-400 w-full rounded-lg"
-                        name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
+                @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
             </div>
 
             <div class="mb-4">
-                <label for="password" class="text-xs">{{ __('Password') }}</label>
-
-                <input id="password" type="password" class="px-3 py-1 border border-gray-400 w-full rounded-lg"
-                    name="password" required autocomplete="current-password">
+                <label for="password" class="input-label">Password</label>
+                <input id="password" type="password" class="input" name="password" required
+                    autocomplete="current-password">
 
                 @error('password')
                 <span class="invalid-feedback" role="alert">
