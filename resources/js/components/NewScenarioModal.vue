@@ -60,6 +60,7 @@
                         :key="index"
                         :checkpoints="project.checkpoints"
                         v-model="form.checkpoints[index]"
+                        class="mb-2"
                     ></ProjectCheckpointAutosuggest>
                     <button type="button" class="btn" @click="addMember">
                         (+) Add checkpoint

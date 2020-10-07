@@ -2342,6 +2342,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -21564,6 +21565,7 @@ var render = function() {
                 _vm._l(_vm.form.checkpoints, function(checkpoint, index) {
                   return _c("ProjectCheckpointAutosuggest", {
                     key: index,
+                    staticClass: "mb-2",
                     attrs: { checkpoints: _vm.project.checkpoints },
                     model: {
                       value: _vm.form.checkpoints[index],
