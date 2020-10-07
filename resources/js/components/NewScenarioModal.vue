@@ -116,6 +116,8 @@ export default {
             this.form.checkpoints.splice(index, 1);
         },
         submit() {
+            this.form.checkpoints = this.form.checkpoints.filter(checkpoint => checkpoint.hasOwnProperty('id'));
+
             this.form
                 .submit(`/projects/${this.project.id}/scenarios`)
                 .then(response => (location = response.data.message));

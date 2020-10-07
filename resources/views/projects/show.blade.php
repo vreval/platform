@@ -24,23 +24,28 @@
                 <div class="mb-8">
                     <div class="flex justify-between">
                         <h3 class="text-gray-400 font-bold mb-4">Scenarios</h3>
-                        <button type="button" class="btn btn-green mb-4 text-xs" @click.prevent="$modal.show('new-scenario')">New Scenario</button>
+                        <button type="button" class="btn btn-green mb-4 text-xs"
+                                @click.prevent="$modal.show('new-scenario')">New Scenario
+                        </button>
                     </div>
                     <div class="w-full card mb-4">
                         <div class="flex -mx-4 px-4 py-2 text-sm font-bold text-gray-500">
                             <div class="w-2/3">Name</div>
                             <div class="w-1/3">Associated Checkpoints</div>
                         </div>
-                        @foreach ($project->scenarios as $scenario)
-                            <div
-                                class="flex items-center hover:bg-gray-200 -mx-4 px-4 py-2 @if(!$loop->last)border-b @endif">
-                                <div class="w-2/3">
-                                    {{ $scenario->name }}
+                        @foreach ($project->scenarios()->with('checkpoints')->get() as $scenario)
+                            <edit-scenario-modal :project="{{ $project }}" :scenario="{{ $scenario }}" class="w-full">
+                                <div
+                                    class="flex items-center hover:bg-gray-200 -mx-4 px-4 py-2 @if(!$loop->last)border-b @endif"
+                                >
+                                    <div class="w-2/3">
+                                        {{ $scenario->name }}
+                                    </div>
+                                    <div class="w-1/3">
+                                        {{ $scenario->checkpoints->count() }}
+                                    </div>
                                 </div>
-                                <div class="w-1/3">
-                                    {{ $scenario->checkpoints->count() }}
-                                </div>
-                            </div>
+                            </edit-scenario-modal>
                         @endforeach
                     </div>
                 </div>

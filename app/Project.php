@@ -12,6 +12,7 @@ class Project extends Model
 
     protected static $recordableEvents = ['created', 'updated'];
     protected $fillable = ['name', 'description', 'owner_id'];
+    protected $with = ['members', 'scenarios', 'checkpoints'];
 
     public function path()
     {

@@ -36,6 +36,10 @@ Vue.component(
     "new-scenario-modal",
     require("./components/NewScenarioModal").default
 );
+Vue.component(
+    "edit-scenario-modal",
+    require("./components/EditScenarioModal").default
+);
 Vue.component("user-search", require("./components/UserSearch.vue").default);
 Vue.component("dropdown", require("./components/Dropdown.vue").default);
 

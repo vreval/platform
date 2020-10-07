@@ -39,6 +39,10 @@ class ProjectScenariosController extends Controller
 
         $scenario->delete();
 
+        if (request()->wantsJson()) {
+            return ['message' => $project->path()];
+        }
+
         return redirect($project->path());
     }
 

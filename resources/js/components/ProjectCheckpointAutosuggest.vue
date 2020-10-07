@@ -26,6 +26,10 @@ export default {
             type: Object,
             default: () => ({})
         },
+        initialQuery: {
+            type: String,
+            default: ""
+        },
         checkpoints: {
             type: Array,
             required: true
@@ -33,7 +37,7 @@ export default {
     },
     data() {
         return {
-            query: ""
+            query: this.initialQuery
         }
     },
     computed: {
@@ -62,7 +66,7 @@ export default {
     @apply relative;
 }
 .autosuggest__results-container {
-    @apply absolute bg-white rounded-b shadow;
+    @apply absolute bg-white rounded-b shadow z-10;
 }
 .autosuggest__results-item {
     @apply p-2 cursor-pointer;
