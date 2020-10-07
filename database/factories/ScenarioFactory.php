@@ -24,6 +24,7 @@ class ScenarioFactory extends Factory
     {
         return [
             'name' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
             'project_id' => Project::factory()
         ];
     }
