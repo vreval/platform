@@ -83,11 +83,14 @@
             </aside>
         </div>
     </main>
+
     @can('administer', $project)
         <edit-project-modal :project="{{ $project }}" can-administer></edit-project-modal>
     @endcan
+
     @cannot('administer', $project)
         <edit-project-modal :project="{{ $project }}"></edit-project-modal>
     @endcannot
+
     <new-scenario-modal :project="{{ $project }}"></new-scenario-modal>
 @endsection
