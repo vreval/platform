@@ -30,4 +30,7 @@
     &:hover {
         @apply bg-gray-200;
     }
+    &:focus {
+        @apply outline-none;
+    }
 }

@@ -44,7 +44,8 @@
                         <dropdown>
                             <template v-slot:trigger>
                                 <button class="dropdown-item block flex items-center bg-gray-200 rounded-full p-1">
-                                    <img class="w-8 rounded-full" src="{{ gravatar_url(auth()->user()) }}" alt="{{ auth()->user()->name }}">
+                                    <img class="w-8 rounded-full" src="{{ gravatar_url(auth()->user()) }}"
+                                         alt="{{ auth()->user()->name }}">
                                     <span class="mx-3">{{ auth()->user()->name }}</span>
                                 </button>
                             </template>
