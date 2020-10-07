@@ -44,6 +44,9 @@ class ProjectFactory
         Scenario::factory()
             ->count($this->scenariosCount)
             ->create(['project_id' => $project->id]);
+        Checkpoint::factory()
+            ->count($this->checkpointsCount)
+            ->create(['project_id' => $project->id]);
 
         return $project;
     }

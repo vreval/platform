@@ -81,7 +81,6 @@ class ProjectsController extends Controller
             'name' => ['required', 'min:3', 'max:150'],
             'description' => ['required', 'min:3', 'max:500'],
             'members' => ['array'],
-            // 'members.*' => ['numberic']
         ]);
     }
 }

@@ -22,7 +22,10 @@
         <div class="flex flex-wrap -mx-2">
             <section class="w-full lg:w-3/4 px-2">
                 <div class="mb-8">
-                    <h3 class="text-gray-400 font-bold mb-4">Scenarios</h3>
+                    <div class="flex justify-between">
+                        <h3 class="text-gray-400 font-bold mb-4">Scenarios</h3>
+                        <button type="button" class="btn btn-green mb-4 text-xs" @click.prevent="$modal.show('new-scenario')">New Scenario</button>
+                    </div>
                     <div class="w-full card mb-4">
                         <div class="flex -mx-4 px-4 py-2 text-sm font-bold text-gray-500">
                             <div class="w-2/3">Name</div>
@@ -40,11 +43,6 @@
                             </div>
                         @endforeach
                     </div>
-                    <form class="card mb-4" action="{{ $project->path() }}/scenarios" method="post">
-                        @csrf
-                        <input class="input" type="text" name="name"
-                               placeholder="Type new scenario name here and press 'ENTER'...">
-                    </form>
                 </div>
 
                 <div class="mb-8">
@@ -90,5 +88,6 @@
     @endcan
     @cannot('administer', $project)
         <edit-project-modal :project="{{ $project }}"></edit-project-modal>
-    @endcan
+    @endcannot
+    <new-scenario-modal :project="{{ $project }}"></new-scenario-modal>
 @endsection

@@ -1,5 +1,5 @@
 <template>
-    <modal name="new-project" classes="p-10 bg-white rounded-lg" height="auto">
+    <modal name="new-project" classes="modal" height="auto">
         <h1 class="font-normal text-2xl mb-8 text-center">
             Create a new Project
         </h1>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="flex-1 ml-4">
                     <div class="mb-4">
-                        <label class="input-label">Invite some members</label>
+                        <h3 class="input-label">Invite some members</h3>
                         <div
                             class="flex mb-2"
                             v-for="(member, index) in form.members"

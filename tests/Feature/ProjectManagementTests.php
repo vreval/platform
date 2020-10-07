@@ -64,7 +64,7 @@ class ProjectManagementTests extends TestCase
     }
 
     /** @test */
-    public function a_user_can_see_all_project_they_have_been_invited_to_on_their_dashboard()
+    public function a_user_can_see_their_projects_on_the_dashboard()
     {
         $project = tap(Project::factory()->create())->invite($this->signIn());
 

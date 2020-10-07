@@ -28,6 +28,7 @@ class Scenario extends Model
     public function checkpoints()
     {
         return $this->belongsToMany(Checkpoint::class, 'scenario_checkpoints')
+            ->withPivot('sort_position')
             ->orderBy('sort_position');
     }
 

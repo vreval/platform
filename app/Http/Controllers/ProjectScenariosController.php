@@ -13,8 +13,15 @@ class ProjectScenariosController extends Controller
 
         $project->addScenario(request()->validate([
             'name' => ['required', 'min:3', 'max:150'],
-            'description' => ['min:3', 'max:500']
+            'description' => ['min:3', 'max:500'],
+            'checkpoints' => ['array'],
+            'checkpoints.*.id' => ['required', 'numeric'],
+            'checkpoints.*.project_id' => ['required', 'numeric'],
         ]));
+
+        if (request()->wantsJson()) {
+            return ['message' => $project->path()];
+        }
 
         return redirect($project->path());
     }

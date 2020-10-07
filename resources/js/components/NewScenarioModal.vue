@@ -1,7 +1,7 @@
 <template>
-    <modal name="edit-project" classes="p-10 bg-white rounded-lg" height="auto">
+    <modal name="new-scenario" height="auto" classes="modal">
         <h1 class="font-normal text-2xl mb-8 text-center">
-            Edit Project
+            Create a new Scenario
         </h1>
         <form @submit.prevent="submit">
             <div class="flex">
@@ -22,14 +22,14 @@
                                 class="text-red-400 text-xs italic"
                                 v-for="(error, index) in form.errors.name"
                                 :key="index"
-                                >{{ error }}</span
+                            >{{ error }}</span
                             >
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <label for="description" class="input-label"
-                            >Description</label
+                        >Description</label
                         >
                         <textarea
                             id="description"
@@ -48,30 +48,22 @@
                                 v-for="(error, index) in form.errors
                                     .description"
                                 :key="index"
-                                >{{ error }}</span
+                            >{{ error }}</span
                             >
                         </div>
                     </div>
                 </div>
-                <div class="flex-1 ml-4" v-if="canAdminister">
-                    <div class="mb-4">
-                        <label class="input-label">Manage Members</label>
-                        <div
-                            class="flex mb-2"
-                            v-for="(member, index) in form.members"
-                            :key="index"
-                        >
-                            <user-search
-                                v-model="form.members[index]"
-                            ></user-search>
-                            <button type="button" @click="removeMember(index)">
-                                x
-                            </button>
-                        </div>
-                        <button type="button" class="btn" @click="addMember">
-                            (+) Add member
-                        </button>
-                    </div>
+                <div class="flex-1 ml-4">
+                    <h3 class="input-label">Checkpoints</h3>
+                    <ProjectCheckpointAutosuggest
+                        v-for="(checkpoint, index) in form.checkpoints"
+                        :key="index"
+                        :checkpoints="project.checkpoints"
+                        v-model="form.checkpoints[index]"
+                    ></ProjectCheckpointAutosuggest>
+                    <button type="button" class="btn" @click="addMember">
+                        (+) Add checkpoint
+                    </button>
                 </div>
             </div>
         </form>
@@ -85,21 +77,22 @@
                 Cancel
             </button>
             <button type="button" class="btn btn-green" @click="submit">
-                Update Project
+                Create Project
             </button>
         </footer>
     </modal>
 </template>
 
 <script>
+import ProjectCheckpointAutosuggest from "./ProjectCheckpointAutosuggest";
 import Form from "./VrevalForm";
+
 export default {
-    name: "EditProjectModal",
+    name: "NewScenarioModal",
+    components: {
+        ProjectCheckpointAutosuggest
+    },
     props: {
-        canAdminister: {
-            type: Boolean,
-            default: false
-        },
         project: {
             type: Object,
             required: true
@@ -108,34 +101,29 @@ export default {
     data() {
         return {
             form: new Form({
-                name: this.project.name,
-                description: this.project.description,
-                members: this.project.members.map(member => ({
-                    id: member.id,
-                    name: member.name,
-                    email: member.email
-                }))
+                name: "",
+                description: "",
+                checkpoints: []
             })
         };
     },
     methods: {
         addMember() {
-            this.form.members.push({});
+            this.form.checkpoints.push({ email: "" });
         },
         removeMember(index) {
-            this.form.members.splice(index, 1);
+            this.form.checkpoints.splice(index, 1);
         },
         submit() {
-            this.form.members = this.form.members.filter(member => member.hasOwnProperty('id'));
-
             this.form
-                .patch(`/projects/${this.project.id}`)
+                .submit(`/projects/${this.project.id}/scenarios`)
                 .then(response => (location = response.data.message));
         },
         cancel() {
             this.form.reset();
-            this.$modal.hide('edit-project');
+            this.$modal.hide('new-scenario');
         }
     }
-};
+}
 </script>
+

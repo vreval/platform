@@ -34,3 +34,7 @@
         @apply outline-none;
     }
 }
+
+.modal {
+    @apply p-10 bg-white rounded-lg;
+}

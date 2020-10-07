@@ -48,7 +48,6 @@ class TriggerActivityTest extends TestCase
     /** @test */
     public function creating_a_new_scenario_records_project_activity()
     {
-        $this->withoutExceptionHandling();
         $project = app(ProjectFactory::class)->create();
 
         $project->addScenario(['name' => 'Some scenario']);

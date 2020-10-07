@@ -19,4 +19,11 @@ class Checkpoint extends Model
     {
         return $this->position !== null;
     }
+
+    public function scenarios()
+    {
+        return $this->belongsToMany(Scenario::class, 'scenario_checkpoints')
+            ->withPivot('sort_position')
+            ->orderBy('sort_position');
+    }
 }

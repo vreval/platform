@@ -21134,6 +21134,14 @@ video {
   outline: 0;
 }
 
+.modal {
+  padding: 2.5rem;
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+  border-radius: 0.5rem;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

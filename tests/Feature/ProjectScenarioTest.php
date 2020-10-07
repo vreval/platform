@@ -26,7 +26,7 @@ class ProjectScenarioTest extends TestCase
     }
 
     /** @test */
-    public function only_the_owner_of_a_project_can_add_scenarios()
+    public function only_the_owner_or_members_of_a_project_can_add_scenarios()
     {
         $this->signIn();
 
@@ -39,7 +39,7 @@ class ProjectScenarioTest extends TestCase
     }
 
     /** @test */
-    public function only_the_owner_of_a_project_can_update_a_scenario()
+    public function only_the_owner_or_members_of_a_project_can_update_a_scenario()
     {
         $this->signIn();
 
@@ -81,6 +81,34 @@ class ProjectScenarioTest extends TestCase
         $this->assertEquals('Test Description', Scenario::first()->description);
     }
 
+    /** @test */
+    public function checkpoints_can_be_included_during_scenario_creation()
+    {
+        $this->withoutExceptionHandling();
+        $user = $this->signIn();
+
+        $project = app(ProjectFactory::class)
+            ->ownedBy($user)
+            ->withCheckpoints(3)
+            ->create();
+
+        $scenario = Scenario::factory()->make([
+            'project_id' => $project->id,
+            'checkpoints' => [
+                $project->checkpoints[1]->attributesToArray(),
+                $project->checkpoints[2]->attributesToArray(),
+                $project->checkpoints[0]->attributesToArray()
+            ]
+        ])->attributesToArray();
+
+        $this->post($project->path() . '/scenarios', $scenario)->assertSessionDoesntHaveErrors();
+
+        $checkpoints = Scenario::first()->checkpoints;
+
+        $this->assertEquals(2, $checkpoints[0]->pivot->checkpoint_id);
+        $this->assertEquals(3, $checkpoints[1]->pivot->checkpoint_id);
+        $this->assertEquals(1, $checkpoints[2]->pivot->checkpoint_id);
+    }
 
     /** @test */
     public function a_scenario_can_be_updated()
@@ -99,7 +127,7 @@ class ProjectScenarioTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_delete_their_scenarios()
+    public function project_owners_and_members_can_delete_their_scenarios()
     {
         $project = app(ProjectFactory::class)
             ->ownedBy($this->signIn())
