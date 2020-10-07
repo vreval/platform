@@ -28,11 +28,7 @@ class Project extends Model
         $scenario = $this->scenarios()->create($data);
 
         if (isset($data['checkpoints'])) {
-            $checkpointsToSync = [];
-            foreach ($data['checkpoints'] as $key => $value) {
-                $checkpointsToSync[$value['id']] = ['sort_position' => $key];
-            }
-            $scenario->checkpoints()->sync($checkpointsToSync);
+            $scenario->addCheckpoints(collect($data['checkpoints']));
         }
 
         return $scenario;

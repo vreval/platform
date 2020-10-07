@@ -84,7 +84,6 @@ class ProjectScenarioTest extends TestCase
     /** @test */
     public function checkpoints_can_be_included_during_scenario_creation()
     {
-        $this->withoutExceptionHandling();
         $user = $this->signIn();
 
         $project = app(ProjectFactory::class)
@@ -105,6 +104,7 @@ class ProjectScenarioTest extends TestCase
 
         $checkpoints = Scenario::first()->checkpoints;
 
+        $this->assertCount(3, $checkpoints);
         $this->assertEquals(2, $checkpoints[0]->pivot->checkpoint_id);
         $this->assertEquals(3, $checkpoints[1]->pivot->checkpoint_id);
         $this->assertEquals(1, $checkpoints[2]->pivot->checkpoint_id);
@@ -124,6 +124,40 @@ class ProjectScenarioTest extends TestCase
         $this->assertDatabaseHas('scenarios', [
             'name' => 'Updated scenario name'
         ]);
+    }
+
+    /** @test */
+    public function a_scenarios_checkpoints_relation_can_be_updated()
+    {
+        $user = $this->signIn();
+
+        $project = app(ProjectFactory::class)
+            ->ownedBy($user)
+            ->withScenarios(1)
+            ->withCheckpoints(3)
+            ->create();
+
+        $scenario = $project->scenarios()->first();
+
+        $this->assertCount(3, $project->checkpoints);
+        $this->assertCount(0, $scenario->checkpoints);
+
+        $updatedScenarioData = $scenario->attributesToArray();
+        $updatedScenarioData['checkpoints'] = [
+            $project->checkpoints[1]->attributesToArray(),
+            $project->checkpoints[2]->attributesToArray(),
+            $project->checkpoints[0]->attributesToArray(),
+        ];
+
+        $this->patch($project->path() . '/scenarios/' . $scenario->id, $updatedScenarioData)
+            ->assertSessionDoesntHaveErrors();
+
+        $checkpoints = $project->scenarios()->first()->checkpoints;
+
+        $this->assertCount(3, $checkpoints);
+        $this->assertEquals(2, $checkpoints[0]->pivot->checkpoint_id);
+        $this->assertEquals(3, $checkpoints[1]->pivot->checkpoint_id);
+        $this->assertEquals(1, $checkpoints[2]->pivot->checkpoint_id);
     }
 
     /** @test */
