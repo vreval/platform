@@ -37,9 +37,12 @@
             >
                 Cancel
             </button>
-            <button type="button" class="btn btn-green" @click="submit">
-                Update Project
-            </button>
+            <div>
+                <button type="button" class="btn btn-red-outline" @click="removeProject">Delete</button>
+                <button type="button" class="btn btn-green" @click="submit">
+                    Update Project
+                </button>
+            </div>
         </footer>
     </modal>
 </template>
@@ -91,6 +94,11 @@ export default {
         cancel() {
             this.form.reset();
             this.$modal.hide('edit-project');
+        },
+        removeProject() {
+            this.form
+                .delete(`/projects/${this.project.id}`)
+                .then(response => (location = response.data.message));
         }
     }
 };

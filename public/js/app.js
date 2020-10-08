@@ -2082,6 +2082,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2134,6 +2137,11 @@ __webpack_require__.r(__webpack_exports__);
     cancel: function cancel() {
       this.form.reset();
       this.$modal.hide('edit-project');
+    },
+    removeProject: function removeProject() {
+      this.form["delete"]("/projects/".concat(this.project.id)).then(function (response) {
+        return location = response.data.message;
+      });
     }
   }
 });
@@ -20605,15 +20613,27 @@ var render = function() {
           [_vm._v("\n            Cancel\n        ")]
         ),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-green",
-            attrs: { type: "button" },
-            on: { click: _vm.submit }
-          },
-          [_vm._v("\n            Update Project\n        ")]
-        )
+        _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-red-outline",
+              attrs: { type: "button" },
+              on: { click: _vm.removeProject }
+            },
+            [_vm._v("Delete")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-green",
+              attrs: { type: "button" },
+              on: { click: _vm.submit }
+            },
+            [_vm._v("\n                Update Project\n            ")]
+          )
+        ])
       ])
     ]
   )

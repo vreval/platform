@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Project;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -64,10 +65,45 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $project = Project::factory()->create([
+            'owner_id' => $user->id,
+            'name' => 'Tutorial',
+            'description' => 'This is a basic sample project to help you get started and become familiar with all the project building blocks (or components) that are available.\r\n You might want to click through all the predefined components and read their description. They teach you about the overall purpose of each of them.',
+        ]);
+
+        $baseline = $project->addScenario([
+            'name' => 'Baseline',
+            'description' => 'Use Scenarios to replicate your study structure. It\'s is often a good idea to start off collecting some sort of behavioural baseline from your subjects.'
+        ]);
+
+        $stressor = $project->addScenario([
+            'name' => 'Stressor',
+            'description' => 'Here you might want to aggravate the subject to illicit a certain response, which you might want to investigate.'
+        ]);
+
+        $recovery = $project->addScenario([
+            'name' => 'Recovery',
+            'description' => 'Record the recovery period of your subjects to finalize the run.'
+        ]);
+
+        $start = $project->addCheckpoint([ 'name' => 'Start', ]);
+        $end = $project->addCheckpoint([ 'name' => 'End', ]);
+        $st1 = $project->addCheckpoint([ 'name' => 'Stimulus 1', ]);
+        $st2 = $project->addCheckpoint([ 'name' => 'Stimulus 2', ]);
+        $st3 = $project->addCheckpoint([ 'name' => 'Stimulus 3', ]);
+        $tree = $project->addCheckpoint([ 'name' => 'Tree', ]);
+        $bench = $project->addCheckpoint([ 'name' => 'Bench', ]);
+
+        $baseline->addCheckpoints(collect([$start, $end]));
+        $stressor->addCheckpoints(collect([$start, $st1, $st2, $st3, $end]));
+        $recovery->addCheckpoints(collect([$start, $tree, $bench, $end]));
+
+        return $user;
     }
 }

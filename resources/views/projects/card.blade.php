@@ -4,13 +4,4 @@
     </a>
     <p class="flex-1">{{ $project->description }}</p>
 
-    @can('administer', $project)
-        <footer>
-            <form method="POST" action="{{ $project->path() }}" class="text-right">
-                @method('DELETE')
-                @csrf
-                <button type="submit" class="text-xs">Delete</button>
-            </form>
-        </footer>
-    @endcan
 </div>
