@@ -4,7 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>VREVAL</title>
+
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -48,10 +51,8 @@
                 font-size: 84px;
             }
 
-            .links > a {
+            a {
                 color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
@@ -71,28 +72,36 @@
                         <a href="{{ url('/home') }}">Home</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
                     @endauth
                 </div>
             @endif
 
-            <div class="content">
+            <div class="content container">
                 <div class="title m-b-md">
-                    Laravel
+                    VREVAL
+                </div>
+                <p class="text-center text-2xl">A simple toolbox for user centric evaluations of virtual environments.</p>
+
+                <p>Based on the research of team InfAr at Bauhaus-University Weimar, Germany, this toolbox aimes to make user centred research a breeze. Following proven methods and processes like
+                    <a href="https://www.yumpu.com/de/document/view/51452434/pdf-download-infar-bauhaus-universitat-weimar">Design by Research</a>, scientists can use VREVAL to make the most of their resources and gain a unique insight into their target demographic.</p>
+
+                <div class="my-12 flex justify-between -mx-4">
+                    <div class="flex-col flex-1 px-4 justify-center">
+                        <div class="w-32 h-32 mb-4 rounded-full bg-gray-400 text-5xl flex items-center justify-center mx-auto"><span>P</span></div>
+                        <p>An online platform where users can manage their projects from anywhere, invite colleagues to collaborate on their work and share results with the world.</p>
+                    </div>
+                    <div class="flex-col flex-1 px-4 justify-center">
+                        <div class="w-32 h-32 mb-4 rounded-full bg-gray-400 text-5xl flex items-center justify-center mx-auto"><span>C</span></div>
+                        <p>The client is a standalone program, designed to be used for running user studies using a desktop or virtual reality. Everyone can download it for free.</p>
+                    </div>
+                    <div class="flex-col flex-1 px-4 justify-center">
+                        <div class="w-32 h-32 mb-4 rounded-full bg-gray-400 text-5xl flex items-center justify-center mx-auto"><span>API</span></div>
+                        <p>VREVAL provides a REST API for developers to make use of their data and build amazing third party applications for data analysis or otherwise.</p>
+                    </div>
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="text-center">
+                    <a href="/register" class="text-2xl btn btn-green">Register now</a>
                 </div>
             </div>
         </div>
