@@ -23,24 +23,22 @@ Vue.use(VModal);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component(
     "new-project-modal",
     require("./components/NewProjectModal.vue").default
-);
-Vue.component(
-    "edit-project-modal",
-    require("./components/EditProjectModal.vue").default
 );
 Vue.component(
     "new-scenario-modal",
     require("./components/NewScenarioModal").default
 );
 Vue.component(
+    "edit-project-modal",
+    require("./components/EditProjectModal.vue").default
+);
+Vue.component(
     "edit-scenario-modal",
     require("./components/EditScenarioModal").default
 );
-Vue.component("user-search", require("./components/UserSearch.vue").default);
 Vue.component("dropdown", require("./components/Dropdown.vue").default);
 
 /**

@@ -39,6 +39,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['gravatar_url'];
+
     public function projects()
     {
         return $this->hasMany(Project::class, 'owner_id')->latest('updated_at');
@@ -51,5 +53,10 @@ class User extends Authenticatable
                 $query->where('user_id', $this->id);
             })
             ->get();
+    }
+
+    public function getGravatarUrlAttribute()
+    {
+        return gravatar_url($this);
     }
 }

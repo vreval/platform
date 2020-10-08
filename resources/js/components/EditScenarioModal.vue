@@ -10,52 +10,7 @@
             <form @submit.prevent="submit">
                 <div class="flex">
                     <div class="flex-1 mr-4">
-                        <div class="mb-4">
-                            <label for="name" class="input-label">Name</label>
-                            <input
-                                type="text"
-                                id="name"
-                                class="input"
-                                :class="
-                                form.errors.name ? 'border border-red-600' : ''
-                            "
-                                v-model="form.name"
-                            />
-                            <div v-if="form.errors">
-                            <span
-                                class="text-red-400 text-xs italic"
-                                v-for="(error, index) in form.errors.name"
-                                :key="index"
-                            >{{ error }}</span
-                            >
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="description" class="input-label"
-                            >Description</label
-                            >
-                            <textarea
-                                id="description"
-                                class="input"
-                                :class="
-                                form.errors.description
-                                    ? 'border border-red-600'
-                                    : ''
-                            "
-                                rows="5"
-                                v-model="form.description"
-                            ></textarea>
-                            <div v-if="form.errors">
-                            <span
-                                class="text-red-400 text-xs italic"
-                                v-for="(error, index) in form.errors
-                                    .description"
-                                :key="index"
-                            >{{ error }}</span
-                            >
-                            </div>
-                        </div>
+                        <basic-form-fields v-model="form"></basic-form-fields>
                     </div>
                     <div class="flex-1 ml-4">
                         <h3 class="input-label">Checkpoints</h3>
@@ -96,10 +51,12 @@
 <script>
 import ProjectCheckpointAutosuggest from "./ProjectCheckpointAutosuggest";
 import Form from "./VrevalForm";
+import BasicFormFields from "./BasicFormFields";
 
 export default {
     name: "EditScenarioModal",
     components: {
+        BasicFormFields,
         ProjectCheckpointAutosuggest
     },
     props: {

@@ -38,3 +38,23 @@
 .modal {
     @apply p-10 bg-white rounded-lg;
 }
+
+.vm--container > .vm--modal {
+    overflow: visible;
+}
+
+#autosuggest {
+    @apply relative w-full block;
+}
+.autosuggest__results-item--highlighted {
+    @apply bg-gray-200;
+}
+.autosuggest__results-container {
+    @apply absolute bg-white rounded-b shadow z-10 overflow-hidden;
+}
+.autosuggest__results-item {
+    @apply p-2 cursor-pointer;
+    &:hover {
+        @apply bg-gray-200;
+    }
+}

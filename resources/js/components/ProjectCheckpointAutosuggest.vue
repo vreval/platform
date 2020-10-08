@@ -7,7 +7,7 @@
             @selected="onSelected"
         >
             <template slot-scope="{ suggestion }">
-                <span>{{ suggestion.item.name }}</span>
+                <span class="whitespace-no-wrap">{{ suggestion.item.name }}</span>
             </template>
         </vue-autosuggest>
     </div>
@@ -60,18 +60,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-#autosuggest {
-    @apply relative;
-}
-.autosuggest__results-container {
-    @apply absolute bg-white rounded-b shadow z-10;
-}
-.autosuggest__results-item {
-    @apply p-2 cursor-pointer;
-    &:hover {
-        @apply bg-gray-200;
-    }
-}
-</style>
