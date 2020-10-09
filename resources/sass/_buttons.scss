@@ -1,23 +1,50 @@
 .btn {
-    @apply font-bold py-2 px-4 rounded;
+    @apply font-medium py-2 px-4 rounded uppercase transition-colors duration-200 whitespace-no-wrap;
 
     &:focus {
         @apply outline-none;
     }
 }
 
-.btn-gray {
-    @apply bg-gray-400;
+.btn-green {
+    @apply bg-green-500 text-white;
 
     &:hover {
-        @apply bg-gray-300;
+        @apply bg-green-400;
     }
 }
 
-.btn-green {
-    @apply bg-green-400 text-white;
+.btn-green-outline {
+    @apply border border-green-500 text-green-500;
 
     &:hover {
-        @apply bg-green-300;
+        @apply bg-green-100;
+    }
+}
+
+.btn-green-text {
+    &:hover {
+        @apply bg-green-100;
+    }
+}
+.btn-white {
+    @apply bg-gray-500 text-gray-800;
+
+    &:hover {
+        @apply bg-gray-400;
+    }
+}
+
+.btn-gray-outline {
+    @apply border border-gray-500;
+
+    &:hover {
+        @apply bg-gray-100;
+    }
+}
+
+.btn-gray-text {
+    &:hover {
+        @apply bg-white bg-opacity-25;
     }
 }

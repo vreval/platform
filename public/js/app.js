@@ -2324,7 +2324,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -2563,6 +2562,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_autosuggest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-autosuggest */ "./node_modules/vue-autosuggest/dist/vue-autosuggest.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
 //
 //
 //
@@ -20438,7 +20439,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "dropdown relative" }, [
+  return _c("div", { staticClass: "dropdown min-w-32 relative" }, [
     _c(
       "div",
       {
@@ -20833,11 +20834,24 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "modal",
-    { attrs: { name: "new-project", classes: "modal", height: "auto" } },
+    {
+      attrs: {
+        name: "new-project",
+        classes: "modal",
+        height: "auto",
+        width: 960
+      }
+    },
     [
-      _c("h1", { staticClass: "font-normal text-2xl mb-8 text-center" }, [
-        _vm._v("\n        Create a new Project\n    ")
+      _c("h2", { staticClass: "font-normal text-2xl" }, [
+        _vm._v("Create a new Project")
       ]),
+      _vm._v(" "),
+      _c(
+        "span",
+        { staticClass: "block text-sm font-medium text-gray-600 mb-8" },
+        [_vm._v("Start with a brand new slate")]
+      ),
       _vm._v(" "),
       _c(
         "form",
@@ -20874,7 +20888,7 @@ var render = function() {
                 { staticClass: "mb-4" },
                 [
                   _c("h3", { staticClass: "input-label" }, [
-                    _vm._v("Invite some members")
+                    _vm._v("Invite people to collaborate")
                   ]),
                   _vm._v(" "),
                   _vm._l(_vm.form.members, function(member, index) {
@@ -20916,7 +20930,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-green text-xs",
+                      staticClass: "btn btn-green-outline text-xs",
                       attrs: { type: "button" },
                       on: { click: _vm.addMember }
                     },
@@ -20934,21 +20948,7 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("footer", { staticClass: "flex justify-between" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-gray mr-2",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.$modal.hide("new-project")
-              }
-            }
-          },
-          [_vm._v("\n            Cancel\n        ")]
-        ),
-        _vm._v(" "),
+      _c("footer", { staticClass: "flex" }, [
         _c(
           "button",
           {
@@ -20957,6 +20957,20 @@ var render = function() {
             on: { click: _vm.submit }
           },
           [_vm._v("\n            Create Project\n        ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-gray ml-2",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                return _vm.$modal.hide("new-project")
+              }
+            }
+          },
+          [_vm._v("\n            Cancel\n        ")]
         )
       ])
     ]
@@ -21170,48 +21184,42 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("vue-autosuggest", {
-        attrs: {
-          suggestions: _vm.filteredOptions,
-          "input-props": {
-            id: "autosuggest_input",
-            class: "input",
-            placeholder: "Find another user to work with..."
-          }
-        },
-        on: { selected: _vm.onSelected, input: _vm.onInputChange },
-        scopedSlots: _vm._u([
-          {
-            key: "default",
-            fn: function(ref) {
-              var suggestion = ref.suggestion
-              return [
-                _c("div", { staticClass: "flex items-center" }, [
-                  _c("img", {
-                    staticClass: "rounded-full w-8 mr-4",
-                    attrs: { src: suggestion.item.gravatar_url, alt: "" }
-                  }),
-                  _vm._v(" "),
-                  _c("div", [_vm._v(_vm._s(suggestion.item.name))])
-                ])
-              ]
-            }
-          }
-        ]),
-        model: {
-          value: _vm.query,
-          callback: function($$v) {
-            _vm.query = $$v
-          },
-          expression: "query"
+  return _c("vue-autosuggest", {
+    attrs: {
+      "input-props": {
+        id: "autosuggest_input",
+        class: "input",
+        placeholder: "Type the name of another user..."
+      },
+      suggestions: _vm.filteredOptions
+    },
+    on: { input: _vm.onInputChange, selected: _vm.onSelected },
+    scopedSlots: _vm._u([
+      {
+        key: "default",
+        fn: function(ref) {
+          var suggestion = ref.suggestion
+          return [
+            _c("div", { staticClass: "flex items-center" }, [
+              _c("img", {
+                staticClass: "rounded-full w-8 mr-4",
+                attrs: { src: suggestion.item.gravatar_url, alt: "" }
+              }),
+              _vm._v(" "),
+              _c("div", [_vm._v(_vm._s(suggestion.item.name))])
+            ])
+          ]
         }
-      })
-    ],
-    1
-  )
+      }
+    ]),
+    model: {
+      value: _vm.query,
+      callback: function($$v) {
+        _vm.query = $$v
+      },
+      expression: "query"
+    }
+  })
 }
 var staticRenderFns = []
 render._withStripped = true

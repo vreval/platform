@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <main>
+    <div class="container mx-auto mt-8">
         <div class="flex justify-between items-center mb-8">
             <div class="text-gray-500">
                 <a href="/projects">My Projects</a> / {{ $project->name }}
@@ -87,7 +87,7 @@
                 @include('projects.activity.card')
             </aside>
         </div>
-    </main>
+    </div>
 
     @can('administer', $project)
         <edit-project-modal :project="{{ $project }}" can-administer></edit-project-modal>

@@ -1,24 +1,26 @@
 <template>
-    <div>
-        <vue-autosuggest
-            :suggestions="filteredOptions"
-            :input-props="{
-                id: 'autosuggest_input',
-                class: 'input',
-                placeholder: 'Find another user to work with...'
-            }"
-            v-model="query"
-            @selected="onSelected"
-            @input="onInputChange"
-        >
-            <template slot-scope="{ suggestion }">
-                <div class="flex items-center">
-                    <img :src="suggestion.item.gravatar_url" class="rounded-full w-8 mr-4" alt="" />
-                    <div>{{ suggestion.item.name }}</div>
-                </div>
-            </template>
-        </vue-autosuggest>
-    </div>
+    <vue-autosuggest
+        v-model="query"
+        :input-props="{
+            id: 'autosuggest_input',
+            class: 'input',
+            placeholder: 'Type the name of another user...'
+        }"
+        :suggestions="filteredOptions"
+        @input="onInputChange"
+        @selected="onSelected"
+    >
+        <template slot-scope="{ suggestion }">
+            <div class="flex items-center">
+                <img
+                    :src="suggestion.item.gravatar_url"
+                    alt=""
+                    class="rounded-full w-8 mr-4"
+                />
+                <div>{{ suggestion.item.name }}</div>
+            </div>
+        </template>
+    </vue-autosuggest>
 </template>
 
 <script>

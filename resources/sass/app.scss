@@ -6,6 +6,25 @@
 
 @import "tailwindcss/utilities";
 
+.hero {
+    background: url("../img/pexels-iván-rivero-1633970.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#app p {
+    @apply mb-3;
+
+    a {
+        @apply border-b-2 border-green-400;
+        &:hover {
+            @apply text-green-400;
+        }
+    }
+}
+
 .input {
     @apply appearance-none block w-full bg-gray-300 text-gray-700 rounded py-3 px-4 leading-tight;
 

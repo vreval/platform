@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')VREVAL - The user centric evaluation tool</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -22,51 +22,50 @@
 
 <body class="bg-gray-200">
 <div id="app">
-    <nav class="bg-white">
-        <div class="container flex justify-between items-center p-4 mx-auto">
-            <a class="font-bold text-lg" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
-            </a>
-            <div>
-                <!-- Right Side Of Navbar -->
-                <ul class="ml-auto">
-                    <!-- Authentication Links -->
-                    @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                    @else
-                        <dropdown>
-                            <template v-slot:trigger>
-                                <button class="dropdown-item block flex items-center bg-gray-200 rounded-full p-1">
-                                    <img class="w-8 rounded-full" src="{{ gravatar_url(auth()->user()) }}"
-                                         alt="{{ auth()->user()->name }}">
-                                    <span class="mx-3">{{ auth()->user()->name }}</span>
-                                </button>
-                            </template>
-
-                            <a href="/projects" class="dropdown-menu-link">Projects</a>
-                            <a href="#" class="dropdown-menu-link">Behaviours</a>
-                            <a href="#" class="dropdown-menu-link">Contacts</a>
-                            <a href="#" class="dropdown-menu-link">Settings</a>
-                            <form class="w-full" id="logout-form" action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="dropdown-menu-link">Logout</button>
-                            </form>
-                        </dropdown>
-
-                    @endguest
-                </ul>
+    <nav class="bg-gray-800 text-white">
+        <div class="container flex justify-between items-center py-4 mx-auto">
+            <div class="flex items-center">
+                <a class="font-bold text-3xl" href="{{ url('/') }}">
+                    <span class="text-green-400">VR</span>EVAL
+                </a>
+                <nav class="flex ml-6">
+                    <a href="#" class="block font-medium mx-2">FAQ</a>
+                    <a href="#" class="block font-medium mx-2">Docs</a>
+                    <a href="#" class="block font-medium mx-2">Tutorials</a>
+                </nav>
             </div>
+            <nav class="flex">
+                <!-- Authentication Links -->
+                @guest
+                    <a class="btn btn-gray-text text-sm ml-4" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    @if (Route::has('register'))
+                        <a class="btn btn-green text-sm ml-4"
+                           href="{{ route('register') }}">{{ __('Register') }}</a>
+                    @endif
+                @else
+                    <dropdown class="text-gray-800">
+                        <template v-slot:trigger>
+                            <button class="dropdown-item block flex items-center bg-gray-200 rounded-full p-1 w-full">
+                                <img class="w-8 rounded-full" src="{{ gravatar_url(auth()->user()) }}"
+                                     alt="{{ auth()->user()->name }}">
+                                <span class="mx-3">{{ auth()->user()->name }}</span>
+                            </button>
+                        </template>
+
+                        <a href="/projects" class="dropdown-menu-link">Projects</a>
+                        <a href="#" class="dropdown-menu-link">Contacts</a>
+                        <a href="#" class="dropdown-menu-link">My Profile</a>
+                        <form class="w-full" id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="dropdown-menu-link">Logout</button>
+                        </form>
+                    </dropdown>
+                @endguest
+            </nav>
         </div>
     </nav>
 
-    <main class="container mx-auto p-4">
+    <main class="bg-gray-200">
         @yield('content')
     </main>
 </div>

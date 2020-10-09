@@ -1,3 +1,7 @@
 .card {
-    @apply bg-white p-4 rounded-lg shadow-lg;
+    @apply bg-white p-4 rounded shadow;
+}
+
+.card-spacious {
+    @apply bg-white p-8 rounded shadow;
 }

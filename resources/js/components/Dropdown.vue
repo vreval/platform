@@ -1,5 +1,5 @@
 <template>
-    <div class="dropdown relative">
+    <div class="dropdown min-w-32 relative">
         <div
             aria-haspopup="true"
             :aria-expanded="isOpen"

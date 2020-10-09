@@ -1,8 +1,7 @@
 <template>
-    <modal name="new-project" classes="modal" height="auto">
-        <h1 class="font-normal text-2xl mb-8 text-center">
-            Create a new Project
-        </h1>
+    <modal name="new-project" classes="modal" height="auto" :width="960">
+        <h2 class="font-normal text-2xl">Create a new Project</h2>
+        <span class="block text-sm font-medium text-gray-600 mb-8">Start with a brand new slate</span>
         <form @submit.prevent="submit">
             <div class="flex">
                 <div class="flex-1 mr-4">
@@ -10,7 +9,7 @@
                 </div>
                 <div class="flex-1 ml-4">
                     <div class="mb-4">
-                        <h3 class="input-label">Invite some members</h3>
+                        <h3 class="input-label">Invite people to collaborate</h3>
                         <div
                             class="flex mb-2"
                             v-for="(member, index) in form.members"
@@ -21,7 +20,7 @@
                                 x
                             </button>
                         </div>
-                        <button type="button" class="btn btn-green text-xs" @click="addMember">
+                        <button type="button" class="btn btn-green-outline text-xs" @click="addMember">
                             (+) Add member
                         </button>
                     </div>
@@ -29,16 +28,16 @@
             </div>
         </form>
 
-        <footer class="flex justify-between">
+        <footer class="flex">
+            <button type="button" class="btn btn-green" @click="submit">
+                Create Project
+            </button>
             <button
                 type="button"
-                class="btn btn-gray mr-2"
+                class="btn btn-gray ml-2"
                 @click="$modal.hide('new-project')"
             >
                 Cancel
-            </button>
-            <button type="button" class="btn btn-green" @click="submit">
-                Create Project
             </button>
         </footer>
     </modal>

@@ -5,7 +5,11 @@ module.exports = {
     },
     purge: [],
     theme: {
-        extend: {},
+        extend: {
+            minWidth: {
+                '32': '8rem'
+            }
+        },
     },
     variants: {},
     plugins: [],

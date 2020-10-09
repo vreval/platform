@@ -1,22 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-    <header class="flex justify-between items-end mb-4">
-        <h2 class="text-gray-400">Projects</h2>
-        <a class="btn btn-green" href="/projects/create" @click.prevent="$modal.show('new-project')">New Project</a>
-    </header>
-    <main>
-        <div class="flex flex-wrap -mx-2">
-            @forelse ($projects as $project)
-                <div class="p-2 w-full sm:w-1/2 lg:w-1/4">
-                    @include('projects.card')
+    <div class="container mx-auto mt-8">
+        <h2 class="text-xl font-medium text-gray-500 mb-8">Projects</h2>
+        <main>
+            <div class="flex flex-wrap -mx-2">
+                @foreach ($projects as $project)
+                    <div class="px-2 mb-4 w-full sm:w-1/2 lg:w-1/3">
+                        @include('projects.card')
+                    </div>
+                @endforeach
+                <div class="px-2 mb-4 w-full sm:w-1/2 lg:w-1/3">
+                    <button @click.prevent="$modal.show('new-project')" class="flex flex-col bg-gray-300 hover:shadow-2xl transition-shadow duration-200 justify-center items-center h-64 w-full focus:outline-none">
+                        <span class="block text-center text-2xl text-gray-500">+</span>
+                        <span class="block text-center text-2xl text-gray-500">Create new Project</span>
+                    </button>
                 </div>
-            @empty
-                <div>
-                    <p>No Projects yet.</p>
-                </div>
-            @endforelse
-        </div>
-    </main>
-    <new-project-modal></new-project-modal>
+            </div>
+        </main>
+        <new-project-modal></new-project-modal>
+    </div>
 @endsection
