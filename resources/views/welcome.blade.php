@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-white hero py-32">
+    <div class="bg-white hero h-screen flex items-center" style="margin-top: -80px">
         <div class="container mx-auto p-12 bg-white bg-opacity-75 rounded">
             <h2 class="text-2xl">A simple toolbox for user centric evaluations of virtual environments.</h2>
             <p>Based on the research of team InfAr at Bauhaus-University Weimar, Germany, this toolbox aimes to make user
