@@ -29,9 +29,9 @@
                     <span class="text-green-400">VR</span>EVAL
                 </a>
                 <nav class="flex ml-6">
-                    <a href="#" class="block font-medium mx-2">FAQ</a>
-                    <a href="#" class="block font-medium mx-2">Docs</a>
-                    <a href="#" class="block font-medium mx-2">Tutorials</a>
+                    <a href="/#faq" class="block font-medium mx-2">FAQ</a>
+                    <a href="/#tutorials" class="block font-medium mx-2">Tutorials</a>
+                    <a href="/#team" class="block font-medium mx-2">Our Team</a>
                 </nav>
             </div>
             <nav class="flex">

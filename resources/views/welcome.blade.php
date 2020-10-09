@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="bg-white py-32">
+    <div id="faq" class="bg-white min-h-screen flex items-center">
         <div class="container mx-auto">
             <h2 class="text-xl text-center border-b-2 pb-6 mb-6">What is VREVAL?</h2>
             <div class="flex justify-between -mx-4 text-center">
@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <div class="bg-gray-200 py-32">
+    <div id="tutorials" class="bg-gray-200 min-h-screen flex items-center">
         <div class="container mx-auto">
             <h2 class="text-xl text-center border-b-2 pb-6 mb-6">Tutorials</h2>
             <div class="flex justify-between -mx-4">
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <div class="bg-white py-32">
+    <div id="team" class="bg-white min-h-screen flex items-center">
         <div class="container mx-auto">
             <h2 class="text-xl text-center border-b-2 pb-6 mb-6">Our Team</h2>
         </div>

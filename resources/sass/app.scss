@@ -6,6 +6,10 @@
 
 @import "tailwindcss/utilities";
 
+html {
+    scroll-behavior: smooth;
+}
+
 .hero {
     background: url("../img/pexels-iván-rivero-1633970.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;

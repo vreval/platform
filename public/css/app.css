@@ -21138,6 +21138,10 @@ video {
           animation: bounce 1s infinite;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .hero {
   background: url("../img/pexels-iván-rivero-1633970.jpg") no-repeat center center fixed;
   background-size: cover;
