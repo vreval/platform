@@ -12,11 +12,13 @@
                 @endforeach
                 <div class="px-2 mb-4 w-full sm:w-1/2 lg:w-1/3">
                     <button @click.prevent="$modal.show('new-project')" class="flex flex-col bg-gray-300 hover:shadow-2xl transition-shadow duration-200 justify-center items-center h-64 w-full focus:outline-none">
-                        <span class="block text-center text-2xl text-gray-500">+</span>
+                        <i class="block fa fa-plus-circle text-center text-4xl text-gray-500 mb-4"></i>
                         <span class="block text-center text-2xl text-gray-500">Create new Project</span>
                     </button>
                 </div>
             </div>
+
+            <data-table use-filter></data-table>
         </main>
         <new-project-modal></new-project-modal>
     </div>

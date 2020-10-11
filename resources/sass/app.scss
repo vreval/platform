@@ -6,6 +6,8 @@
 
 @import "tailwindcss/utilities";
 
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
 html {
     scroll-behavior: smooth;
 }
@@ -37,8 +39,24 @@ html {
     }
 }
 
+.input-icon-left {
+    @apply appearance-none block w-full bg-gray-300 text-gray-700 rounded py-3 pl-12 pr-4 leading-tight;
+
+    &:focus {
+        @apply outline-none bg-gray-200;
+    }
+}
+
+.input-icon-right {
+    @apply appearance-none block w-full bg-gray-300 text-gray-700 rounded py-3 pr-12 pr-4 leading-tight;
+
+    &:focus {
+        @apply outline-none bg-gray-200;
+    }
+}
+
 .input-label {
-    @apply text-sm text-gray-700 font-bold;
+    @apply text-sm text-gray-600 font-bold;
 }
 
 .dropdown-toggle {

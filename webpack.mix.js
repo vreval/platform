@@ -14,6 +14,7 @@ const tailwindcss = require("tailwindcss");
 
 mix
     .copyDirectory('resources/images', 'public/img')
+    .copyDirectory('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
     .js("resources/js/app.js", "public/js")
     .sass("resources/sass/app.scss", "public/css")
     .options({

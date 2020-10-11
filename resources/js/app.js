@@ -40,6 +40,8 @@ Vue.component(
     require("./components/EditScenarioModal").default
 );
 Vue.component("dropdown", require("./components/Dropdown.vue").default);
+Vue.component("checkbox", require("./components/Checkbox.vue").default);
+Vue.component("data-table", require("./components/Table.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
