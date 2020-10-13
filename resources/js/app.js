@@ -39,6 +39,11 @@ Vue.component(
     "edit-scenario-modal",
     require("./components/EditScenarioModal").default
 );
+Vue.component(
+    "projects-table",
+    require("./components/ProjectsTable").default
+);
+
 Vue.component("dropdown", require("./components/Dropdown.vue").default);
 Vue.component("checkbox", require("./components/Checkbox.vue").default);
 Vue.component("data-table", require("./components/Table.vue").default);

@@ -5,7 +5,7 @@
         <h2 class="text-xl font-medium text-gray-500 mb-8">Projects</h2>
         <main>
             <div class="flex flex-wrap -mx-2">
-                @foreach ($projects as $project)
+                @foreach ($projects->where('is_pinned', true) as $project)
                     <div class="px-2 mb-4 w-full sm:w-1/2 lg:w-1/3">
                         @include('projects.card')
                     </div>
@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <data-table use-filter></data-table>
+            <projects-table :projects="{{ $projects }}" class="mb-4"></projects-table>
         </main>
         <new-project-modal></new-project-modal>
     </div>

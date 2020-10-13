@@ -13,6 +13,22 @@ class Project extends Model
     protected static $recordableEvents = ['created', 'updated'];
     protected $fillable = ['name', 'description', 'owner_id'];
     protected $with = ['members', 'scenarios', 'checkpoints'];
+    protected $appends = ['relative_updated', 'formatted_created', 'is_pinned'];
+
+    public function getRelativeUpdatedAttribute()
+    {
+        return $this->updated_at->diffForHumans();
+    }
+
+    public function getFormattedCreatedAttribute()
+    {
+        return $this->created_at->toDateString();
+    }
+
+    public function getIsPinnedAttribute()
+    {
+        return $this->pins->contains(auth()->user());
+    }
 
     public function path()
     {
@@ -35,14 +51,14 @@ class Project extends Model
         return $scenario;
     }
 
-    public function addCheckpoint(array $data)
-    {
-        return $this->checkpoints()->create($data);
-    }
-
     public function scenarios()
     {
         return $this->hasMany(Scenario::class);
+    }
+
+    public function addCheckpoint(array $data)
+    {
+        return $this->checkpoints()->create($data);
     }
 
     public function checkpoints()
@@ -65,6 +81,11 @@ class Project extends Model
         return $this->members()->attach($user);
     }
 
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'project_members')->withTimestamps();
+    }
+
     public function syncMembers($members)
     {
         if (empty($members)) {
@@ -74,8 +95,18 @@ class Project extends Model
         }
     }
 
-    public function members()
+    public function pins()
     {
-        return $this->belongsToMany(User::class, 'project_members')->withTimestamps();
+        return $this->belongsToMany(User::class, 'pins');
+    }
+
+    public function pinBy(User $user)
+    {
+        return $this->pins()->attach($user);
+    }
+
+    public function unpinBy(User $user)
+    {
+        return $this->pins()->detach($user);
     }
 }

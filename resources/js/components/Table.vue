@@ -5,8 +5,6 @@
             <input type="text" class="input-icon-left text-lg text-gray-600 font-bold">
         </div>
         <div class="w-full flex text-xs text-gray-600 font-medium uppercase">
-            <div class="px-4 py-2 w-12">
-            </div>
             <div
                 v-for="(header, index) in headers"
                 :key="index"
@@ -15,6 +13,8 @@
             >
                 {{ header.text }}
             </div>
+            <div class="px-4 py-2 w-12">
+            </div>
         </div>
         <div
             v-for="(row, rowIndex) in content"
@@ -22,44 +22,47 @@
             class="w-full flex hover:bg-gray-200"
             :class="rowIndex < content.length - 1 ? 'border-b' : ''"
         >
-            <div class="px-4 py-2 w-12">
-                <checkbox v-model="checked"></checkbox>
-            </div>
             <div @click="$emit('clicked-row', row)" class="w-full flex">
                 <div
-                    v-for="(value, key, valueIndex) in row"
-                    :key="key"
-                    :style="{ width: headers[valueIndex].size }"
+                    v-for="(column, columnIndex) in headers"
+                    :key="columnIndex"
+                    :style="{ width: column.width }"
                     class="px-4 py-2"
                 >
-                    {{ value }}
+                    {{ row[column.fieldName] }}
                 </div>
+            </div>
+            <div class="flex items-center w-12">
+                <button @click.prevent="toggle(row.id, row.isPinned)" class="w-6 h-6">
+                    <i class="fas fa-thumbtack" :class="row.isPinned ? 'text-gray-800' : 'text-gray-400'"></i>
+                </button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "Table",
     props: {
         useFilter: { type: Boolean },
-        initialContent: { type: Array }
+        initialContent: { type: Array },
+        headers: { type: Array },
+        content: { type: Array }
     },
     data() {
         return {
             checked: false,
-            headers: [
-                { text: "Name", width: `${200 / 4}%` },
-                { text: "Size", width: `${100 / 4}%` },
-                { text: "Actions", width: `${100 / 4}%` }
-            ],
-            content: [
-                { name: "Testname", size: 2, action: "fly" },
-                { name: "Leela", size: 3, action: "run" },
-                { name: "Fry", size: 1, action: "walk" }
-            ]
         };
+    },
+    methods: {
+        toggle(id, isPinned) {
+            axios[isPinned ? 'delete' : 'post'](`/projects/${id}/pins`)
+                .then(response => (location = '/projects'))
+                .catch(error => console.log(error));
+        }
     }
 };
 </script>
