@@ -18,7 +18,7 @@
 
     <div id="faq" class="bg-white min-h-screen flex items-center">
         <div class="container mx-auto">
-            <h2 class="text-xl text-center border-b-2 pb-6 mb-6">What is VREVAL?</h2>
+            <h2 class="text-xl text-center border-b-2 pb-6 mb-6">How VREVAL Is Used</h2>
             <div class="flex justify-between -mx-4 text-center">
                 <div class="flex-col w-1/3 px-4 justify-center">
                     <h3 class="text-3xl">Platform</h3>
