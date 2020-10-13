@@ -30,11 +30,11 @@
                 </a>
                 <nav class="flex ml-6">
                     <a href="/#faq" class="block font-medium mx-2">FAQ</a>
-                    <a href="/#tutorials" class="block font-medium mx-2">Tutorials</a>
+                    <a href="/#tutorials" class="block font-medium mx-2">How To</a>
                     <a href="/#team" class="block font-medium mx-2">Our Team</a>
                 </nav>
             </div>
-            <nav class="flex">
+            <nav class="flex items-center">
                 <!-- Authentication Links -->
                 @guest
                     <a class="btn btn-gray-text text-sm ml-4" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -43,6 +43,8 @@
                            href="{{ route('register') }}">{{ __('Register') }}</a>
                     @endif
                 @else
+                    <a href="/home" class="block text-2xl mr-4"><i class="fa fa-home"></i></a>
+
                     <dropdown class="text-gray-800 min-w-32">
                         <template v-slot:trigger>
                             <button class="dropdown-item block flex items-center bg-gray-200 rounded-full p-1 w-full">
@@ -52,10 +54,18 @@
                             </button>
                         </template>
 
-                        <a href="/projects" class="dropdown-menu-link">Projects</a>
-                        <a href="#" class="dropdown-menu-link">Contacts</a>
-                        <a href="#" class="dropdown-menu-link">My Profile</a>
-                        <form class="w-full" id="logout-form" action="{{ route('logout') }}" method="POST">
+                        <div class="py-2 border-b">
+                            <h4 class="text-xs uppercase text-gray-600 font-bold px-2">Management</h4>
+                            <a href="/projects" class="dropdown-menu-link">Projects</a>
+                            <a href="#" class="dropdown-menu-link">Evaluations</a>
+                            <a href="#" class="dropdown-menu-link">Participations</a>
+                        </div>
+                        <div class="py-2 border-b">
+                            <h4 class="text-xs uppercase text-gray-600 font-bold px-2">Profile</h4>
+                            <a href="#" class="dropdown-menu-link">My Contacts</a>
+                            <a href="#" class="dropdown-menu-link">My Profile</a>
+                        </div>
+                        <form class="w-full py-2" id="logout-form" action="{{ route('logout') }}" method="POST">
                             @csrf
                             <button type="submit" class="dropdown-menu-link">Logout</button>
                         </form>
