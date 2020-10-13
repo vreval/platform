@@ -43,7 +43,7 @@
                            href="{{ route('register') }}">{{ __('Register') }}</a>
                     @endif
                 @else
-                    <dropdown class="text-gray-800">
+                    <dropdown class="text-gray-800 min-w-32">
                         <template v-slot:trigger>
                             <button class="dropdown-item block flex items-center bg-gray-200 rounded-full p-1 w-full">
                                 <img class="w-8 rounded-full" src="{{ gravatar_url(auth()->user()) }}"
@@ -69,5 +69,8 @@
         @yield('content')
     </main>
 </div>
+<footer class="h-32 mt-12 flex justify-center items-center">
+    <p>VREVAL 2020</p>
+</footer>
 </body>
 </html>

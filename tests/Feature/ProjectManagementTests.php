@@ -74,8 +74,6 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function a_user_can_update_their_project()
     {
-        $this->withoutExceptionHandling();
-
         $project = app(ProjectFactory::class)
             ->ownedBy($this->signIn())
             ->create();
@@ -95,8 +93,6 @@ class ProjectManagementTests extends TestCase
     /** @test */
     public function a_user_can_see_all_projects_they_have_been_invited_to_on_their_dashboard()
     {
-        $this->withoutExceptionHandling();
-
         $user = $this->signIn();
 
         $project = Project::factory()->create();
@@ -145,6 +141,48 @@ class ProjectManagementTests extends TestCase
 
         $this->get($project->path())->assertStatus(200);
         $this->get($project->path())->assertSee($project->name);
+    }
+
+    /** @test */
+    public function a_user_can_pin_a_project()
+    {
+        $user = $this->signIn();
+
+        $project = app(ProjectFactory::class)->ownedBy($user)->create();
+
+        $this->post($project->path() . '/pins')->assertSessionHas('message', $project->name . ' pinned.');
+
+        $this->assertCount(1, $project->fresh()->pins);
+    }
+
+    /** @test */
+    public function a_user_can_unpin_a_project()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = $this->signIn();
+
+        $project = app(ProjectFactory::class)->ownedBy($user)->create();
+
+        $project->pinBy($user);
+
+        $this->assertCount(1, $project->fresh()->pins);
+
+        $this->delete($project->path() . '/pins')->assertSessionHas('message', $project->name . ' unpinned.');
+
+
+        $this->assertCount(0, $project->fresh()->pins);
+    }
+
+    /** @test */
+    public function users_cannot_pin_projects_of_others()
+    {
+        $this->signIn();
+
+        $project = app(ProjectFactory::class)->create();
+
+        $this->post($project->path() . '/pins')->assertStatus(403);
+        $this->delete($project->path() . '/pins')->assertStatus(403);
     }
 
     /** @test */
