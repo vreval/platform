@@ -39,14 +39,11 @@ Vue.component(
     "edit-scenario-modal",
     require("./components/EditScenarioModal").default
 );
-Vue.component(
-    "projects-table",
-    require("./components/ProjectsTable").default
-);
 
 Vue.component("dropdown", require("./components/Dropdown.vue").default);
-Vue.component("checkbox", require("./components/Checkbox.vue").default);
 Vue.component("data-table", require("./components/Table.vue").default);
+Vue.component("projects-table-row", require("./components/ProjectsTableRow.vue").default);
+Vue.component("scenarios-table-row", require("./components/ScenariosTableRow.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -55,5 +52,35 @@ Vue.component("data-table", require("./components/Table.vue").default);
  */
 
 const app = new Vue({
-    el: "#app"
+    el: "#app",
+    data() {
+        return {
+            projectsTableOptions: {
+                orderBy: 'name',
+                order: 'asc',
+                headers: [
+                    { text: 'Name', width: `${1/2 * 100}%`, name: 'name' },
+                    { text: 'Created at', width: `${1/4 * 100}%`, name: 'formatted_created' },
+                    { text: 'Updated at', width: `${1/4 * 100}%`, name: 'relative_updated' },
+                ]
+            },
+            scenariosTableOptions: {
+                orderBy: 'name',
+                order: 'asc',
+                headers: [
+                    { text: 'Name', width: `${3/4 * 100}%`, name: 'name' },
+                    { text: 'Checkpoints', width: `${1/4 * 100}%`, name: 'checkpoint_count' },
+                ]
+            },
+            checkpointsTableOptions: {
+                orderBy: 'name',
+                order: 'asc',
+                headers: [
+                    { text: 'Name', width: `${3/4 * 100}%`, name: 'name' },
+                    { text: 'Type', width: `${1/4 * 100}%`, name: 'checkpoint_count' },
+                    { text: 'Behaviour', width: `${1/4 * 100}%`, name: 'checkpoint_count' },
+                ]
+            }
+        }
+    }
 });

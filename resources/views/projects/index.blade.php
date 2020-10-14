@@ -19,34 +19,7 @@
         </div>
 
         <h2 class="text-xl font-medium text-gray-500 mb-4">All</h2>
-        <div class="bg-white rounded shadow py-2">
-            <div class="flex text-xs text-gray-600 font-medium uppercase">
-                <div class="px-3 py-1 w-1/2">Name</div>
-                <div class="px-3 py-1 w-1/4">Created at</div>
-                <div class="px-3 py-1 w-1/4">Updated at</div>
-                <div class="px-3 py-1 w-12">Pin</div>
-            </div>
-            @foreach($projects as $project)
-                <a href="{{ $project->path() }}"
-                   class="@if(!$loop->last)border-b @endif block flex items-center hover:bg-gray-200">
-                    <div class="px-3 py-1 w-1/2">{{ $project->name }}</div>
-                    <div class="px-3 py-1 w-1/4">{{ $project->created_at->toFormattedDateString() }}</div>
-                    <div class="px-3 py-1 w-1/4">{{ $project->relative_updated }}</div>
-                    <div class="px-3 py-1 w-12">
-                        <form method="post" action="{{ $project->path() . '/pins' }}">
-                            @if($project->is_pinned)
-                                @csrf
-                                @method('DELETE')
-                                <button class="w-6 h-6"><i class="fas fa-thumbtack"></i></button>
-                            @else
-                                @csrf
-                                <button class="w-6 h-6"><i class="fas fa-thumbtack text-gray-400"></i></button>
-                            @endif
-                        </form>
-                    </div>
-                </a>
-            @endforeach
-        </div>
+        <data-table :options="projectsTableOptions" :items="{{ $projects }}" item-component="projects-table-row"></data-table>
         <new-project-modal></new-project-modal>
     </div>
 @endsection

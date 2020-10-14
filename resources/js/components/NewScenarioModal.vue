@@ -1,6 +1,6 @@
 <template>
     <modal name="new-scenario" height="auto" classes="modal">
-        <h1 class="font-normal text-2xl mb-8 text-center">
+        <h1 class="font-normal text-2xl mb-8">
             Create a new Scenario
         </h1>
         <form @submit.prevent="submit">
@@ -10,30 +10,37 @@
                 </div>
                 <div class="flex-1 ml-4">
                     <h3 class="input-label">Checkpoints</h3>
-                    <ProjectCheckpointAutosuggest
+                    <div
+                        class="flex"
                         v-for="(checkpoint, index) in form.checkpoints"
                         :key="index"
-                        :checkpoints="project.checkpoints"
-                        v-model="form.checkpoints[index]"
-                        class="mb-2"
-                    ></ProjectCheckpointAutosuggest>
-                    <button type="button" class="btn" @click="addMember">
-                        (+) Add checkpoint
+                    >
+                        <ProjectCheckpointAutosuggest
+                            v-model="form.checkpoints[index]"
+                            :checkpoints="project.checkpoints"
+                            class="mb-2"
+                        ></ProjectCheckpointAutosuggest>
+                            <button type="button" @click="removeMember(index)" class="block ml-1 p-2 text-gray-600 hover:text-gray-800 focus:outline-none">
+                                <i class="fas fa-times"></i>
+                            </button>
+                    </div>
+                    <button type="button" class="btn btn-green-outline text-xs" @click="addMember">
+                        <i class="fas fa-plus mr-1"></i> Add checkpoint
                     </button>
                 </div>
             </div>
         </form>
 
-        <footer class="flex justify-between">
+        <footer class="flex">
+            <button type="button" class="btn btn-green" @click="submit">
+                Create Scenario
+            </button>
             <button
                 type="button"
-                class="btn btn-gray mr-2"
+                class="btn btn-gray ml-2"
                 @click="cancel"
             >
                 Cancel
-            </button>
-            <button type="button" class="btn btn-green" @click="submit">
-                Create Project
             </button>
         </footer>
     </modal>

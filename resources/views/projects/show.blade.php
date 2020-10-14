@@ -22,57 +22,33 @@
         <div class="flex flex-wrap -mx-2">
             <section class="w-full lg:w-3/4 px-2">
                 <div class="mb-8">
-                    <div class="flex justify-between">
-                        <h3 class="text-gray-400 font-bold mb-4">Scenarios</h3>
-                        <button type="button" class="btn btn-green mb-4 text-xs"
-                                @click.prevent="$modal.show('new-scenario')">New Scenario
-                        </button>
-                    </div>
-                    <div class="w-full card mb-4">
-                        <div class="flex -mx-4 px-4 py-2 text-sm font-bold text-gray-500">
-                            <div class="w-2/3">Name</div>
-                            <div class="w-1/3">Associated Checkpoints</div>
-                        </div>
-                        @foreach ($project->scenarios()->with('checkpoints')->get() as $scenario)
-                            <edit-scenario-modal :project="{{ $project }}" :scenario="{{ $scenario }}" class="w-full">
-                                <div
-                                    class="flex items-center hover:bg-gray-200 -mx-4 px-4 py-2 @if(!$loop->last)border-b @endif"
-                                >
-                                    <div class="w-2/3">
-                                        {{ $scenario->name }}
-                                    </div>
-                                    <div class="w-1/3">
-                                        {{ $scenario->checkpoints->count() }}
-                                    </div>
-                                </div>
-                            </edit-scenario-modal>
-                        @endforeach
-                    </div>
+                    <h3 class="text-gray-400 font-bold mb-4">Scenarios</h3>
+                    <data-table
+                        :items="{{ $project->scenarios }}"
+                        :options="scenariosTableOptions"
+                        item-component="scenarios-table-row"
+                    ></data-table>
+                    <button
+                        type="button"
+                        class="mt-4 text-gray-500 text-lg font-medium rounded flex flex-col bg-gray-300 hover:shadow-2xl transition-shadow duration-200 justify-center items-center w-full py-4 focus:outline-none"
+                        @click.prevent="$modal.show('new-scenario')"
+                    ><i class="fa fa-plus-circle mr-2"></i>New Scenario
+                    </button>
                 </div>
 
                 <div class="mb-8">
                     <h3 class="text-gray-400 font-bold mb-4">Checkpoints</h3>
-                    <div class="w-full card mb-4">
-                        <div class="flex -mx-4 px-4 py-2 text-sm font-bold text-gray-500">
-                            <div class="w-2/3">Name</div>
-                            <div class="w-1/6">Behaviour</div>
-                            <div class="w-1/6">Type</div>
-                        </div>
-                        @foreach ($project->checkpoints as $checkpoint)
-                            <div
-                                class="flex items-center hover:bg-gray-200 -mx-4 px-4 py-2 @if(!$loop->last)border-b @endif">
-                                <div class="w-2/3 overflow-hidden" style="white-space: nowrap;">
-                                    {{ $checkpoint->name }}
-                                </div>
-                                <div class="w-1/6">
-                                    Default
-                                </div>
-                                <div class="w-1/6">
-                                    Basic, Info, Gate
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+                    <data-table
+                        :items="{{ $project->checkpoints }}"
+                        :options="checkpointsTableOptions"
+                        item-component="scenarios-table-row"
+                    ></data-table>
+                    <button
+                        type="button"
+                        class="mt-4 text-gray-500 text-lg font-medium rounded flex flex-col bg-gray-300 hover:shadow-2xl transition-shadow duration-200 justify-center items-center w-full py-4 focus:outline-none"
+                        @click.prevent="$modal.show('new-scenario')"
+                    ><i class="fa fa-plus-circle mr-2"></i>New Checkpoint
+                    </button>
                 </div>
 
                 <div class="mb-8">
@@ -81,6 +57,7 @@
 
                 @include('errors')
             </section>
+
             <aside class="w-full lg:w-1/4 px-2">
                 <h3 class="text-gray-400 font-bold mb-4">About</h3>
                 @include('projects.card')

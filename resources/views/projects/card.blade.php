@@ -9,8 +9,8 @@
         </div>
     </div>
     <div class="mb-4">
-        <span class="block text-sm font-medium text-gray-600">Created: {{ $project->created_at->toFormattedDateString() }}</span>
-        <span class="block text-sm font-medium text-gray-600">Updated {{ $project->updated_at->diffForHumans() }} by {{ $project->activity->first()->user->name }}</span>
+        <span class="block text-sm font-medium text-gray-600">Created: {{ $project->formatted_created }}</span>
+        <span class="block text-sm font-medium text-gray-600">Updated {{ $project->relative_updated }} by {{ $project->activity->first()->user->name }}</span>
     </div>
     <p class="flex-1">{{ str_limit($project->description) }}</p>
 </a>

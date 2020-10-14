@@ -12,8 +12,13 @@ class Scenario extends Model
     use RecordsActivity;
 
     protected $fillable = ['name', 'description'];
-
     protected $touches = ['project'];
+    protected $appends = ['checkpoint_count'];
+
+    public function getCheckpointCountAttribute()
+    {
+        return $this->checkpoints->count();
+    }
 
     public function path()
     {

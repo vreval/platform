@@ -22,7 +22,7 @@ class Project extends Model
 
     public function getFormattedCreatedAttribute()
     {
-        return $this->created_at->toDateString();
+        return $this->created_at->toFormattedDateString();
     }
 
     public function getIsPinnedAttribute()

@@ -1,5 +1,12 @@
 <template>
-    <modal name="edit-project" classes="p-10 bg-white rounded-lg" height="auto">
+    <modal
+        :classes="['modal']"
+        :max-width="960"
+        :shiftY="0.2"
+        :width="'90%'"
+        height="auto"
+        name="edit-project"
+    >
         <h1 class="font-normal text-2xl mb-8 text-center">
             Edit Project
         </h1>
@@ -8,21 +15,22 @@
                 <div class="flex-1 mr-4">
                     <basic-form-fields v-model="form"></basic-form-fields>
                 </div>
-                <div class="flex-1 ml-4" v-if="canAdminister">
+                <div v-if="canAdminister" class="flex-1 ml-4">
                     <div class="mb-4">
                         <label class="input-label">Manage Members</label>
                         <div
-                            class="flex mb-2"
                             v-for="(member, index) in form.members"
                             :key="index"
+                            class="flex mb-2"
                         >
-                            <project-user-autosuggest v-model="form.members[index]" :initial-query="member.name"></project-user-autosuggest>
+                            <project-user-autosuggest v-model="form.members[index]"
+                                                      :initial-query="member.name"></project-user-autosuggest>
                             <button type="button" @click="removeMember(index)">
-                                x
+                                <i class="fas fa-times text-gray-600"></i>
                             </button>
                         </div>
-                        <button type="button" class="btn" @click="addMember">
-                            (+) Add member
+                        <button class="block btn btn-green-outline text-xs" type="button" @click="addMember">
+                            <i class="fas fa-plus"></i> Add member
                         </button>
                     </div>
                 </div>
@@ -30,19 +38,19 @@
         </form>
 
         <footer class="flex justify-between">
-            <button
-                type="button"
-                class="btn btn-gray mr-2"
-                @click="cancel"
-            >
-                Cancel
-            </button>
             <div>
-                <button type="button" class="btn btn-red-outline" @click="removeProject">Delete</button>
-                <button type="button" class="btn btn-green" @click="submit">
+                <button class="btn btn-green" type="button" @click="submit">
                     Update Project
                 </button>
+                <button
+                    class="btn btn-gray-text ml-2"
+                    type="button"
+                    @click="cancel"
+                >
+                    Cancel
+                </button>
             </div>
+            <button class="btn btn-gray-text text-red-600" type="button" @click="removeProject">Delete</button>
         </footer>
     </modal>
 </template>
@@ -51,6 +59,7 @@
 import Form from "./VrevalForm";
 import ProjectUserAutosuggest from "./ProjectUserAutosuggest";
 import BasicFormFields from "./BasicFormFields";
+
 export default {
     name: "EditProjectModal",
     components: {BasicFormFields, ProjectUserAutosuggest},
