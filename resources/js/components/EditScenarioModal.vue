@@ -22,13 +22,20 @@
                             class="mb-2"
                             :initial-query="form.checkpoints[index].name"
                         ></ProjectCheckpointAutosuggest>
-                        <button type="button" class="btn" @click="addMember">
-                            (+) Add checkpoint
+                        <button type="button" class="btn btn-green-outline text-xs" @click="addMember">
+                            <i class="fas fa-plus"></i> Add Checkpoint
                         </button>
                     </div>
                 </div>
             </form>
 
+            <modal-footer
+                @submit-clicked="submit"
+                @cancel-clicked="cancel"
+                submit-text="Update Project"
+            >
+                <button class="btn btn-gray-text text-red-600" type="button" @click="removeProject">Delete</button>
+            </modal-footer>
             <footer class="flex justify-between">
                 <button
                     type="button"

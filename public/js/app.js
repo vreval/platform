@@ -2085,14 +2085,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2218,6 +2210,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2275,6 +2274,47 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModalFooter.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ModalFooter.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ModalFooter",
+  props: {
+    submitText: {
+      type: String,
+      required: true
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewProjectModal.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewProjectModal.vue?vue&type=script&lang=js& ***!
@@ -2287,13 +2327,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _VrevalForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VrevalForm */ "./resources/js/components/VrevalForm.js");
 /* harmony import */ var _BasicFormFields__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BasicFormFields */ "./resources/js/components/BasicFormFields.vue");
 /* harmony import */ var _ProjectUserAutosuggest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProjectUserAutosuggest */ "./resources/js/components/ProjectUserAutosuggest.vue");
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2404,6 +2437,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ProjectCheckpointAutosuggest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProjectCheckpointAutosuggest */ "./resources/js/components/ProjectCheckpointAutosuggest.vue");
 /* harmony import */ var _VrevalForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VrevalForm */ "./resources/js/components/VrevalForm.js");
 /* harmony import */ var _BasicFormFields__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BasicFormFields */ "./resources/js/components/BasicFormFields.vue");
+//
+//
 //
 //
 //
@@ -2812,6 +2847,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Table",
   props: {
@@ -2825,7 +2863,8 @@ __webpack_require__.r(__webpack_exports__);
     itemComponent: {
       type: String,
       required: true
-    }
+    },
+    emptyMessage: String
   },
   computed: {
     computedItems: function computedItems() {
@@ -20695,7 +20734,7 @@ var render = function() {
       }
     },
     [
-      _c("h1", { staticClass: "font-normal text-2xl mb-8 text-center" }, [
+      _c("h1", { staticClass: "font-normal text-2xl mb-8" }, [
         _vm._v("\n        Edit Project\n    ")
       ]),
       _vm._v(" "),
@@ -20796,40 +20835,26 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("footer", { staticClass: "flex justify-between" }, [
-        _c("div", [
+      _c(
+        "modal-footer",
+        {
+          attrs: { "submit-text": "Update Project" },
+          on: { "submit-clicked": _vm.submit, "cancel-clicked": _vm.cancel }
+        },
+        [
           _c(
             "button",
             {
-              staticClass: "btn btn-green",
+              staticClass: "btn btn-gray-text text-red-600",
               attrs: { type: "button" },
-              on: { click: _vm.submit }
+              on: { click: _vm.removeProject }
             },
-            [_vm._v("\n                Update Project\n            ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-gray-text ml-2",
-              attrs: { type: "button" },
-              on: { click: _vm.cancel }
-            },
-            [_vm._v("\n                Cancel\n            ")]
+            [_vm._v("Delete")]
           )
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-gray-text text-red-600",
-            attrs: { type: "button" },
-            on: { click: _vm.removeProject }
-          },
-          [_vm._v("Delete")]
-        )
-      ])
-    ]
+        ]
+      )
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -20943,20 +20968,38 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn",
+                        staticClass: "btn btn-green-outline text-xs",
                         attrs: { type: "button" },
                         on: { click: _vm.addMember }
                       },
                       [
-                        _vm._v(
-                          "\n                        (+) Add checkpoint\n                    "
-                        )
+                        _c("i", { staticClass: "fas fa-plus" }),
+                        _vm._v(" Add Checkpoint\n                    ")
                       ]
                     )
                   ],
                   2
                 )
               ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "modal-footer",
+            {
+              attrs: { "submit-text": "Update Project" },
+              on: { "submit-clicked": _vm.submit, "cancel-clicked": _vm.cancel }
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-gray-text text-red-600",
+                  attrs: { type: "button" },
+                  on: { click: _vm.removeProject }
+                },
+                [_vm._v("Delete")]
+              )
             ]
           ),
           _vm._v(" "),
@@ -20997,11 +21040,68 @@ var render = function() {
               )
             ])
           ])
-        ]
+        ],
+        1
       )
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModalFooter.vue?vue&type=template&id=64ace4e6&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ModalFooter.vue?vue&type=template&id=64ace4e6& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("footer", { staticClass: "flex justify-between" }, [
+    _c("div", [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-green",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              return _vm.$emit("submit-clicked")
+            }
+          }
+        },
+        [_vm._v("\n            " + _vm._s(_vm.submitText) + "\n        ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-gray ml-2",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              return _vm.$emit("cancel-clicked")
+            }
+          }
+        },
+        [_vm._v("\n            Cancel\n        ")]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", [_vm._t("default")], 2)
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -21142,32 +21242,17 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("footer", { staticClass: "flex" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-green",
-            attrs: { type: "button" },
-            on: { click: _vm.submit }
-          },
-          [_vm._v("\n            Create Project\n        ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-gray ml-2",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.$modal.hide("new-project")
-              }
-            }
-          },
-          [_vm._v("\n            Cancel\n        ")]
-        )
-      ])
-    ]
+      _c("modal-footer", {
+        attrs: { "submit-text": "Create Project" },
+        on: {
+          "submit-clicked": _vm.submit,
+          "cancel-clicked": function($event) {
+            return _vm.$modal.hide("new-project")
+          }
+        }
+      })
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -21194,7 +21279,16 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "modal",
-    { attrs: { name: "new-scenario", height: "auto", classes: "modal" } },
+    {
+      attrs: {
+        classes: ["modal"],
+        "max-width": 960,
+        shiftY: 0.2,
+        width: "90%",
+        height: "auto",
+        name: "new-scenario"
+      }
+    },
     [
       _c("h1", { staticClass: "font-normal text-2xl mb-8" }, [
         _vm._v("\n        Create a new Scenario\n    ")
@@ -21292,28 +21386,12 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("footer", { staticClass: "flex" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-green",
-            attrs: { type: "button" },
-            on: { click: _vm.submit }
-          },
-          [_vm._v("\n            Create Scenario\n        ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-gray ml-2",
-            attrs: { type: "button" },
-            on: { click: _vm.cancel }
-          },
-          [_vm._v("\n            Cancel\n        ")]
-        )
-      ])
-    ]
+      _c("modal-footer", {
+        attrs: { "submit-text": "Create Scenario" },
+        on: { "submit-clicked": _vm.submit, "cancel-clicked": _vm.cancel }
+      })
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -21575,28 +21653,35 @@ var render = function() {
     "div",
     { staticClass: "bg-white shadow rounded" },
     [
-      _c(
-        "div",
-        {
-          staticClass: "w-full flex text-xs text-gray-600 font-medium uppercase"
-        },
-        [
-          _vm._l(_vm.options.headers, function(header, index) {
-            return _c(
-              "div",
-              {
-                key: index,
-                staticClass: "px-4 py-2",
-                style: { width: header.width }
-              },
-              [_vm._v("\n            " + _vm._s(header.text) + "\n        ")]
-            )
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "px-4 py-2 w-32" })
-        ],
-        2
-      ),
+      _vm.computedItems.length > 0
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "w-full flex text-xs text-gray-600 font-medium uppercase"
+            },
+            [
+              _vm._l(_vm.options.headers, function(header, index) {
+                return _c(
+                  "div",
+                  {
+                    key: index,
+                    staticClass: "px-4 py-2",
+                    style: { width: header.width }
+                  },
+                  [
+                    _vm._v(
+                      "\n            " + _vm._s(header.text) + "\n        "
+                    )
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "px-4 py-2 w-32" })
+            ],
+            2
+          )
+        : _c("div", [_c("p", [_vm._v(_vm._s(_vm.emptyMessage))])]),
       _vm._v(" "),
       _vm._l(_vm.computedItems, function(item, itemIndex) {
         return _c(
@@ -33823,6 +33908,7 @@ Vue.component("new-project-modal", __webpack_require__(/*! ./components/NewProje
 Vue.component("new-scenario-modal", __webpack_require__(/*! ./components/NewScenarioModal */ "./resources/js/components/NewScenarioModal.vue")["default"]);
 Vue.component("edit-project-modal", __webpack_require__(/*! ./components/EditProjectModal.vue */ "./resources/js/components/EditProjectModal.vue")["default"]);
 Vue.component("edit-scenario-modal", __webpack_require__(/*! ./components/EditScenarioModal */ "./resources/js/components/EditScenarioModal.vue")["default"]);
+Vue.component("modal-footer", __webpack_require__(/*! ./components/ModalFooter */ "./resources/js/components/ModalFooter.vue")["default"]);
 Vue.component("dropdown", __webpack_require__(/*! ./components/Dropdown.vue */ "./resources/js/components/Dropdown.vue")["default"]);
 Vue.component("data-table", __webpack_require__(/*! ./components/Table.vue */ "./resources/js/components/Table.vue")["default"]);
 Vue.component("projects-table-row", __webpack_require__(/*! ./components/ProjectsTableRow.vue */ "./resources/js/components/ProjectsTableRow.vue")["default"]);
@@ -34193,6 +34279,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditScenarioModal_vue_vue_type_template_id_6a98beb8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditScenarioModal_vue_vue_type_template_id_6a98beb8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ModalFooter.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/ModalFooter.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ModalFooter_vue_vue_type_template_id_64ace4e6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModalFooter.vue?vue&type=template&id=64ace4e6& */ "./resources/js/components/ModalFooter.vue?vue&type=template&id=64ace4e6&");
+/* harmony import */ var _ModalFooter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModalFooter.vue?vue&type=script&lang=js& */ "./resources/js/components/ModalFooter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ModalFooter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ModalFooter_vue_vue_type_template_id_64ace4e6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ModalFooter_vue_vue_type_template_id_64ace4e6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ModalFooter.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ModalFooter.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/ModalFooter.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalFooter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ModalFooter.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModalFooter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalFooter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ModalFooter.vue?vue&type=template&id=64ace4e6&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/ModalFooter.vue?vue&type=template&id=64ace4e6& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalFooter_vue_vue_type_template_id_64ace4e6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ModalFooter.vue?vue&type=template&id=64ace4e6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModalFooter.vue?vue&type=template&id=64ace4e6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalFooter_vue_vue_type_template_id_64ace4e6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalFooter_vue_vue_type_template_id_64ace4e6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

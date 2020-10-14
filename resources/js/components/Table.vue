@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white shadow rounded">
-        <div class="w-full flex text-xs text-gray-600 font-medium uppercase">
+        <div v-if="computedItems.length > 0" class="w-full flex text-xs text-gray-600 font-medium uppercase">
             <div
                 v-for="(header, index) in options.headers"
                 :key="index"
@@ -10,6 +10,9 @@
                 {{ header.text }}
             </div>
             <div class="px-4 py-2 w-32"></div>
+        </div>
+        <div v-else>
+            <p>{{ emptyMessage }}</p>
         </div>
         <div
             v-for="(item, itemIndex) in computedItems"
@@ -36,7 +39,8 @@ export default {
         itemComponent: {
             type: String,
             required: true
-        }
+        },
+        emptyMessage: String
     },
     computed: {
         computedItems() {

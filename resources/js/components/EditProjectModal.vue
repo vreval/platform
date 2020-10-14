@@ -7,7 +7,7 @@
         height="auto"
         name="edit-project"
     >
-        <h1 class="font-normal text-2xl mb-8 text-center">
+        <h1 class="font-normal text-2xl mb-8">
             Edit Project
         </h1>
         <form @submit.prevent="submit">
@@ -37,21 +37,13 @@
             </div>
         </form>
 
-        <footer class="flex justify-between">
-            <div>
-                <button class="btn btn-green" type="button" @click="submit">
-                    Update Project
-                </button>
-                <button
-                    class="btn btn-gray-text ml-2"
-                    type="button"
-                    @click="cancel"
-                >
-                    Cancel
-                </button>
-            </div>
-            <button class="btn btn-gray-text text-red-600" type="button" @click="removeProject">Delete</button>
-        </footer>
+      <modal-footer
+          @submit-clicked="submit"
+          @cancel-clicked="cancel"
+          submit-text="Update Project"
+      >
+        <button class="btn btn-gray-text text-red-600" type="button" @click="removeProject">Delete</button>
+      </modal-footer>
     </modal>
 </template>
 

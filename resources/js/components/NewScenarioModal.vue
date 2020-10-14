@@ -1,5 +1,12 @@
 <template>
-    <modal name="new-scenario" height="auto" classes="modal">
+    <modal
+        :classes="['modal']"
+        :max-width="960"
+        :shiftY="0.2"
+        :width="'90%'"
+        height="auto"
+        name="new-scenario"
+    >
         <h1 class="font-normal text-2xl mb-8">
             Create a new Scenario
         </h1>
@@ -11,38 +18,33 @@
                 <div class="flex-1 ml-4">
                     <h3 class="input-label">Checkpoints</h3>
                     <div
-                        class="flex"
                         v-for="(checkpoint, index) in form.checkpoints"
                         :key="index"
+                        class="flex"
                     >
                         <ProjectCheckpointAutosuggest
                             v-model="form.checkpoints[index]"
                             :checkpoints="project.checkpoints"
                             class="mb-2"
                         ></ProjectCheckpointAutosuggest>
-                            <button type="button" @click="removeMember(index)" class="block ml-1 p-2 text-gray-600 hover:text-gray-800 focus:outline-none">
-                                <i class="fas fa-times"></i>
-                            </button>
+                        <button class="block ml-1 p-2 text-gray-600 hover:text-gray-800 focus:outline-none"
+                                type="button"
+                                @click="removeMember(index)">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                    <button type="button" class="btn btn-green-outline text-xs" @click="addMember">
+                    <button class="btn btn-green-outline text-xs" type="button" @click="addMember">
                         <i class="fas fa-plus mr-1"></i> Add checkpoint
                     </button>
                 </div>
             </div>
         </form>
 
-        <footer class="flex">
-            <button type="button" class="btn btn-green" @click="submit">
-                Create Scenario
-            </button>
-            <button
-                type="button"
-                class="btn btn-gray ml-2"
-                @click="cancel"
-            >
-                Cancel
-            </button>
-        </footer>
+        <modal-footer
+            @submit-clicked="submit"
+            @cancel-clicked="cancel"
+            submit-text="Create Scenario"
+        ></modal-footer>
     </modal>
 </template>
 
@@ -74,7 +76,7 @@ export default {
     },
     methods: {
         addMember() {
-            this.form.checkpoints.push({ email: "" });
+            this.form.checkpoints.push({email: ""});
         },
         removeMember(index) {
             this.form.checkpoints.splice(index, 1);

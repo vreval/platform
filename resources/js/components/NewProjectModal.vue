@@ -45,18 +45,11 @@
             </div>
         </form>
 
-        <footer class="flex">
-            <button class="btn btn-green" type="button" @click="submit">
-                Create Project
-            </button>
-            <button
-                class="btn btn-gray ml-2"
-                type="button"
-                @click="$modal.hide('new-project')"
-            >
-                Cancel
-            </button>
-        </footer>
+        <modal-footer
+            @submit-clicked="submit"
+            @cancel-clicked="$modal.hide('new-project')"
+            submit-text="Create Project"
+        ></modal-footer>
     </modal>
 </template>
 

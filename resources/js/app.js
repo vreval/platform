@@ -40,6 +40,7 @@ Vue.component(
     require("./components/EditScenarioModal").default
 );
 
+Vue.component("modal-footer", require("./components/ModalFooter").default);
 Vue.component("dropdown", require("./components/Dropdown.vue").default);
 Vue.component("data-table", require("./components/Table.vue").default);
 Vue.component("projects-table-row", require("./components/ProjectsTableRow.vue").default);
