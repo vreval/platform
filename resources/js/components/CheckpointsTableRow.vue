@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <div @click="$modal.show(`edit-scenario-${item.id}`)" class="block flex w-full">
+        <div class="block flex w-full">
             <div
                 v-for="(column, index) in headers"
                 :key="index"
@@ -10,15 +10,12 @@
             <div class="px-4 py-2 w-32 text-right">
             </div>
         </div>
-        <edit-scenario-modal :scenario="item"></edit-scenario-modal>
     </div>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
-    name: "ScenariosTableRow",
+    name: "CheckpointTableRow",
     props: {
         headers: {
             type: Array,

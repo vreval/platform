@@ -9,5 +9,8 @@ class Form extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description'];
+    protected $casts = [
+        'fields' => 'array'
+    ];
 }

@@ -66,6 +66,11 @@ class Project extends Model
         return $this->hasMany(Checkpoint::class);
     }
 
+    public function addForm(array $data)
+    {
+        return $this->forms()->create($data);
+    }
+
     public function forms()
     {
         return $this->hasMany(Form::class);

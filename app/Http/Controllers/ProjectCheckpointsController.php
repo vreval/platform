@@ -19,4 +19,9 @@ class ProjectCheckpointsController extends Controller
 
        return redirect($project->path());
     }
+
+    public function index(Project $project)
+    {
+        return ['checkpoints' => $project->checkpoints];
+    }
 }

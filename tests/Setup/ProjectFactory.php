@@ -3,6 +3,7 @@
 namespace Tests\Setup;
 
 use App\Checkpoint;
+use App\Form;
 use App\Project;
 use App\Scenario;
 use App\User;
@@ -13,6 +14,7 @@ class ProjectFactory
     private $scenariosCount = 0;
     private $user;
     private $checkpointsCount = 0;
+    private $formsCount = 0;
 
     public function withScenarios($count)
     {
@@ -24,6 +26,13 @@ class ProjectFactory
     public function withCheckpoints($count)
     {
         $this->checkpointsCount = $count;
+
+        return $this;
+    }
+
+    public function withForms($count)
+    {
+        $this->formsCount = $count;
 
         return $this;
     }
@@ -46,6 +55,9 @@ class ProjectFactory
             ->create(['project_id' => $project->id]);
         Checkpoint::factory()
             ->count($this->checkpointsCount)
+            ->create(['project_id' => $project->id]);
+        Form::factory()
+            ->count($this->formsCount)
             ->create(['project_id' => $project->id]);
 
         return $project;

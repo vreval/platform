@@ -23,7 +23,7 @@
                 <div class="mb-8">
                     <h3 class="text-gray-400 font-bold mb-4">Scenarios</h3>
                     <data-table
-                        :items="{{ $project->scenarios }}"
+                        :items="{{ $project->scenarios()->with('checkpoints')->get() }}"
                         :options="scenariosTableOptions"
                         item-component="scenarios-table-row"
                     ></data-table>
@@ -40,12 +40,12 @@
                     <data-table
                         :items="{{ $project->checkpoints }}"
                         :options="checkpointsTableOptions"
-                        item-component="scenarios-table-row"
+                        item-component="checkpoints-table-row"
                     ></data-table>
                     <button
                         type="button"
                         class="mt-4 text-gray-500 text-lg font-medium rounded flex flex-col bg-gray-300 hover:shadow-2xl transition-shadow duration-200 justify-center items-center w-full py-4 focus:outline-none"
-                        @click.prevent="$modal.show('new-scenario')"
+                        @click.prevent="$modal.show('new-checkpoint')"
                     ><i class="fa fa-plus-circle mr-2"></i>New Checkpoint
                     </button>
                 </div>
@@ -54,13 +54,13 @@
                     <h3 class="text-gray-400 font-bold mb-4">Forms</h3>
                     <data-table
                         :items="{{ $project->forms }}"
-                        :options="checkpointsTableOptions"
+                        :options="formsTableOptions"
                         item-component="scenarios-table-row"
                     ></data-table>
                     <button
                         type="button"
                         class="mt-4 text-gray-500 text-lg font-medium rounded flex flex-col bg-gray-300 hover:shadow-2xl transition-shadow duration-200 justify-center items-center w-full py-4 focus:outline-none"
-                        @click.prevent="$modal.show('new-scenario')"
+                        @click.prevent="$modal.show('new-form')"
                     ><i class="fa fa-plus-circle mr-2"></i>New Form
                     </button>
                 </div>
@@ -85,4 +85,6 @@
     @endcannot
 
     <new-scenario-modal :project="{{ $project }}"></new-scenario-modal>
+    <new-checkpoint-modal :project="{{ $project }}"></new-checkpoint-modal>
+    <new-form-modal :project="{{ $project }}"></new-form-modal>
 @endsection

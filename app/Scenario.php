@@ -17,7 +17,7 @@ class Scenario extends Model
 
     public function getCheckpointCountAttribute()
     {
-        return $this->checkpoints->count();
+        return $this->checkpoints()->get()->count();
     }
 
     public function path()

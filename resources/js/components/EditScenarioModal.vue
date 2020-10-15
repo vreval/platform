@@ -1,64 +1,53 @@
 <template>
-    <div>
-        <div @click="$modal.show(`edit-scenario-${scenario.id}`)" class="cursor-pointer">
-            <slot></slot>
-        </div>
-        <modal :name="`edit-scenario-${scenario.id}`" height="auto" classes="modal">
-            <h1 class="font-normal text-2xl mb-8 text-center">
-                Edit Scenario
-            </h1>
-            <form @submit.prevent="submit">
-                <div class="flex">
-                    <div class="flex-1 mr-4">
-                        <basic-form-fields v-model="form"></basic-form-fields>
-                    </div>
-                    <div class="flex-1 ml-4">
-                        <h3 class="input-label">Checkpoints</h3>
-                        <ProjectCheckpointAutosuggest
-                            v-for="(checkpoint, index) in form.checkpoints"
-                            :key="index"
-                            :checkpoints="project.checkpoints"
-                            v-model="form.checkpoints[index]"
-                            class="mb-2"
-                            :initial-query="form.checkpoints[index].name"
-                        ></ProjectCheckpointAutosuggest>
-                        <button type="button" class="btn btn-green-outline text-xs" @click="addMember">
-                            <i class="fas fa-plus"></i> Add Checkpoint
-                        </button>
-                    </div>
+    <modal
+        v-if="!loading"
+        :classes="['modal']"
+        :max-width="960"
+        :name="`edit-scenario-${scenario.id}`"
+        :shiftY="0.2"
+        :width="'90%'"
+        height="auto"
+    >
+        <h1 class="font-normal text-2xl mb-8">
+            Edit Scenario
+        </h1>
+        <form @submit.prevent="submit">
+            <div class="flex">
+                <div class="flex-1 mr-4">
+                    <basic-form-fields v-model="form"></basic-form-fields>
                 </div>
-            </form>
-
-            <modal-footer
-                @submit-clicked="submit"
-                @cancel-clicked="cancel"
-                submit-text="Update Project"
-            >
-                <button class="btn btn-gray-text text-red-600" type="button" @click="removeProject">Delete</button>
-            </modal-footer>
-            <footer class="flex justify-between">
-                <button
-                    type="button"
-                    class="btn btn-gray mr-2"
-                    @click="cancel"
-                >
-                    Cancel
-                </button>
-                <div>
-                    <button type="button" class="btn btn-red-outline" @click="removeScenario">Delete</button>
-                    <button type="button" class="btn btn-green" @click="submit">
-                        Update Scenario
+                <div class="flex-1 ml-4">
+                    <h3 class="input-label">Checkpoints</h3>
+                    <ProjectCheckpointAutosuggest
+                        v-for="(checkpoint, index) in form.checkpoints"
+                        :key="index"
+                        v-model="form.checkpoints[index]"
+                        :checkpoints="checkpoints"
+                        :initial-query="form.checkpoints[index].name"
+                        class="mb-2"
+                    ></ProjectCheckpointAutosuggest>
+                    <button class="btn btn-green-outline text-xs" type="button" @click="addMember">
+                        <i class="fas fa-plus"></i> Add Checkpoint
                     </button>
                 </div>
-            </footer>
-        </modal>
-    </div>
+            </div>
+        </form>
+
+        <modal-footer
+            submit-text="Update Project"
+            @submit-clicked="submit"
+            @cancel-clicked="cancel"
+        >
+            <button class="btn btn-gray-text text-red-600" type="button" @click="removeScenario">Delete</button>
+        </modal-footer>
+    </modal>
 </template>
 
 <script>
 import ProjectCheckpointAutosuggest from "./ProjectCheckpointAutosuggest";
 import Form from "./VrevalForm";
 import BasicFormFields from "./BasicFormFields";
+import axios from "axios";
 
 export default {
     name: "EditScenarioModal",
@@ -67,17 +56,25 @@ export default {
         ProjectCheckpointAutosuggest
     },
     props: {
-        project: {
-            type: Object,
-            required: true
-        },
         scenario: {
             type: Object,
             required: true
         },
     },
+    mounted() {
+        axios
+            .get(`/projects/${this.scenario.project_id}/checkpoints`)
+            .then(response => {
+                this.checkpoints = response.data.checkpoints;
+                this.loading = false;
+            })
+            .catch(error => console.log(error));
+
+    },
     data() {
         return {
+            loading: true,
+            checkpoints: [],
             form: new Form({
                 name: this.scenario.name,
                 description: this.scenario.description,
@@ -96,11 +93,11 @@ export default {
             this.form.checkpoints = this.form.checkpoints.filter(checkpoint => checkpoint.hasOwnProperty('id'));
 
             this.form
-                .patch(`/projects/${this.project.id}/scenarios/${this.scenario.id}`)
+                .patch(`/projects/${this.scenario.project_id}/scenarios/${this.scenario.id}`)
                 .then(response => (location = response.data.message));
         },
         removeScenario() {
-            axios.delete(`/projects/${this.project.id}/scenarios/${this.scenario.id}`)
+            axios.delete(`/projects/${this.scenario.project_id}/scenarios/${this.scenario.id}`)
         },
         cancel() {
             this.form.reset();

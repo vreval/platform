@@ -1972,6 +1972,46 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CheckpointsTableRow.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CheckpointsTableRow.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "CheckpointTableRow",
+  props: {
+    headers: {
+      type: Array,
+      required: true
+    },
+    item: {
+      type: Object,
+      required: true
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dropdown.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dropdown.vue?vue&type=script&lang=js& ***!
@@ -2160,6 +2200,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ProjectCheckpointAutosuggest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProjectCheckpointAutosuggest */ "./resources/js/components/ProjectCheckpointAutosuggest.vue");
 /* harmony import */ var _VrevalForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VrevalForm */ "./resources/js/components/VrevalForm.js");
 /* harmony import */ var _BasicFormFields__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BasicFormFields */ "./resources/js/components/BasicFormFields.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -2205,18 +2247,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -2227,17 +2258,25 @@ __webpack_require__.r(__webpack_exports__);
     ProjectCheckpointAutosuggest: _ProjectCheckpointAutosuggest__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
-    project: {
-      type: Object,
-      required: true
-    },
     scenario: {
       type: Object,
       required: true
     }
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/projects/".concat(this.scenario.project_id, "/checkpoints")).then(function (response) {
+      _this.checkpoints = response.data.checkpoints;
+      _this.loading = false;
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  },
   data: function data() {
     return {
+      loading: true,
+      checkpoints: [],
       form: new _VrevalForm__WEBPACK_IMPORTED_MODULE_1__["default"]({
         name: this.scenario.name,
         description: this.scenario.description,
@@ -2258,12 +2297,12 @@ __webpack_require__.r(__webpack_exports__);
       this.form.checkpoints = this.form.checkpoints.filter(function (checkpoint) {
         return checkpoint.hasOwnProperty('id');
       });
-      this.form.patch("/projects/".concat(this.project.id, "/scenarios/").concat(this.scenario.id)).then(function (response) {
+      this.form.patch("/projects/".concat(this.scenario.project_id, "/scenarios/").concat(this.scenario.id)).then(function (response) {
         return location = response.data.message;
       });
     },
     removeScenario: function removeScenario() {
-      axios["delete"]("/projects/".concat(this.project.id, "/scenarios/").concat(this.scenario.id));
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("/projects/".concat(this.scenario.project_id, "/scenarios/").concat(this.scenario.id));
     },
     cancel: function cancel() {
       this.form.reset();
@@ -2309,6 +2348,125 @@ __webpack_require__.r(__webpack_exports__);
     submitText: {
       type: String,
       required: true
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewCheckpointModal.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewCheckpointModal.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "NewCheckpointModal",
+  props: {
+    project: {
+      type: Object,
+      required: true
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewFormModal.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewFormModal.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _VrevalForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VrevalForm */ "./resources/js/components/VrevalForm.js");
+/* harmony import */ var _BasicFormFields__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BasicFormFields */ "./resources/js/components/BasicFormFields.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "NewScenarioModal",
+  components: {
+    BasicFormFields: _BasicFormFields__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: {
+    project: {
+      type: Object,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      form: new _VrevalForm__WEBPACK_IMPORTED_MODULE_0__["default"]({
+        name: "",
+        description: "",
+        checkpoints: []
+      })
+    };
+  },
+  methods: {
+    submit: function submit() {
+      this.form.submit("/projects/".concat(this.project.id, "/forms")).then(function (response) {
+        return location = response.data.message;
+      });
+    },
+    cancel: function cancel() {
+      this.form.reset();
+      this.$modal.hide('new-form');
     }
   }
 });
@@ -2784,6 +2942,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
 //
 //
 //
@@ -20557,7 +20718,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "flex-1 mr-4" }, [
+  return _c("div", { staticClass: "flex-1" }, [
     _c("div", { staticClass: "mb-4" }, [
       _c("label", { staticClass: "input-label", attrs: { for: "name" } }, [
         _vm._v("Name")
@@ -20645,6 +20806,51 @@ var render = function() {
           )
         : _vm._e()
     ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CheckpointsTableRow.vue?vue&type=template&id=7ba3da9c&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CheckpointsTableRow.vue?vue&type=template&id=7ba3da9c& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "w-full" }, [
+    _c(
+      "div",
+      { staticClass: "block flex w-full" },
+      [
+        _vm._l(_vm.headers, function(column, index) {
+          return _c(
+            "div",
+            {
+              key: index,
+              staticClass: "px-4 py-2",
+              style: { width: column.width }
+            },
+            [_vm._v(_vm._s(_vm.item[column.name]))]
+          )
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "px-4 py-2 w-32 text-right" })
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = []
@@ -20879,35 +21085,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "div",
-        {
-          staticClass: "cursor-pointer",
-          on: {
-            click: function($event) {
-              return _vm.$modal.show("edit-scenario-" + _vm.scenario.id)
-            }
-          }
-        },
-        [_vm._t("default")],
-        2
-      ),
-      _vm._v(" "),
-      _c(
+  return !_vm.loading
+    ? _c(
         "modal",
         {
           attrs: {
+            classes: ["modal"],
+            "max-width": 960,
             name: "edit-scenario-" + _vm.scenario.id,
-            height: "auto",
-            classes: "modal"
+            shiftY: 0.2,
+            width: "90%",
+            height: "auto"
           }
         },
         [
-          _c("h1", { staticClass: "font-normal text-2xl mb-8 text-center" }, [
-            _vm._v("\n            Edit Scenario\n        ")
+          _c("h1", { staticClass: "font-normal text-2xl mb-8" }, [
+            _vm._v("\n        Edit Scenario\n    ")
           ]),
           _vm._v(" "),
           _c(
@@ -20952,7 +21145,7 @@ var render = function() {
                         key: index,
                         staticClass: "mb-2",
                         attrs: {
-                          checkpoints: _vm.project.checkpoints,
+                          checkpoints: _vm.checkpoints,
                           "initial-query": _vm.form.checkpoints[index].name
                         },
                         model: {
@@ -20974,7 +21167,7 @@ var render = function() {
                       },
                       [
                         _c("i", { staticClass: "fas fa-plus" }),
-                        _vm._v(" Add Checkpoint\n                    ")
+                        _vm._v(" Add Checkpoint\n                ")
                       ]
                     )
                   ],
@@ -20996,56 +21189,16 @@ var render = function() {
                 {
                   staticClass: "btn btn-gray-text text-red-600",
                   attrs: { type: "button" },
-                  on: { click: _vm.removeProject }
+                  on: { click: _vm.removeScenario }
                 },
                 [_vm._v("Delete")]
               )
             ]
-          ),
-          _vm._v(" "),
-          _c("footer", { staticClass: "flex justify-between" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-gray mr-2",
-                attrs: { type: "button" },
-                on: { click: _vm.cancel }
-              },
-              [_vm._v("\n                Cancel\n            ")]
-            ),
-            _vm._v(" "),
-            _c("div", [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-red-outline",
-                  attrs: { type: "button" },
-                  on: { click: _vm.removeScenario }
-                },
-                [_vm._v("Delete")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-green",
-                  attrs: { type: "button" },
-                  on: { click: _vm.submit }
-                },
-                [
-                  _vm._v(
-                    "\n                    Update Scenario\n                "
-                  )
-                ]
-              )
-            ])
-          ])
+          )
         ],
         1
       )
-    ],
-    1
-  )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -21102,6 +21255,140 @@ var render = function() {
     _vm._v(" "),
     _c("div", [_vm._t("default")], 2)
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewCheckpointModal.vue?vue&type=template&id=552bc370&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewCheckpointModal.vue?vue&type=template&id=552bc370& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "modal",
+    {
+      attrs: {
+        classes: ["modal"],
+        "max-width": 960,
+        shiftY: 0.2,
+        width: "90%",
+        height: "auto",
+        name: "new-checkpoint"
+      }
+    },
+    [
+      _c("h1", { staticClass: "font-normal text-2xl mb-8" }, [
+        _vm._v("\n        How to upload checkpoints\n    ")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et\n        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet\n        clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,\n        consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,\n        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no\n        sea takimata sanctus est Lorem ipsum dolor sit amet."
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-green",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                return _vm.$modal.hide("new-checkpoint")
+              }
+            }
+          },
+          [_vm._v("Close")]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewFormModal.vue?vue&type=template&id=be3eac18&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewFormModal.vue?vue&type=template&id=be3eac18& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "modal",
+    {
+      attrs: {
+        classes: ["modal"],
+        "max-width": 960,
+        shiftY: 0.2,
+        width: "90%",
+        height: "auto",
+        name: "new-form"
+      }
+    },
+    [
+      _c("h1", { staticClass: "font-normal text-2xl mb-8" }, [
+        _vm._v("\n        Create a new Form\n    ")
+      ]),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.submit($event)
+            }
+          }
+        },
+        [
+          _c("basic-form-fields", {
+            model: {
+              value: _vm.form,
+              callback: function($$v) {
+                _vm.form = $$v
+              },
+              expression: "form"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("modal-footer", {
+        attrs: { "submit-text": "Create Form" },
+        on: { "submit-clicked": _vm.submit, "cancel-clicked": _vm.cancel }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -21602,29 +21889,40 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "a",
-    {
-      staticClass: "block flex w-full",
-      attrs: {
-        href: "/projects/" + _vm.item.project_id + "/scenarios/" + _vm.item.id
-      }
-    },
+    "div",
+    { staticClass: "w-full" },
     [
-      _vm._l(_vm.headers, function(column, index) {
-        return _c(
-          "div",
-          {
-            key: index,
-            staticClass: "px-4 py-2",
-            style: { width: column.width }
-          },
-          [_vm._v(_vm._s(_vm.item[column.name]))]
-        )
-      }),
+      _c(
+        "div",
+        {
+          staticClass: "block flex w-full",
+          on: {
+            click: function($event) {
+              return _vm.$modal.show("edit-scenario-" + _vm.item.id)
+            }
+          }
+        },
+        [
+          _vm._l(_vm.headers, function(column, index) {
+            return _c(
+              "div",
+              {
+                key: index,
+                staticClass: "px-4 py-2",
+                style: { width: column.width }
+              },
+              [_vm._v(_vm._s(_vm.item[column.name]))]
+            )
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "px-4 py-2 w-32 text-right" })
+        ],
+        2
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "px-4 py-2 w-32 text-right" })
+      _c("edit-scenario-modal", { attrs: { scenario: _vm.item } })
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -33906,6 +34204,8 @@ Vue.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_0___default.a);
 
 Vue.component("new-project-modal", __webpack_require__(/*! ./components/NewProjectModal.vue */ "./resources/js/components/NewProjectModal.vue")["default"]);
 Vue.component("new-scenario-modal", __webpack_require__(/*! ./components/NewScenarioModal */ "./resources/js/components/NewScenarioModal.vue")["default"]);
+Vue.component("new-checkpoint-modal", __webpack_require__(/*! ./components/NewCheckpointModal */ "./resources/js/components/NewCheckpointModal.vue")["default"]);
+Vue.component("new-form-modal", __webpack_require__(/*! ./components/NewFormModal */ "./resources/js/components/NewFormModal.vue")["default"]);
 Vue.component("edit-project-modal", __webpack_require__(/*! ./components/EditProjectModal.vue */ "./resources/js/components/EditProjectModal.vue")["default"]);
 Vue.component("edit-scenario-modal", __webpack_require__(/*! ./components/EditScenarioModal */ "./resources/js/components/EditScenarioModal.vue")["default"]);
 Vue.component("modal-footer", __webpack_require__(/*! ./components/ModalFooter */ "./resources/js/components/ModalFooter.vue")["default"]);
@@ -33913,6 +34213,7 @@ Vue.component("dropdown", __webpack_require__(/*! ./components/Dropdown.vue */ "
 Vue.component("data-table", __webpack_require__(/*! ./components/Table.vue */ "./resources/js/components/Table.vue")["default"]);
 Vue.component("projects-table-row", __webpack_require__(/*! ./components/ProjectsTableRow.vue */ "./resources/js/components/ProjectsTableRow.vue")["default"]);
 Vue.component("scenarios-table-row", __webpack_require__(/*! ./components/ScenariosTableRow.vue */ "./resources/js/components/ScenariosTableRow.vue")["default"]);
+Vue.component("checkpoints-table-row", __webpack_require__(/*! ./components/CheckpointsTableRow.vue */ "./resources/js/components/CheckpointsTableRow.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -33958,7 +34259,7 @@ var app = new Vue({
         order: 'asc',
         headers: [{
           text: 'Name',
-          width: "".concat(3 / 4 * 100, "%"),
+          width: "".concat(1 / 2 * 100, "%"),
           name: 'name'
         }, {
           text: 'Type',
@@ -33968,6 +34269,19 @@ var app = new Vue({
           text: 'Behaviour',
           width: "".concat(1 / 4 * 100, "%"),
           name: 'checkpoint_count'
+        }]
+      },
+      formsTableOptions: {
+        orderBy: 'name',
+        order: 'asc',
+        headers: [{
+          text: 'Name',
+          width: "".concat(3 / 4 * 100, "%"),
+          name: 'name'
+        }, {
+          text: 'Fields',
+          width: "".concat(1 / 4 * 100, "%"),
+          name: 'field_count'
         }]
       }
     };
@@ -34072,6 +34386,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicFormFields_vue_vue_type_template_id_01210250___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicFormFields_vue_vue_type_template_id_01210250___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CheckpointsTableRow.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/CheckpointsTableRow.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CheckpointsTableRow_vue_vue_type_template_id_7ba3da9c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CheckpointsTableRow.vue?vue&type=template&id=7ba3da9c& */ "./resources/js/components/CheckpointsTableRow.vue?vue&type=template&id=7ba3da9c&");
+/* harmony import */ var _CheckpointsTableRow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CheckpointsTableRow.vue?vue&type=script&lang=js& */ "./resources/js/components/CheckpointsTableRow.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CheckpointsTableRow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CheckpointsTableRow_vue_vue_type_template_id_7ba3da9c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CheckpointsTableRow_vue_vue_type_template_id_7ba3da9c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CheckpointsTableRow.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CheckpointsTableRow.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/CheckpointsTableRow.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CheckpointsTableRow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CheckpointsTableRow.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CheckpointsTableRow.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CheckpointsTableRow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CheckpointsTableRow.vue?vue&type=template&id=7ba3da9c&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/CheckpointsTableRow.vue?vue&type=template&id=7ba3da9c& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CheckpointsTableRow_vue_vue_type_template_id_7ba3da9c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CheckpointsTableRow.vue?vue&type=template&id=7ba3da9c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CheckpointsTableRow.vue?vue&type=template&id=7ba3da9c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CheckpointsTableRow_vue_vue_type_template_id_7ba3da9c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CheckpointsTableRow_vue_vue_type_template_id_7ba3da9c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -34348,6 +34731,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalFooter_vue_vue_type_template_id_64ace4e6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalFooter_vue_vue_type_template_id_64ace4e6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/NewCheckpointModal.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/NewCheckpointModal.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NewCheckpointModal_vue_vue_type_template_id_552bc370___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NewCheckpointModal.vue?vue&type=template&id=552bc370& */ "./resources/js/components/NewCheckpointModal.vue?vue&type=template&id=552bc370&");
+/* harmony import */ var _NewCheckpointModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewCheckpointModal.vue?vue&type=script&lang=js& */ "./resources/js/components/NewCheckpointModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _NewCheckpointModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _NewCheckpointModal_vue_vue_type_template_id_552bc370___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NewCheckpointModal_vue_vue_type_template_id_552bc370___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/NewCheckpointModal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/NewCheckpointModal.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/NewCheckpointModal.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewCheckpointModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./NewCheckpointModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewCheckpointModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewCheckpointModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/NewCheckpointModal.vue?vue&type=template&id=552bc370&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/NewCheckpointModal.vue?vue&type=template&id=552bc370& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewCheckpointModal_vue_vue_type_template_id_552bc370___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./NewCheckpointModal.vue?vue&type=template&id=552bc370& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewCheckpointModal.vue?vue&type=template&id=552bc370&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewCheckpointModal_vue_vue_type_template_id_552bc370___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewCheckpointModal_vue_vue_type_template_id_552bc370___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/NewFormModal.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/NewFormModal.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NewFormModal_vue_vue_type_template_id_be3eac18___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NewFormModal.vue?vue&type=template&id=be3eac18& */ "./resources/js/components/NewFormModal.vue?vue&type=template&id=be3eac18&");
+/* harmony import */ var _NewFormModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewFormModal.vue?vue&type=script&lang=js& */ "./resources/js/components/NewFormModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _NewFormModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _NewFormModal_vue_vue_type_template_id_be3eac18___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NewFormModal_vue_vue_type_template_id_be3eac18___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/NewFormModal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/NewFormModal.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/NewFormModal.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewFormModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./NewFormModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewFormModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewFormModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/NewFormModal.vue?vue&type=template&id=be3eac18&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/NewFormModal.vue?vue&type=template&id=be3eac18& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewFormModal_vue_vue_type_template_id_be3eac18___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./NewFormModal.vue?vue&type=template&id=be3eac18& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewFormModal.vue?vue&type=template&id=be3eac18&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewFormModal_vue_vue_type_template_id_be3eac18___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NewFormModal_vue_vue_type_template_id_be3eac18___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

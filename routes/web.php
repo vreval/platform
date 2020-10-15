@@ -45,8 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'update']);
     Route::delete('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'destroy']);
 
+    Route::get('/projects/{project}/checkpoints', [ProjectCheckpointsController::class, 'index']);
     Route::post('/projects/{project}/checkpoints', [ProjectCheckpointsController::class, 'store']);
     Route::post('/projects/{project}/forms', [ProjectFormsController::class, 'store']);
+    Route::patch('/projects/{project}/forms/{form}', [ProjectFormsController::class, 'update']);
     Route::post('/projects/{project}/pins', [ProjectPinsController::class, 'store']);
     Route::delete('/projects/{project}/pins', [ProjectPinsController::class, 'destroy']);
 

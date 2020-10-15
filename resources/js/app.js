@@ -32,6 +32,14 @@ Vue.component(
     require("./components/NewScenarioModal").default
 );
 Vue.component(
+    "new-checkpoint-modal",
+    require("./components/NewCheckpointModal").default
+);
+Vue.component(
+    "new-form-modal",
+    require("./components/NewFormModal").default
+);
+Vue.component(
     "edit-project-modal",
     require("./components/EditProjectModal.vue").default
 );
@@ -45,6 +53,7 @@ Vue.component("dropdown", require("./components/Dropdown.vue").default);
 Vue.component("data-table", require("./components/Table.vue").default);
 Vue.component("projects-table-row", require("./components/ProjectsTableRow.vue").default);
 Vue.component("scenarios-table-row", require("./components/ScenariosTableRow.vue").default);
+Vue.component("checkpoints-table-row", require("./components/CheckpointsTableRow.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -77,9 +86,17 @@ const app = new Vue({
                 orderBy: 'name',
                 order: 'asc',
                 headers: [
-                    { text: 'Name', width: `${3/4 * 100}%`, name: 'name' },
+                    { text: 'Name', width: `${1/2 * 100}%`, name: 'name' },
                     { text: 'Type', width: `${1/4 * 100}%`, name: 'checkpoint_count' },
                     { text: 'Behaviour', width: `${1/4 * 100}%`, name: 'checkpoint_count' },
+                ]
+            },
+            formsTableOptions: {
+                orderBy: 'name',
+                order: 'asc',
+                headers: [
+                    { text: 'Name', width: `${3/4 * 100}%`, name: 'name' },
+                    { text: 'Fields', width: `${1/4 * 100}%`, name: 'field_count' },
                 ]
             }
         }

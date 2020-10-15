@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-1 mr-4">
+    <div class="flex-1">
         <div class="mb-4">
             <label class="input-label" for="name">Name</label>
             <input
