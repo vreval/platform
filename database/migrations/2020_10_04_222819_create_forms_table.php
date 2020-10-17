@@ -18,7 +18,7 @@ class CreateFormsTable extends Migration
             $table->unsignedBigInteger('project_id');
             $table->string('name');
             $table->text('description');
-            $table->text('fields')->nullable();
+            $table->text('fields')->default('[]');
             $table->timestamps();
 
             $table->foreign('project_id')

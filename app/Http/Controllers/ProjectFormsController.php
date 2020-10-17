@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Form;
 use App\Project;
-use Illuminate\Http\Request;
 
 class ProjectFormsController extends Controller
 {
@@ -43,7 +42,20 @@ class ProjectFormsController extends Controller
             'name' => ['required', 'min:3', 'max:150'],
             'description' => ['min:3', 'max:500'],
             'fields' => ['array'],
-            'fields.*.type' => ['required', 'in:header,text,new_section,selection,evaluation']
+            'fields.*.type' => ['required', 'in:header,text,section,selection,evaluation'],
+            'fields.*.template.text' => ['string'],
+            'fields.*.template.show_subtitle' => ['boolean'],
+            'fields.*.template.question' => ['string'],
+            'fields.*.template.subtitle' => ['string'],
+            'fields.*.template.options' => ['array', 'between:2,7'],
+            'fields.*.template.random_order' => ['boolean'],
+            'fields.*.template.dropdown' => ['boolean'],
+            'fields.*.template.required' => ['boolean'],
+            'fields.*.template.scale_size' => ['numeric', 'between:2,7'],
+            'fields.*.template.lower_bound_label' => ['string'],
+            'fields.*.template.upper_bound_label' => ['string'],
+            'fields.*.template.show_labels' => ['boolean'],
+            'fields.*.template.multiple_choice' => ['boolean'],
         ]);
     }
 }

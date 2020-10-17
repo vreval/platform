@@ -12,5 +12,5 @@
         <span class="block text-sm font-medium text-gray-600">Created: {{ $project->formatted_created }}</span>
         <span class="block text-sm font-medium text-gray-600">Updated {{ $project->relative_updated }} by {{ $project->activity->first()->user->name }}</span>
     </div>
-    <p class="flex-1">{{ str_limit($project->description) }}</p>
+    <p class="flex-1">{!! nl2br(e(str_limit($project->description, 200))) !!}</p>
 </a>
