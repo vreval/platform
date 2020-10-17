@@ -78,6 +78,8 @@ class RegisterController extends Controller
             'description' => 'This is a basic sample project to help you get started and become familiar with all the project building blocks (or components) that are available.\r\n You might want to click through all the predefined components and read their description. They teach you about the overall purpose of each of them.',
         ]);
 
+        $project->pinBy($user);
+
         $baseline = $project->addScenario([
             'name' => 'Baseline',
             'description' => 'Use Scenarios to replicate your study structure. It\'s is often a good idea to start off collecting some sort of behavioural baseline from your subjects.'
