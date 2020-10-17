@@ -2,7 +2,7 @@
 
 The VREVAL Platform is a web application to create and manage research projects that deal with user centered evaluations of virtual environments.
 
-[Visit the preview](http://207.154.211.120/)
+[Visit the preview](http://138.197.184.95:8080)
 
 [Documentation](#) // TODO
 
