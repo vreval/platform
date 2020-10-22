@@ -7,6 +7,16 @@ use App\Project;
 
 class ProjectFormsController extends Controller
 {
+    public function show(Project $project, Form $form)
+    {
+        $this->authorize('manage', $project);
+
+        return view('forms.show', [
+            'project' => $project,
+            'form' => $form
+        ]);
+    }
+
     public function store(Project $project)
     {
         $this->authorize('manage', $project);
@@ -42,16 +52,16 @@ class ProjectFormsController extends Controller
             'name' => ['required', 'min:3', 'max:150'],
             'description' => ['min:3', 'max:500'],
             'fields' => ['array'],
-            'fields.*.type' => ['required', 'in:header,text,section,selection,evaluation'],
+            'fields.*.type' => ['required', 'in:header,text,section,selection,rating'],
             'fields.*.template.text' => ['string'],
             'fields.*.template.show_subtitle' => ['boolean'],
             'fields.*.template.question' => ['string'],
-            'fields.*.template.subtitle' => ['string'],
+            'fields.*.template.subtitle' => ['string', 'nullable'],
             'fields.*.template.options' => ['array', 'between:2,7'],
             'fields.*.template.random_order' => ['boolean'],
             'fields.*.template.dropdown' => ['boolean'],
             'fields.*.template.required' => ['boolean'],
-            'fields.*.template.scale_size' => ['numeric', 'between:2,7'],
+            'fields.*.template.levels' => ['numeric', 'between:2,7'],
             'fields.*.template.lower_bound_label' => ['string'],
             'fields.*.template.upper_bound_label' => ['string'],
             'fields.*.template.show_labels' => ['boolean'],

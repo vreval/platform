@@ -55,7 +55,7 @@
                     <data-table
                         :items="{{ $project->forms }}"
                         :options="formsTableOptions"
-                        item-component="scenarios-table-row"
+                        item-component="forms-table-row"
                     ></data-table>
                     <button
                         type="button"

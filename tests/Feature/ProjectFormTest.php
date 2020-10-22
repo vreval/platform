@@ -71,7 +71,7 @@ class ProjectFormTest extends TestCase
                 ['type' => 'text', 'template' => ['text' => 'Some text']],
                 ['type' => 'section', 'template' => []],
                 ['type' => 'selection', 'template' => []],
-                ['type' => 'evaluation', 'template' => []],
+                ['type' => 'rating', 'template' => []],
             ]
         ])->attributesToArray();
 
@@ -164,10 +164,10 @@ class ProjectFormTest extends TestCase
             ->ownedBy($this->signIn())
             ->create();
         $form = Form::factory()->make(['fields' => []]);
-        $form->addEvaluation([
+        $form->addRating([
             'question' => 1234,
             'subtitle' => 1234,
-            'scale_size' => 1234,
+            'levels' => 1234,
             'lower_bound_label' => 1234,
             'upper_bound_label' => 1234,
             'show_labels'=> 'invalid input',
@@ -179,7 +179,7 @@ class ProjectFormTest extends TestCase
             ->assertSessionHasErrors([
                 'fields.0.template.question',
                 'fields.0.template.subtitle',
-                'fields.0.template.scale_size',
+                'fields.0.template.levels',
                 'fields.0.template.lower_bound_label',
                 'fields.0.template.upper_bound_label',
                 'fields.0.template.show_labels',
@@ -203,7 +203,7 @@ class ProjectFormTest extends TestCase
                 $fieldFactory->makeText(),
                 $fieldFactory->makeSection(),
                 $fieldFactory->makeSelection(),
-                $fieldFactory->makeEvaluation(),
+                $fieldFactory->makeRating(),
             ]
         ])->attributesToArray();
 
@@ -233,7 +233,7 @@ class ProjectFormTest extends TestCase
                 $fieldFactory->makeText(),
                 $fieldFactory->makeSection(),
                 $fieldFactory->makeSelection(),
-                $fieldFactory->makeEvaluation(),
+                $fieldFactory->makeRating(),
             ]
         ])->attributesToArray();
 

@@ -22,7 +22,7 @@
 
 <body class="bg-gray-200">
 <div id="app">
-    <nav id="main-navigation" class="bg-gray-800 text-white sticky top-0 transition-all duration-200 bg-opacity-50">
+    <nav id="main-navigation" class="bg-gray-800 text-white sticky top-0 transition-all duration-200 bg-opacity-50 z-20">
         <div class="container flex justify-between items-center py-4 mx-auto">
             <div class="flex items-center">
                 <a class="font-bold text-3xl" href="{{ url('/') }}">

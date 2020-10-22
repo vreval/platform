@@ -13,6 +13,7 @@ class Form extends Model
     protected $fieldFactory;
     protected $fillable = ['name', 'description', 'fields'];
     protected $casts = ['fields' => 'array'];
+    protected $attributes = ['fields' => '[]'];
 
     public function __construct(array $attributes = [])
     {
@@ -40,8 +41,8 @@ class Form extends Model
         $this->fields = array_merge($this->fields, [$this->fieldFactory->makeSelection($template)]);
     }
 
-    public function addEvaluation(array $template)
+    public function addRating(array $template)
     {
-        $this->fields = array_merge($this->fields, [$this->fieldFactory->makeEvaluation($template)]);
+        $this->fields = array_merge($this->fields, [$this->fieldFactory->makeRating($template)]);
     }
 }

@@ -33,7 +33,7 @@ class FormFactory extends Factory
                 $fieldFactory->makeText(),
                 $fieldFactory->makeSection(),
                 $fieldFactory->makeSelection(),
-                $fieldFactory->makeEvaluation(),
+                $fieldFactory->makeRating(),
             ]
         ];
     }

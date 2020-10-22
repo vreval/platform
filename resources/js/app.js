@@ -4,6 +4,10 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+String.prototype.ucFirst = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 require("./bootstrap");
 
 window.Vue = require("vue");
@@ -54,6 +58,8 @@ Vue.component("data-table", require("./components/Table.vue").default);
 Vue.component("projects-table-row", require("./components/ProjectsTableRow.vue").default);
 Vue.component("scenarios-table-row", require("./components/ScenariosTableRow.vue").default);
 Vue.component("checkpoints-table-row", require("./components/CheckpointsTableRow.vue").default);
+Vue.component("forms-table-row", require("./components/FormsTableRow.vue").default);
+Vue.component("project-form-builder", require("./components/FormBuilder/ProjectFormBuilder").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

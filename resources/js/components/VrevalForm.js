@@ -49,6 +49,11 @@ export default class VrevalForm {
     }
 
     reset() {
-        Object.assign(this, this.originalData);
+        // Object.assign(this, this.originalData);
+        Object.assign(this, JSON.parse(JSON.stringify(this.originalData)));
+    }
+
+    hasErrors() {
+        return Object.keys(this.errors).length > 0;
     }
 }

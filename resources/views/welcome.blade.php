@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-white hero h-screen flex items-center" style="margin-top: -80px">
+    <div class="bg-white hero h-screen flex items-center relative" style="margin-top: -80px">
         <div class="container mx-auto p-12 bg-white bg-opacity-75 rounded">
             <h2 class="text-2xl">A simple toolbox for user centric evaluations of virtual environments.</h2>
             <p>Based on the research of team InfAr at Bauhaus-University Weimar, Germany, this toolbox aimes to make user
@@ -14,6 +14,8 @@
                 <a href="#" class="btn btn-gray-text text-xs">Download</a>
             </div>
         </div>
+
+        <a href="#faq" class="w-12 h-12 bg-white rounded-full absolute bottom-0 right-0 mr-12 mb-12 text-3xl flex items-center justify-center">&darr;</a>
     </div>
 
     <div id="faq" class="bg-white min-h-screen flex items-center">

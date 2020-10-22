@@ -54,6 +54,7 @@ class FormFieldFactory
                 'question' => 'Question',
                 'subtitle' => 'Subtitle',
                 'options' => ['Option 1', 'Option 2', 'Option 3'],
+                'selection' => 0,
                 'random_order' => false,
                 'dropdown' => false,
                 'show_subtitle' => false,
@@ -63,14 +64,14 @@ class FormFieldFactory
         ], $options);
     }
 
-    public function makeEvaluation($options = [])
+    public function makeRating($options = [])
     {
         return $this->mergeOptions([
-            'type' => 'evaluation',
+            'type' => 'rating',
             'template' => [
                 'question' => 'Question',
                 'subtitle' => 'Subtitle',
-                'scale_size' => 5,
+                'levels' => 5,
                 'lower_bound_label' => 'Label A',
                 'upper_bound_label' => 'Label B',
                 'show_subtitle' => false,

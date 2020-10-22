@@ -38,10 +38,10 @@ class FormTest extends TestCase
             'show_subtitle' => false,
             'required' => false,
         ]);
-        $form->addEvaluation([
+        $form->addRating([
             'question' => 'Question for evaluation',
             'subtitle' => 'this is a subtitle',
-            'scale_size' => 3,
+            'levels' => 3,
             'lower_bound_label' => 'small',
             'upper_bound_label' => 'large',
             'show_subtitle' => false,
@@ -54,7 +54,7 @@ class FormTest extends TestCase
         $this->assertEquals('Some text', $form->fields[1]['template']['text']);
         $this->assertEquals('section', $form->fields[2]['type']);
         $this->assertTrue($form->fields[3]['template']['random_order']);
-        $this->assertEquals(3, $form->fields[4]['template']['scale_size']);
+        $this->assertEquals(3, $form->fields[4]['template']['levels']);
     }
 
     /** @test */
@@ -62,17 +62,17 @@ class FormTest extends TestCase
     {
         $fieldFactory = new FormFieldFactory();
 
-        $field = $fieldFactory->makeEvaluation([
+        $field = $fieldFactory->makeRating([
             'required' => true,
             'show_labels' => false
         ]);
 
         $this->assertEquals([
-            'type' => 'evaluation',
+            'type' => 'rating',
             'template' => [
                 'question' => 'Question',
                 'subtitle' => 'Subtitle',
-                'scale_size' => 5,
+                'levels' => 5,
                 'lower_bound_label' => 'Label A',
                 'upper_bound_label' => 'Label B',
                 'show_subtitle' => false,
