@@ -2614,6 +2614,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RatingField",
@@ -2632,6 +2659,31 @@ __webpack_require__.r(__webpack_exports__);
       set: function set(newValue) {
         this.$emit('input', newValue);
       }
+    },
+    symbolRange: function symbolRange() {
+      var x = this.proxyValue.levels;
+      var symbolGenerators = {
+        none: function none() {
+          return [];
+        },
+        asc: function asc() {
+          return Array.prototype.range(1, x, 1);
+        },
+        mirror: function mirror() {
+          var range = Array.prototype.range(Math.floor(x / 2) * -1, Math.floor(x / 2), 1);
+          if (!(x % 2)) range.splice(x / 2, 1);
+          return range;
+        },
+        pos_neg: function pos_neg() {
+          var range = Array.prototype.range(Math.floor(x / 2) * -1, Math.floor(x / 2), 1);
+          if (!(x % 2)) range.splice(x / 2, 1);
+          return range.map(function (item) {
+            if (item === 0) return 0;
+            return item < 0 ? '-'.repeat(Math.abs(item)) : '+'.repeat(item);
+          });
+        }
+      };
+      return symbolGenerators[this.proxyValue.symbols_selection]();
     }
   },
   methods: {
@@ -2694,6 +2746,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FieldHeader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FieldHeader */ "./resources/js/components/FormBuilder/FieldHeader.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -21790,7 +21847,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "text-gray-400 hover:text-gray-800 ml-4 px-3 py-1",
+          staticClass: "btn btn-icon ml-4",
           attrs: { type: "button" },
           on: {
             click: function($event) {
@@ -21804,7 +21861,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "text-gray-400 hover:text-gray-800 ml-4 px-3 py-1",
+          staticClass: "btn btn-icon ml-4",
           attrs: { type: "button" },
           on: {
             click: function($event) {
@@ -21818,7 +21875,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "text-gray-400 hover:text-gray-800 ml-4 px-3 py-1",
+          staticClass: "btn btn-icon ml-4",
           attrs: { type: "button" },
           on: {
             click: function($event) {
@@ -21832,7 +21889,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "text-gray-400 hover:text-gray-800 ml-4 px-3 py-1",
+          staticClass: "btn btn-icon ml-4",
           attrs: { type: "button" },
           on: {
             click: function($event) {
@@ -22172,7 +22229,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("div", { staticClass: "mb-4 flex -mx-2" }, [
-        _c("div", { staticClass: "w-2/3 mx-2" }, [
+        _c("div", { staticClass: "w-1/2 mx-2" }, [
           _c("label", { staticClass: "input-label" }, [_vm._v("Question")]),
           _vm._v(" "),
           _c("input", {
@@ -22185,7 +22242,7 @@ var render = function() {
               }
             ],
             staticClass: "input font-bold mb-2",
-            attrs: { type: "text" },
+            attrs: { type: "text", placeholder: "Type your question here..." },
             domProps: { value: _vm.proxyValue.question },
             on: {
               input: function($event) {
@@ -22226,7 +22283,7 @@ var render = function() {
             : _vm._e()
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "w-1/3 mx-2" }, [
+        _c("div", { staticClass: "w-1/4 mx-2" }, [
           _c("label", { staticClass: "input-label" }, [_vm._v("Levels")]),
           _vm._v(" "),
           _c("div", { staticClass: "relative flex items-center" }, [
@@ -22260,11 +22317,59 @@ var render = function() {
                   }
                 }
               },
-              _vm._l([2, 3, 4, 5, 6, 7], function(level) {
+              _vm._l(Array.prototype.range(2, 7, 1), function(level) {
                 return _c(
                   "option",
-                  { key: level + "level", domProps: { value: level } },
+                  { key: "level-" + level, domProps: { value: level } },
                   [_vm._v(_vm._s(level))]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("i", { staticClass: "fas fa-caret-down absolute right-0 mr-4" })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/4 mx-2" }, [
+          _c("label", { staticClass: "input-label" }, [_vm._v("Symbols")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "relative flex items-center" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.proxyValue.symbols_selection,
+                    expression: "proxyValue.symbols_selection"
+                  }
+                ],
+                staticClass: "input",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.proxyValue,
+                      "symbols_selection",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              _vm._l(_vm.proxyValue.symbols, function(symbol, index) {
+                return _c(
+                  "option",
+                  { key: "symbol-" + symbol, domProps: { value: symbol } },
+                  [_vm._v(_vm._s(symbol))]
                 )
               }),
               0
@@ -22278,137 +22383,175 @@ var render = function() {
       _c(
         "div",
         { staticClass: "my-4" },
-        _vm._l(_vm.proxyValue.items, function(item, labelIndex) {
-          return _c(
+        [
+          _c(
             "div",
-            {
-              key: labelIndex + "label",
-              staticClass: "py-2 flex items-center justify-center"
-            },
-            [
-              _vm.proxyValue.show_labels
-                ? _c(
-                    "span",
-                    { staticClass: "mx-1 input-label block w-1/4 text-right" },
-                    [_vm._v(_vm._s(item.lower_bound_label))]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "w-1/2 flex justify-center" },
-                _vm._l(_vm.proxyValue.levels, function(n) {
-                  return _c("i", {
-                    key: n + "n",
-                    staticClass: "far fa-circle text-3xl text-gray-600 mx-1"
-                  })
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _vm.proxyValue.show_labels
-                ? _c("span", { staticClass: "mx-1 input-label block w-1/4" }, [
-                    _vm._v(_vm._s(item.upper_bound_label))
-                  ])
-                : _vm._e()
-            ]
-          )
-        }),
-        0
+            { staticClass: "flex justify-center" },
+            _vm._l(_vm.symbolRange, function(symbol, index) {
+              return _c(
+                "span",
+                {
+                  key: "symbol-label-" + index,
+                  staticClass: "text-center input-label w-10"
+                },
+                [_vm._v(_vm._s(symbol))]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.proxyValue.items, function(item, labelIndex) {
+            return _c(
+              "div",
+              {
+                key: "circles-" + labelIndex,
+                staticClass: "py-2 flex items-center justify-center"
+              },
+              [
+                _vm.proxyValue.show_labels
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "mx-1 input-label block w-1/4 text-right"
+                      },
+                      [_vm._v(_vm._s(item.lower_bound_label))]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "w-1/2 flex justify-center" },
+                  _vm._l(_vm.proxyValue.levels, function(n) {
+                    return _c(
+                      "div",
+                      { key: n + "n", staticClass: "w-10 text-center" },
+                      [
+                        _c("i", {
+                          staticClass:
+                            "far fa-circle text-3xl text-gray-600 mx-1"
+                        })
+                      ]
+                    )
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _vm.proxyValue.show_labels
+                  ? _c(
+                      "span",
+                      { staticClass: "mx-1 input-label block w-1/4" },
+                      [_vm._v(_vm._s(item.upper_bound_label))]
+                    )
+                  : _vm._e()
+              ]
+            )
+          })
+        ],
+        2
       ),
       _vm._v(" "),
       _c(
         "div",
         { staticClass: "my-4" },
         _vm._l(_vm.proxyValue.items, function(item, itemIndex) {
-          return _c(
-            "div",
-            { key: itemIndex + "item", staticClass: "mb-4 flex -mx-2" },
-            [
-              _c("div", { staticClass: "flex-1 mx-2 flex items-center" }, [
-                _c("label", { staticClass: "input-label w-20" }, [
-                  _vm._v("1 Label")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.proxyValue.items[itemIndex].lower_bound_label,
-                      expression:
-                        "proxyValue.items[itemIndex].lower_bound_label"
-                    }
-                  ],
-                  staticClass: "input",
-                  attrs: { type: "text" },
-                  domProps: {
-                    value: _vm.proxyValue.items[itemIndex].lower_bound_label
-                  },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+          return _vm.proxyValue.show_labels
+            ? _c(
+                "div",
+                { key: itemIndex + "item", staticClass: "mb-4 flex -mx-2" },
+                [
+                  _c("div", { staticClass: "flex-1 mx-2 flex items-center" }, [
+                    _c(
+                      "label",
+                      { staticClass: "input-label w-20 text-right pr-2" },
+                      [_vm._v("1 Label")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value:
+                            _vm.proxyValue.items[itemIndex].lower_bound_label,
+                          expression:
+                            "proxyValue.items[itemIndex].lower_bound_label"
+                        }
+                      ],
+                      staticClass: "input",
+                      attrs: { type: "text" },
+                      domProps: {
+                        value: _vm.proxyValue.items[itemIndex].lower_bound_label
+                      },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.proxyValue.items[itemIndex],
+                            "lower_bound_label",
+                            $event.target.value
+                          )
+                        }
                       }
-                      _vm.$set(
-                        _vm.proxyValue.items[itemIndex],
-                        "lower_bound_label",
-                        $event.target.value
-                      )
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "flex-1 mx-2 flex items-center" }, [
-                _c("label", { staticClass: "input-label w-20" }, [
-                  _vm._v(_vm._s(_vm.proxyValue.levels) + " Label")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.proxyValue.items[itemIndex].upper_bound_label,
-                      expression:
-                        "proxyValue.items[itemIndex].upper_bound_label"
-                    }
-                  ],
-                  staticClass: "input",
-                  attrs: { type: "text" },
-                  domProps: {
-                    value: _vm.proxyValue.items[itemIndex].upper_bound_label
-                  },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex-1 mx-2 flex items-center" }, [
+                    _c(
+                      "label",
+                      { staticClass: "input-label w-20 text-right pr-2" },
+                      [_vm._v(_vm._s(_vm.proxyValue.levels) + " Label")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value:
+                            _vm.proxyValue.items[itemIndex].upper_bound_label,
+                          expression:
+                            "proxyValue.items[itemIndex].upper_bound_label"
+                        }
+                      ],
+                      staticClass: "input",
+                      attrs: { type: "text" },
+                      domProps: {
+                        value: _vm.proxyValue.items[itemIndex].upper_bound_label
+                      },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.proxyValue.items[itemIndex],
+                            "upper_bound_label",
+                            $event.target.value
+                          )
+                        }
                       }
-                      _vm.$set(
-                        _vm.proxyValue.items[itemIndex],
-                        "upper_bound_label",
-                        $event.target.value
-                      )
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "px-3 py-1 text-gray-400 hover:text-gray-800",
-                  on: {
-                    click: function($event) {
-                      return _vm.removeItem(itemIndex)
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "far fa-trash-alt" })]
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn",
+                      class: itemIndex !== 0 ? "btn-icon" : "btn-icon-disabled",
+                      attrs: { disabled: itemIndex === 0 },
+                      on: {
+                        click: function($event) {
+                          return _vm.removeItem(itemIndex)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-trash-alt" })]
+                  )
+                ]
               )
-            ]
-          )
+            : _vm._e()
         }),
         0
       ),
@@ -22590,8 +22733,8 @@ var render = function() {
               expression: "proxyValue.question"
             }
           ],
-          staticClass: "input",
-          attrs: { type: "text" },
+          staticClass: "input font-bold",
+          attrs: { type: "text", placeholder: "Type your question here..." },
           domProps: { value: _vm.proxyValue.question },
           on: {
             input: function($event) {
@@ -22639,8 +22782,9 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass:
-                    "px-3 py-1 ml-2 focus:outline-none text-gray-400 hover:text-gray-800",
+                  staticClass: "icon",
+                  class: index <= 1 ? "btn-icon-disabled" : "btn-icon",
+                  attrs: { disabled: index <= 2 },
                   on: {
                     click: function($event) {
                       return _vm.removeOption(index)
@@ -35826,6 +35970,14 @@ String.prototype.ucFirst = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
+Array.prototype.range = function (start, stop, step) {
+  return Array.from({
+    length: (stop - start) / step + 1
+  }, function (_, i) {
+    return start + i * step;
+  });
+};
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -36359,6 +36511,8 @@ var templates = {
       "template": {
         "question": "",
         "subtitle": "",
+        "symbols": ["none", "asc", "mirror", "pos_neg"],
+        "symbols_selection": 'asc',
         "levels": 5,
         "items": [{
           "lower_bound_label": "Label",

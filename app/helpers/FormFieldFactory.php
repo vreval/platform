@@ -72,6 +72,8 @@ class FormFieldFactory
                 'question' => 'Question',
                 'subtitle' => 'Subtitle',
                 'levels' => 5,
+                'symbols' => ['none', 'asc', 'mirror', 'pos_neg'],
+                'symbols_selection' => 'asc',
                 'items' => [
                     [
                         'lower_bound_label' => 'Item A Low',

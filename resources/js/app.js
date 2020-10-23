@@ -8,6 +8,10 @@ String.prototype.ucFirst = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
+Array.prototype.range = function (start, stop, step) {
+    return Array.from({length: (stop - start) / step + 1}, (_, i) => start + (i * step));
+}
+
 require("./bootstrap");
 
 window.Vue = require("vue");

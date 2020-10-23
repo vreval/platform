@@ -58,6 +58,16 @@ class FormTest extends TestCase
     }
 
     /** @test */
+    public function it_can_add_a_rating_field()
+    {
+        $form = Form::factory()->create(['fields' => []]);
+        $this->assertCount(0, $form->fields);
+        $form->addRating();
+        $form->addRating(['levels' => 3]);
+        $this->assertEquals(3, $form->collectFields()->get(1)['template']['levels']);
+    }
+
+    /** @test */
     public function form_field_factory_merges_field_options_into_defaults()
     {
         $fieldFactory = new FormFieldFactory();
@@ -86,6 +96,8 @@ class FormTest extends TestCase
                 'show_subtitle' => false,
                 'required' => true,
                 'show_labels' => false,
+                'symbols' => ['none', 'asc', 'mirror', 'pos_neg'],
+                'symbols_selection' => 'asc'
             ]
         ], $field);
     }

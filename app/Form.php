@@ -21,27 +21,32 @@ class Form extends Model
         $this->fieldFactory = new FormFieldFactory();
     }
 
-    public function addHeader($template)
+    public function collectFields()
+    {
+        return collect($this->fields);
+    }
+
+    public function addHeader(array $template = [])
     {
         $this->fields = array_merge($this->fields, [$this->fieldFactory->makeHeader($template)]);
     }
 
-    public function addText($template)
+    public function addText(array $template = [])
     {
         $this->fields = array_merge($this->fields, [$this->fieldFactory->makeText($template)]);
     }
 
-    public function addSection($template = [])
+    public function addSection(array $template = [])
     {
         $this->fields = array_merge($this->fields, [$this->fieldFactory->makeSection($template)]);
     }
 
-    public function addSelection(array $template)
+    public function addSelection(array $template = [])
     {
         $this->fields = array_merge($this->fields, [$this->fieldFactory->makeSelection($template)]);
     }
 
-    public function addRating(array $template)
+    public function addRating(array $template = [])
     {
         $this->fields = array_merge($this->fields, [$this->fieldFactory->makeRating($template)]);
     }

@@ -9,13 +9,18 @@
             @down="$emit('down', fieldIndex)"
         ></field-header>
         <div class="mb-4">
-            <input type="text" class="input" v-model="proxyValue.question">
+            <input type="text" class="input font-bold" v-model="proxyValue.question" placeholder="Type your question here...">
         </div>
         <div ref="options-container">
             <div v-for="(option, index) in proxyValue.options" :key="index" class="flex items-center mb-2 w-2/3">
                 <i class="far fa-circle mr-4 text-gray-600"></i>
                 <input type="text" class="input" v-model="proxyValue.options[index]">
-                <button class="px-3 py-1 ml-2 focus:outline-none text-gray-400 hover:text-gray-800" @click="removeOption(index)"><i class="far fa-trash-alt"></i></button>
+                <button
+                    class="icon"
+                    :class="index <= 1 ? 'btn-icon-disabled' : 'btn-icon'"
+                    :disabled="index <= 2"
+                    @click="removeOption(index)"
+                ><i class="far fa-trash-alt"></i></button>
             </div>
         </div>
         <div class="flex mt-4">

@@ -6,6 +6,18 @@
     }
 }
 
+.btn-icon {
+    @apply px-3 py-1 text-gray-600;
+
+    &:hover {
+        @apply text-gray-800
+    }
+}
+
+.btn-icon-disabled {
+    @apply px-3 py-1 text-gray-400 cursor-not-allowed;
+}
+
 .btn-green {
     @apply bg-green-500 text-white;
 

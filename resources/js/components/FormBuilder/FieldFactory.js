@@ -43,6 +43,8 @@ const templates = {
             "template": {
                 "question": "",
                 "subtitle": "",
+                "symbols": ["none", "asc", "mirror", "pos_neg"],
+                "symbols_selection": 'asc',
                 "levels": 5,
                 "items": [
                     {
