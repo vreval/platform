@@ -168,8 +168,12 @@ class ProjectFormTest extends TestCase
             'question' => 1234,
             'subtitle' => 1234,
             'levels' => 1234,
-            'lower_bound_label' => 1234,
-            'upper_bound_label' => 1234,
+            'items' => [
+                [
+                    'lower_bound_label' => 1234,
+                    'upper_bound_label' => 1234,
+                ]
+            ],
             'show_labels'=> 'invalid input',
             'show_subtitle'=> 'invalid input',
             'required'=> 'invalid input',
@@ -180,8 +184,8 @@ class ProjectFormTest extends TestCase
                 'fields.0.template.question',
                 'fields.0.template.subtitle',
                 'fields.0.template.levels',
-                'fields.0.template.lower_bound_label',
-                'fields.0.template.upper_bound_label',
+                'fields.0.template.items.0.lower_bound_label',
+                'fields.0.template.items.0.upper_bound_label',
                 'fields.0.template.show_labels',
                 'fields.0.template.show_subtitle',
                 'fields.0.template.required',
@@ -214,7 +218,7 @@ class ProjectFormTest extends TestCase
         $this->assertEquals('Header Text', $newForm->fields[0]['template']['text']);
         $this->assertEquals('Text Block', $newForm->fields[1]['template']['text']);
         $this->assertCount(3, $newForm->fields[3]['template']['options']);
-        $this->assertEquals('Label A', $newForm->fields[4]['template']['lower_bound_label']);
+        $this->assertEquals('Item A Low', $newForm->fields[4]['template']['items'][0]['lower_bound_label']);
     }
 
     /** @test */

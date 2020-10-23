@@ -73,8 +73,16 @@ class FormTest extends TestCase
                 'question' => 'Question',
                 'subtitle' => 'Subtitle',
                 'levels' => 5,
-                'lower_bound_label' => 'Label A',
-                'upper_bound_label' => 'Label B',
+                'items' => [
+                    [
+                        'lower_bound_label' => 'Item A Low',
+                        'upper_bound_label' => 'Item A High',
+                    ],
+                    [
+                        'lower_bound_label' => 'Item B Low',
+                        'upper_bound_label' => 'Item B High',
+                    ]
+                ],
                 'show_subtitle' => false,
                 'required' => true,
                 'show_labels' => false,

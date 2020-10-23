@@ -44,8 +44,12 @@ const templates = {
                 "question": "",
                 "subtitle": "",
                 "levels": 5,
-                "lower_bound_label": "Label",
-                "upper_bound_label": "Label",
+                "items": [
+                    {
+                        "lower_bound_label": "Label",
+                        "upper_bound_label": "Label",
+                    }
+                ],
                 "show_subtitle": false,
                 "required": false,
                 "show_labels": true

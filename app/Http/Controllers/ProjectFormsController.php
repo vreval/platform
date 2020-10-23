@@ -62,8 +62,8 @@ class ProjectFormsController extends Controller
             'fields.*.template.dropdown' => ['boolean'],
             'fields.*.template.required' => ['boolean'],
             'fields.*.template.levels' => ['numeric', 'between:2,7'],
-            'fields.*.template.lower_bound_label' => ['string'],
-            'fields.*.template.upper_bound_label' => ['string'],
+            'fields.*.template.items.*.lower_bound_label' => ['string'],
+            'fields.*.template.items.*.upper_bound_label' => ['string'],
             'fields.*.template.show_labels' => ['boolean'],
             'fields.*.template.multiple_choice' => ['boolean'],
         ]);
