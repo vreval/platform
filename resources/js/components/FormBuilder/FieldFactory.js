@@ -4,7 +4,7 @@ const templates = {
             "type": "header",
             "template": {
                 "text": "",
-                "show_subtitle": true,
+                "show_subtitle": false,
                 "subtitle": ""
             }
         }

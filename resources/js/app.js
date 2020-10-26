@@ -63,7 +63,11 @@ Vue.component("projects-table-row", require("./components/ProjectsTableRow.vue")
 Vue.component("scenarios-table-row", require("./components/ScenariosTableRow.vue").default);
 Vue.component("checkpoints-table-row", require("./components/CheckpointsTableRow.vue").default);
 Vue.component("forms-table-row", require("./components/FormsTableRow.vue").default);
-Vue.component("project-form-builder", require("./components/FormBuilder/ProjectFormBuilder").default);
+Vue.component("form-builder", require("./components/FormBuilder/FormBuilder").default);
+Vue.component("questionnaire-builder", require("./components/FormBuilder/QuestionnaireBuilder").default);
+Vue.component("task-slot", require("./components/FormBuilder/TaskSlot").default);
+Vue.component("tabs", require("./components/Tabs").default);
+Vue.component("tab", require("./components/Tab").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -1,3 +1,5 @@
+import jsonDiff from "json-diff";
+
 export default class VrevalForm {
     constructor(data) {
         this.originalData = JSON.parse(JSON.stringify(data));
@@ -16,6 +18,8 @@ export default class VrevalForm {
     }
 
     patch(endpoint) {
+        if (!this.isDirty()) return;
+
         return this.submit(endpoint, "patch");
     }
 
@@ -50,10 +54,23 @@ export default class VrevalForm {
 
     reset() {
         // Object.assign(this, this.originalData);
+        this.errors = {};
         Object.assign(this, JSON.parse(JSON.stringify(this.originalData)));
     }
 
     hasErrors() {
         return Object.keys(this.errors).length > 0;
+    }
+
+    firstError() {
+        return this.errors[Object.keys(this.errors)[0]][0];
+    }
+
+    isDirty() {
+        return this.diff() !== undefined;
+    }
+
+    diff() {
+       return jsonDiff.diff(this.originalData, this.data());
     }
 }

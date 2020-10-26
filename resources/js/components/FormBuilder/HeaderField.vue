@@ -8,7 +8,7 @@
             @down="$emit('down', fieldIndex)"
         ></field-header>
         <div class="mb-2">
-            <input type="text" class="input mb-2 text-3xl" v-model="proxyValue.text" placeholder="Header Text">
+            <input type="text" class="input mb-2 text-3xl" v-model="proxyValue.text" placeholder="Header Text" required>
             <input type="text" class="input" v-if="proxyValue.show_subtitle" v-model="proxyValue.subtitle" placeholder="Subtitle">
         </div>
         <div class="-mx-4 mt-4 px-4 pt-4 border-t flex justify-end">

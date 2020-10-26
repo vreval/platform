@@ -7,6 +7,13 @@ use App\Project;
 
 class ProjectFormsController extends Controller
 {
+    public function index(Project $project)
+    {
+        $this->authorize('manage', $project);
+
+        return response()->json(Form::where('project_id', $project->id)->select(['id', 'name', 'task_id', 'task_type', 'fields'])->get());
+    }
+
     public function show(Project $project, Form $form)
     {
         $this->authorize('manage', $project);

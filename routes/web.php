@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectCheckpointsController;
 use App\Http\Controllers\ProjectFormsController;
+use App\Http\Controllers\ProjectFormTaskController;
 use App\Http\Controllers\ProjectInvitationsController;
 use App\Http\Controllers\ProjectPinsController;
 use App\Http\Controllers\ProjectScenariosController;
@@ -48,9 +49,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/projects/{project}/checkpoints', [ProjectCheckpointsController::class, 'index']);
     Route::post('/projects/{project}/checkpoints', [ProjectCheckpointsController::class, 'store']);
 
+    Route::get('/projects/{project}/forms', [ProjectFormsController::class, 'index']);
     Route::get('/projects/{project}/forms/{form}', [ProjectFormsController::class, 'show']);
     Route::post('/projects/{project}/forms', [ProjectFormsController::class, 'store']);
     Route::patch('/projects/{project}/forms/{form}', [ProjectFormsController::class, 'update']);
+
+    Route::patch('/projects/{project}/forms/{form}/task', [ProjectFormTaskController::class, 'update']);
 
     Route::post('/projects/{project}/pins', [ProjectPinsController::class, 'store']);
     Route::delete('/projects/{project}/pins', [ProjectPinsController::class, 'destroy']);

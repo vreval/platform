@@ -19,8 +19,6 @@
             @endforeach
         </div>
 
-        <div class="mt-4">
-            <project-form-builder :initial-form="{{ json_encode($form) }}"></project-form-builder>
-        </div>
+        <form-builder :initial-form="{{ json_encode($form) }}"></form-builder>
     </div>
 @endsection
