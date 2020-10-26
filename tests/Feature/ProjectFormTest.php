@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Annotation;
 use App\Form;
 use App\helpers\FormFieldFactory;
+use App\Pointing;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
@@ -244,5 +246,44 @@ class ProjectFormTest extends TestCase
         $this->patch($project->path() . '/forms/' . $form->id, $formAttributes);
 
         $this->assertEquals('text', $form->fresh()->fields[0]['type']);
+    }
+
+    /** @test */
+    public function a_user_can_assign_an_annotation_task_to_the_form ()
+    {
+        $user = $this->signIn();
+
+        $project = app(ProjectFactory::class)->withForms(1)->ownedBy($user)->create();
+        $form = $project->forms()->first();
+
+        $annotation = Annotation::factory()
+            ->make(['project_id' => $project->id])
+            ->attributesToArray();
+        $annotation['type'] = Annotation::class;
+
+        $this->patch($project->path() . '/forms/' . $form->id . '/task', $annotation)
+            ->assertSessionHasNoErrors();
+
+        $this->assertInstanceOf(Annotation::class, $form->fresh()->task);
+    }
+
+    /** @test */
+    public function a_user_can_assign_a_pointing_task_to_the_form ()
+    {
+        $this->withoutExceptionHandling();
+        $user = $this->signIn();
+
+        $project = app(ProjectFactory::class)->withForms(1)->ownedBy($user)->create();
+        $form = $project->forms()->first();
+
+        $pointing = Pointing::factory()
+            ->make(['project_id' => $project->id])
+            ->attributesToArray();
+        $pointing['type'] = Pointing::class;
+
+        $this->patch($project->path() . '/forms/' . $form->id . '/task', $pointing)
+            ->assertSessionHasNoErrors();
+
+        $this->assertInstanceOf(Pointing::class, $form->fresh()->task);
     }
 }

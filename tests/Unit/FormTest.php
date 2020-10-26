@@ -2,8 +2,10 @@
 
 namespace Tests\Unit;
 
+use App\Annotation;
 use App\Form;
 use App\helpers\FormFieldFactory;
+use App\Pointing;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -65,6 +67,26 @@ class FormTest extends TestCase
         $form->addRating();
         $form->addRating(['levels' => 3]);
         $this->assertEquals(3, $form->collectFields()->get(1)['template']['levels']);
+    }
+
+    /** @test */
+    public function it_can_add_an_annotation_task()
+    {
+        $form = Form::factory()->create();
+
+        $annotation = Annotation::factory()->create();
+        $form->task()->associate($annotation);
+        $this->assertInstanceOf(Annotation::class, $form->task);
+    }
+
+    /** @test */
+    public function it_can_add_a_pointing_task()
+    {
+        $form = Form::factory()->create();
+
+        $pointing = Pointing::factory()->create();
+        $form->task()->associate($pointing);
+        $this->assertInstanceOf(Pointing::class, $form->task);
     }
 
     /** @test */
