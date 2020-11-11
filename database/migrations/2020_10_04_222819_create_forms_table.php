@@ -19,7 +19,6 @@ class CreateFormsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->text('fields');
-            $table->nullableMorphs('task');
             $table->timestamps();
 
             $table->foreign('project_id')
