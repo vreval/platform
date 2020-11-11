@@ -30,6 +30,17 @@ class Scenario extends Model
         return $this->belongsTo(Project::class);
     }
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class)
+            ->orderBy('position');
+    }
+
+    public function taskAtPosition($position)
+    {
+        return $this->tasks->where('position', $position)->first();
+    }
+
     public function checkpoints()
     {
         return $this->belongsToMany(Checkpoint::class, 'scenario_checkpoints')

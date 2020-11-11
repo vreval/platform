@@ -8,6 +8,7 @@ use App\Http\Controllers\ProjectInvitationsController;
 use App\Http\Controllers\ProjectPinsController;
 use App\Http\Controllers\ProjectScenariosController;
 use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\TasksController;
 use App\Http\Controllers\UserSearchController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/projects/{project}/scenarios', [ProjectScenariosController::class, 'store']);
     Route::patch('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'update']);
     Route::delete('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'destroy']);
+
+    Route::post('/projects/{project}/scenarios/{scenario}/tasks', [TasksController::class, 'store']);
 
     Route::get('/projects/{project}/checkpoints', [ProjectCheckpointsController::class, 'index']);
     Route::post('/projects/{project}/checkpoints', [ProjectCheckpointsController::class, 'store']);

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Checkpoint;
 use App\Project;
 use App\Scenario;
+use App\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Setup\ProjectFactory;
@@ -180,22 +181,85 @@ class ScenarioTest extends TestCase
     /** @test */
     public function tasks_can_be_added()
     {
+        $user = $this->signIn();
+
+        $project = app(ProjectFactory::class)
+            ->ownedBy($user)
+            ->withScenarios(1)
+            ->withCheckpoints(3)
+            ->withForms(3)
+            ->create();
+        $scenario = $project->scenarios()->first();
+
+        $this->post($scenario->path() . '/tasks', [
+            'tasks' => [
+                [
+                    'start_checkpoint_id' => $project->checkpoints[1]->id,
+                    'start_form_id' => $project->forms[1]->id
+                ],
+                [
+                    'start_checkpoint_id' => $project->checkpoints[0]->id,
+                    'start_form_id' => $project->forms[0]->id
+                ],
+                [
+                    'start_checkpoint_id' => $project->checkpoints[2]->id,
+                    'start_form_id' => $project->forms[2]->id
+                ],
+            ]
+        ]);
+
+        $this->assertCount(3, $scenario->tasks);
+        $this->assertEquals(0, $scenario->tasks->first()->position);
+        $this->assertEquals(2, $scenario->tasks->last()->position);
+
+        // Check the order
+        $this->assertEquals(2, $scenario->taskAtPosition(0)->checkpoint->id);
+        $this->assertEquals(3, $scenario->taskAtPosition(2)->checkpoint->id);
+
+        $this->post($scenario->path() . '/tasks', [
+            'tasks' => [
+                [
+                    'start_checkpoint_id' => $project->checkpoints[1]->id,
+                    'start_form_id' => $project->forms[1]->id
+                ],
+                [
+                    'start_checkpoint_id' => $project->checkpoints[0]->id,
+                    'start_form_id' => $project->forms[0]->id
+                ],
+            ]
+        ]);
+        $this->assertCount(2, $scenario->fresh()->tasks);
+    }
+
+    /** @test */
+    public function tasks_are_validated_correctly()
+    {
         $this->withoutExceptionHandling();
         $user = $this->signIn();
 
         $project = app(ProjectFactory::class)
             ->ownedBy($user)
             ->withScenarios(1)
+            ->withCheckpoints(1)
+            ->withForms(1)
             ->create();
         $scenario = $project->scenarios()->first();
 
         $this->post($scenario->path() . '/tasks', [
-            'start_checkpoint_id' => 1,
-            'start_form_id' => 1,
-            'type_id' => 1,
-            'settings' => [],
+            'tasks' => [
+                [
+                    'start_checkpoint_id' => $project->checkpoints->first()->id,
+                    'start_form_id' => $project->forms->first()->id,
+                    'type_id' => 1,
+                    'settings' => [
+                        'max_walking_distance' => 100,
+                        'tracking_interval' => 0.25
+                    ]
+                ],
+            ]
         ]);
 
-        $this->assertCount(1, $scenario->tasks);
+        $this->assertEquals(1, $scenario->fresh()->tasks->first()->checkpoint->id);
+        $this->assertEquals(1, $scenario->fresh()->tasks->first()->form->id);
     }
 }
