@@ -70,26 +70,6 @@ class FormTest extends TestCase
     }
 
     /** @test */
-    public function it_can_add_an_annotation_task()
-    {
-        $form = Form::factory()->create();
-
-        $annotation = Annotation::factory()->create();
-        $form->task()->associate($annotation);
-        $this->assertInstanceOf(Annotation::class, $form->task);
-    }
-
-    /** @test */
-    public function it_can_add_a_pointing_task()
-    {
-        $form = Form::factory()->create();
-
-        $pointing = Pointing::factory()->create();
-        $form->task()->associate($pointing);
-        $this->assertInstanceOf(Pointing::class, $form->task);
-    }
-
-    /** @test */
     public function form_field_factory_merges_field_options_into_defaults()
     {
         $fieldFactory = new FormFieldFactory();

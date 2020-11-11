@@ -54,8 +54,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/projects/{project}/forms', [ProjectFormsController::class, 'store']);
     Route::patch('/projects/{project}/forms/{form}', [ProjectFormsController::class, 'update']);
 
-    Route::patch('/projects/{project}/forms/{form}/task', [ProjectFormTaskController::class, 'update']);
-
     Route::post('/projects/{project}/pins', [ProjectPinsController::class, 'store']);
     Route::delete('/projects/{project}/pins', [ProjectPinsController::class, 'destroy']);
 

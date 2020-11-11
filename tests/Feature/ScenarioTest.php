@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 
-class ProjectScenarioTest extends TestCase
+class ScenarioTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -82,6 +82,39 @@ class ProjectScenarioTest extends TestCase
     }
 
     /** @test */
+    public function a_scenario_can_be_updated()
+    {
+        $project = app(ProjectFactory::class)->withScenarios(1)->create();
+
+        $this->actingAs($project->owner)
+            ->patch($project->scenarios->first()->path(), ['name' => 'Updated scenario name'])
+            ->assertSessionHasNoErrors();
+
+        $this->assertEquals('Updated scenario name', $project->scenarios()->first()->name);
+
+        $this->assertDatabaseHas('scenarios', [
+            'name' => 'Updated scenario name'
+        ]);
+    }
+
+    /** @test */
+    public function project_owners_and_members_can_delete_their_scenarios()
+    {
+        $project = app(ProjectFactory::class)
+            ->ownedBy($this->signIn())
+            ->withScenarios(1)
+            ->create();
+        $scenario = $project->scenarios->first();
+
+        $this->assertDatabaseCount('scenarios', 1);
+
+        $this->delete($scenario->path())
+            ->assertRedirect($project->path());
+
+        $this->assertDatabaseCount('scenarios', 0);
+    }
+
+    /** @test */
     public function checkpoints_can_be_included_during_scenario_creation()
     {
         $user = $this->signIn();
@@ -111,23 +144,7 @@ class ProjectScenarioTest extends TestCase
     }
 
     /** @test */
-    public function a_scenario_can_be_updated()
-    {
-        $project = app(ProjectFactory::class)->withScenarios(1)->create();
-
-        $this->actingAs($project->owner)
-            ->patch($project->scenarios->first()->path(), ['name' => 'Updated scenario name'])
-            ->assertSessionHasNoErrors();
-
-        $this->assertEquals('Updated scenario name', $project->scenarios()->first()->name);
-
-        $this->assertDatabaseHas('scenarios', [
-            'name' => 'Updated scenario name'
-        ]);
-    }
-
-    /** @test */
-    public function a_scenarios_checkpoints_relation_can_be_updated()
+    public function checkpoints_relation_can_be_updated()
     {
         $user = $this->signIn();
 
@@ -161,19 +178,24 @@ class ProjectScenarioTest extends TestCase
     }
 
     /** @test */
-    public function project_owners_and_members_can_delete_their_scenarios()
+    public function tasks_can_be_added()
     {
+        $this->withoutExceptionHandling();
+        $user = $this->signIn();
+
         $project = app(ProjectFactory::class)
-            ->ownedBy($this->signIn())
+            ->ownedBy($user)
             ->withScenarios(1)
             ->create();
-        $scenario = $project->scenarios->first();
+        $scenario = $project->scenarios()->first();
 
-        $this->assertDatabaseCount('scenarios', 1);
+        $this->post($scenario->path() . '/tasks', [
+            'start_checkpoint_id' => 1,
+            'start_form_id' => 1,
+            'type_id' => 1,
+            'settings' => [],
+        ]);
 
-        $this->delete($scenario->path())
-            ->assertRedirect($project->path());
-
-        $this->assertDatabaseCount('scenarios', 0);
+        $this->assertCount(1, $scenario->tasks);
     }
 }

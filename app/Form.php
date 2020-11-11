@@ -14,17 +14,11 @@ class Form extends Model
     protected $fillable = ['name', 'description', 'fields'];
     protected $casts = ['fields' => 'array'];
     protected $attributes = ['fields' => '[]'];
-    protected $appends = ['attached_task'];
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->fieldFactory = new FormFieldFactory();
-    }
-
-    public function getAttachedTaskAttribute()
-    {
-        return $this->task;
     }
 
     public function collectFields()
@@ -55,10 +49,5 @@ class Form extends Model
     public function addRating(array $template = [])
     {
         $this->fields = array_merge($this->fields, [$this->fieldFactory->makeRating($template)]);
-    }
-
-    public function task()
-    {
-        return $this->morphTo();
     }
 }
