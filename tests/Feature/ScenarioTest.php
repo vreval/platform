@@ -8,6 +8,7 @@ use App\Scenario;
 use App\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Artisan;
 use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 
@@ -181,6 +182,7 @@ class ScenarioTest extends TestCase
     /** @test */
     public function tasks_can_be_added()
     {
+        Artisan::call('db:seed', ['--class' => 'TaskTypeSeeder']);
         $user = $this->signIn();
 
         $project = app(ProjectFactory::class)
@@ -195,18 +197,24 @@ class ScenarioTest extends TestCase
             'tasks' => [
                 [
                     'start_checkpoint_id' => $project->checkpoints[1]->id,
-                    'start_form_id' => $project->forms[1]->id
+                    'start_form_id' => $project->forms[1]->id,
+                    'type_id' => 1,
+                    'settings' => ['tracking_frequency' => 0.25]
                 ],
                 [
                     'start_checkpoint_id' => $project->checkpoints[0]->id,
-                    'start_form_id' => $project->forms[0]->id
+                    'start_form_id' => $project->forms[0]->id,
+                    'type_id' => 1,
+                    'settings' => ['tracking_frequency' => 0.25]
                 ],
                 [
                     'start_checkpoint_id' => $project->checkpoints[2]->id,
-                    'start_form_id' => $project->forms[2]->id
+                    'start_form_id' => $project->forms[2]->id,
+                    'type_id' => 1,
+                    'settings' => ['tracking_frequency' => 0.25]
                 ],
             ]
-        ]);
+        ])->assertSessionHasNoErrors();
 
         $this->assertCount(3, $scenario->tasks);
         $this->assertEquals(0, $scenario->tasks->first()->position);
@@ -220,11 +228,15 @@ class ScenarioTest extends TestCase
             'tasks' => [
                 [
                     'start_checkpoint_id' => $project->checkpoints[1]->id,
-                    'start_form_id' => $project->forms[1]->id
+                    'start_form_id' => $project->forms[1]->id,
+                    'type_id' => 1,
+                    'settings' => ['tracking_frequency' => 0.25]
                 ],
                 [
                     'start_checkpoint_id' => $project->checkpoints[0]->id,
-                    'start_form_id' => $project->forms[0]->id
+                    'start_form_id' => $project->forms[0]->id,
+                    'type_id' => 1,
+                    'settings' => ['tracking_frequency' => 0.25]
                 ],
             ]
         ]);
@@ -234,7 +246,7 @@ class ScenarioTest extends TestCase
     /** @test */
     public function tasks_are_validated_correctly()
     {
-        $this->withoutExceptionHandling();
+        Artisan::call('db:seed', ['--class' => 'TaskTypeSeeder']);
         $user = $this->signIn();
 
         $project = app(ProjectFactory::class)
@@ -250,16 +262,30 @@ class ScenarioTest extends TestCase
                 [
                     'start_checkpoint_id' => $project->checkpoints->first()->id,
                     'start_form_id' => $project->forms->first()->id,
-                    'type_id' => 1,
+                    'type_id' => 5,
                     'settings' => [
                         'max_walking_distance' => 100,
                         'tracking_interval' => 0.25
                     ]
                 ],
             ]
-        ]);
+        ])->assertSessionHasNoErrors();
 
         $this->assertEquals(1, $scenario->fresh()->tasks->first()->checkpoint->id);
         $this->assertEquals(1, $scenario->fresh()->tasks->first()->form->id);
+
+        $this->post($scenario->path() . '/tasks', [
+            'tasks' => [
+                [
+                    'start_checkpoint_id' => $project->checkpoints->first()->id,
+                    'start_form_id' => $project->forms->first()->id,
+                    'type_id' => 6,
+                    'settings' => [
+                        'max_walking_distance' => 100,
+                        'tracking_interval' => 0.25
+                    ]
+                ],
+            ]
+        ])->assertSessionHasErrors('tasks.0.type_id');
     }
 }

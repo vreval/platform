@@ -13,6 +13,7 @@ class Task extends Model
         'scenario_id',
         'start_checkpoint_id',
         'start_form_id',
+        'type_id',
         'position'
     ];
 
@@ -24,5 +25,10 @@ class Task extends Model
     public function form()
     {
         return $this->belongsTo(Form::class, 'start_form_id');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(TaskType::class);
     }
 }

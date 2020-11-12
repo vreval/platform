@@ -19,6 +19,7 @@ class CreateTasksTable extends Migration
             $table->unsignedBigInteger('start_checkpoint_id');
             $table->unsignedBigInteger('start_form_id');
             $table->unsignedTinyInteger('position')->unique();
+            $table->unsignedBigInteger('type_id');
             $table->timestamps();
 
             $table->foreign('scenario_id')
@@ -34,6 +35,11 @@ class CreateTasksTable extends Migration
             $table->foreign('start_form_id')
                 ->references('id')
                 ->on('forms')
+                ->onDelete('cascade');
+
+            $table->foreign('type_id')
+                ->references('id')
+                ->on('task_types')
                 ->onDelete('cascade');
         });
     }

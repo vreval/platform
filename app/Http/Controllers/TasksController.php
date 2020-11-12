@@ -16,7 +16,7 @@ class TasksController extends Controller
             'tasks' => ['required', 'array'],
             'tasks.*.start_checkpoint_id' => ['exists:checkpoints,id'],
             'tasks.*.start_form_id' => ['exists:forms,id'],
-//            'tasks.*.type_id' => ['required', 'exists:task_types,id'],
+            'tasks.*.type_id' => ['required', 'exists:task_types,id'],
             'tasks.*.settings' => ['required', 'array']
         ]);
 
