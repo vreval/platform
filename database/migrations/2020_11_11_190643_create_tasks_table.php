@@ -13,6 +13,13 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
+        Schema::create('task_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->text('description');
+            $table->text('settings');
+        });
+
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('scenario_id');
@@ -52,5 +59,6 @@ class CreateTasksTable extends Migration
     public function down()
     {
         Schema::dropIfExists('tasks');
+        Schema::dropIfExists('task_types');
     }
 }
