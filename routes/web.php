@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('projects', ProjectsController::class);
 
+    Route::get('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'show']);
     Route::post('/projects/{project}/scenarios', [ProjectScenariosController::class, 'store']);
     Route::patch('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'update']);
     Route::delete('/projects/{project}/scenarios/{scenario}', [ProjectScenariosController::class, 'destroy']);

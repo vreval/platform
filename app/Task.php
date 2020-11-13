@@ -17,6 +17,13 @@ class Task extends Model
         'position'
     ];
 
+    protected $appends = ['type_name'];
+
+    public function getTypeNameAttribute()
+    {
+        return $this->type->name;
+    }
+
     public function checkpoint()
     {
         return $this->belongsTo(Checkpoint::class, 'start_checkpoint_id');
