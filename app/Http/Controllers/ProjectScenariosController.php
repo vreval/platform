@@ -7,6 +7,16 @@ use App\Scenario;
 
 class ProjectScenariosController extends Controller
 {
+    public function show(Project $project, Scenario $scenario)
+    {
+        $this->authorize('manage', $project);
+
+        return view('scenarios.show', [
+            'project' => $project,
+            'scenario' => $scenario
+        ]);
+    }
+
     public function store(Project $project)
     {
         $this->authorize('manage', $project);

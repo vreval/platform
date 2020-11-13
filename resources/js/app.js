@@ -63,9 +63,13 @@ Vue.component("projects-table-row", require("./components/ProjectsTableRow.vue")
 Vue.component("scenarios-table-row", require("./components/ScenariosTableRow.vue").default);
 Vue.component("checkpoints-table-row", require("./components/CheckpointsTableRow.vue").default);
 Vue.component("forms-table-row", require("./components/FormsTableRow.vue").default);
+
+Vue.component("builder-wrapper", require("./components/BuilderWrapper").default);
+Vue.component("scenario-builder", require("./components/ScenarioBuilder/ScenarioBuilder").default);
 Vue.component("form-builder", require("./components/FormBuilder/FormBuilder").default);
+
 Vue.component("questionnaire-builder", require("./components/FormBuilder/QuestionnaireBuilder").default);
-Vue.component("task-slot", require("./components/FormBuilder/TaskSlot").default);
+
 Vue.component("tabs", require("./components/Tabs").default);
 Vue.component("tab", require("./components/Tab").default);
 
