@@ -4,7 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-String.prototype.ucFirst = function() {
+String.prototype.ucFirst = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
@@ -87,34 +87,34 @@ const app = new Vue({
                 orderBy: 'name',
                 order: 'asc',
                 headers: [
-                    { text: 'Name', width: `${1/2 * 100}%`, name: 'name' },
-                    { text: 'Created at', width: `${1/4 * 100}%`, name: 'formatted_created' },
-                    { text: 'Updated at', width: `${1/4 * 100}%`, name: 'relative_updated' },
+                    {text: 'Name', width: `${1 / 2 * 100}%`, name: 'name'},
+                    {text: 'Created at', width: `${1 / 4 * 100}%`, name: 'formatted_created'},
+                    {text: 'Updated at', width: `${1 / 4 * 100}%`, name: 'relative_updated'},
                 ]
             },
             scenariosTableOptions: {
                 orderBy: 'name',
                 order: 'asc',
                 headers: [
-                    { text: 'Name', width: `${3/4 * 100}%`, name: 'name' },
-                    { text: 'Checkpoints', width: `${1/4 * 100}%`, name: 'checkpoint_count' },
+                    {text: 'Name', width: `${3 / 4 * 100}%`, name: 'name'},
+                    {text: 'Checkpoints', width: `${1 / 4 * 100}%`, name: 'checkpoint_count'},
                 ]
             },
             checkpointsTableOptions: {
                 orderBy: 'name',
                 order: 'asc',
                 headers: [
-                    { text: 'Name', width: `${1/2 * 100}%`, name: 'name' },
-                    { text: 'Type', width: `${1/4 * 100}%`, name: 'checkpoint_count' },
-                    { text: 'Behaviour', width: `${1/4 * 100}%`, name: 'checkpoint_count' },
+                    {text: 'Name', width: `${1 / 2 * 100}%`, name: 'name'},
+                    {text: 'Type', width: `${1 / 4 * 100}%`, name: 'checkpoint_count'},
+                    {text: 'Behaviour', width: `${1 / 4 * 100}%`, name: 'checkpoint_count'},
                 ]
             },
             formsTableOptions: {
                 orderBy: 'name',
                 order: 'asc',
                 headers: [
-                    { text: 'Name', width: `${3/4 * 100}%`, name: 'name' },
-                    { text: 'Fields', width: `${1/4 * 100}%`, name: 'field_count' },
+                    {text: 'Name', width: `${3 / 4 * 100}%`, name: 'name'},
+                    {text: 'Fields', width: `${1 / 4 * 100}%`, name: 'field_count'},
                 ]
             }
         }

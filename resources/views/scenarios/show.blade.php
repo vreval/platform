@@ -1,10 +1,10 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container mx-auto mt-8">
         <div class="flex justify-between items-center mb-8">
             <div class="text-gray-500">
-                <a href="/projects">My Projects</a> / <a href="{{ $project->path() }}">{{ $project->name }}</a> / {{ $scenario->name }}
+                <a href="/projects">My Projects</a> / <a href="{{ $project->path() }}">{{ $project->name }}</a>
+                / {{ $scenario->name }}
             </div>
             <a href="{{ $project->path() . '/edit' }}" @click.prevent="$modal.show('edit-project')"
                class="btn btn-gray-outline ml-6">Edit</a>
@@ -19,6 +19,13 @@
             @endforeach
         </div>
 
-        <builder-wrapper wrappee="scenario-builder" :data="{{ json_encode($scenario->tasks) }}"></builder-wrapper>
+        <div class="mt-4">
+            <builder-wrapper
+                    wrappee="scenario-builder"
+                    :project="{{ json_encode($project) }}"
+                    :component="{{ json_encode($scenario) }}"
+                    :data="{{ json_encode($scenario->tasks) }}"
+            ></builder-wrapper>
+        </div>
     </div>
 @endsection

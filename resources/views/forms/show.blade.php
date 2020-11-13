@@ -4,7 +4,8 @@
     <div class="container mx-auto mt-8">
         <div class="flex justify-between items-center mb-8">
             <div class="text-gray-500">
-                <a href="/projects">My Projects</a> / <a href="{{ $project->path() }}">{{ $project->name }}</a> / {{ $form->name }}
+                <a href="/projects">My Projects</a> / <a href="{{ $project->path() }}">{{ $project->name }}</a>
+                / {{ $form->name }}
             </div>
             <a href="{{ $project->path() . '/edit' }}" @click.prevent="$modal.show('edit-project')"
                class="btn btn-gray-outline ml-6">Edit</a>
