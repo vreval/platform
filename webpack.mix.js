@@ -21,3 +21,4 @@ mix
         processCssUrls: false,
         postCss: [tailwindcss("./tailwind.config.js")]
     })
+    .sourceMaps()
