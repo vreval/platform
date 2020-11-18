@@ -25,6 +25,6 @@ class TaskTest extends TestCase
             'position' => 1
         ]);
 
-        $this->assertEquals('annotation', $task->type_name);
+        $this->assertEquals('Annotation', $task->type_name);
     }
 }

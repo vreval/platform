@@ -30,7 +30,7 @@ class Scenario extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function tasks()
+    public function fields()
     {
         return $this->hasMany(Task::class)
             ->orderBy('position');
@@ -38,7 +38,7 @@ class Scenario extends Model
 
     public function taskAtPosition($position)
     {
-        return $this->tasks->where('position', $position)->first();
+        return $this->fields->where('position', $position)->first();
     }
 
     public function checkpoints()

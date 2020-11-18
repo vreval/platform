@@ -12,7 +12,7 @@ class Project extends Model
 
     protected static $recordableEvents = ['created', 'updated'];
     protected $fillable = ['name', 'description', 'owner_id'];
-    protected $with = ['members', 'scenarios', 'checkpoints'];
+    protected $with = ['members', 'scenarios', 'checkpoints', 'forms'];
     protected $appends = ['relative_updated', 'formatted_created', 'is_pinned'];
 
     public function getRelativeUpdatedAttribute()

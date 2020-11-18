@@ -11,7 +11,7 @@ class ProjectFormsController extends Controller
     {
         $this->authorize('manage', $project);
 
-        return response()->json(Form::where('project_id', $project->id)->select(['id', 'name', 'task_id', 'task_type', 'fields'])->get());
+        return response()->json(Form::where('project_id', $project->id)->select(['id', 'name', 'fields'])->get());
     }
 
     public function show(Project $project, Form $form)

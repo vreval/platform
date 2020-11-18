@@ -17,6 +17,7 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description');
+            $table->string('icon');
             $table->text('settings');
         });
 

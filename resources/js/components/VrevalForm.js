@@ -32,9 +32,10 @@ export default class VrevalForm {
     }
 
     submit(endpoint, requestType = "post") {
-        return axios[requestType](endpoint, this.data())
-            .then(this.onSuccess.bind(this))
-            .catch(this.onFail.bind(this));
+        console.log(this.data());
+        // return axios[requestType](endpoint, this.data())
+        //     .then(this.onSuccess.bind(this))
+        //     .catch(this.onFail.bind(this));
     }
 
     onSuccess(response) {

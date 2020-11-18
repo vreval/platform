@@ -8,23 +8,13 @@
         @up="$emit('up', fieldIndex)"
     ></field-header>
 
-    <div v-if="customTaskSettings">
-      <label class="input-label">Customize task defaults</label>
-      <textarea class="input font-mono" rows="10">{{ JSON.stringify(settings, null, 2) }}</textarea>
-    </div>
-
-    <div v-if="customAvatarBehaviour" class="-mx-4 mt-4 px-4 pt-4 border-t">
-      <label class="input-label">Customize avatar behaviour</label>
-      <textarea class="input font-mono" rows="10">{{ JSON.stringify(avatarBehaviour, null, 2) }}</textarea>
-    </div>
-
     <div class="-mx-4 mt-4 px-4 pt-4 border-t">
       <div class="mb-2 flex -mx-2">
         <div class="w-1/2 mx-2">
           <label class="input-label">Start checkpoint:</label>
           <div class="relative flex items-center">
-            <select class="input">
-              <option v-if="forms.length === 0" selected>You haven't created any checkpoints yet.</option>
+            <select class="input" v-model="proxyValue.start_checkpoint_id">
+              <option v-if="checkpoints.length === 0" :value="null" selected disabled>You haven't created any checkpoints yet.</option>
               <option v-for="form in checkpoints" :key="form.id" :value="form.id">{{ form.name }}</option>
             </select>
             <i class="fas fa-caret-down absolute right-0 mr-4"></i>
@@ -34,9 +24,9 @@
         <div class="w-1/2 mx-2">
           <label class="input-label">Start form:</label>
           <div class="relative flex items-center">
-            <select class="input">
-              <option v-if="forms.length === 0" selected>You haven't created any forms yet.</option>
+            <select class="input" v-model="proxyValue.start_form_id">
               <option v-for="form in forms" :key="form.id" :value="form.id">{{ form.name }}</option>
+              <option v-if="forms.length === 0" :value="null" selected disabled>You haven't created any forms yet.</option>
             </select>
             <i class="fas fa-caret-down absolute right-0 mr-4"></i>
           </div>
@@ -55,8 +45,8 @@
       <div class="mb-2">
         <label class="input-label">Select a form the annotations should use</label>
         <div class="relative flex items-center">
-          <select class="input">
-            <option v-if="forms.length === 0" selected>You haven't created any forms yet.</option>
+          <select class="input" v-model="proxyValue.form_id">
+            <option v-if="forms.length === 0" value="null" disabled>You haven't created any forms yet.</option>
             <option v-for="form in forms" :key="form.id" :value="form.id">{{ form.name }}</option>
           </select>
           <i class="fas fa-caret-down absolute right-0 mr-4"></i>
@@ -66,30 +56,29 @@
       <div class="mb-2">
         <label class="input-label">How many annotations should be placed?</label>
         <div class="relative flex items-center">
-          <span class="mr-2">{{ amount }}</span>
-          <input type="range" min="1" max="10" step="1" v-model="amount">
+          <span class="input-label mr-2">{{ proxyValue.count }}</span>
+          <input type="range" min="1" max="10" step="1" v-model="proxyValue.count">
         </div>
+      </div>
+    </div>
+
+    <div class="-mx-4 mt-4 px-4 pt-4 border-t">
+      <div class="mb-2">
+        <input id="customize-task-settings" type="checkbox" v-model="customTaskSettings">
+        <label for="customize-task-settings" class="input-label">Customize task defaults</label>
+        <textarea v-if="customTaskSettings" class="input font-mono" rows="5">{{ JSON.stringify(settings, null, 2) }}</textarea>
+      </div>
+
+      <div class="mb-2">
+        <input id="customize-avatar-behaviour" type="checkbox" v-model="customAvatarBehaviour">
+        <label for="customize-avatar-behaviour" class="input-label">Customize avatar behaviour</label>
+        <textarea v-if="customAvatarBehaviour" class="input font-mono" rows="5">{{ JSON.stringify(avatarBehaviour, null, 2) }}</textarea>
       </div>
     </div>
 
     <!-- Footer ------------------------------------------------------------------------------------------------ -->
     <div class="-mx-4 mt-4 px-4 pt-4 border-t flex justify-end">
-      <button
-          class="btn btn-gray-text"
-          @click="customTaskSettings = !customTaskSettings"
-      >
-        <i v-if="!customTaskSettings" class="far fa-circle mr-1"></i>
-        <i v-else class="far fa-dot-circle text-green-400 mr-1"></i>
-        Customize task defaults
-      </button>
-      <button
-          class="btn btn-gray-text"
-          @click="customAvatarBehaviour = !customAvatarBehaviour"
-      >
-        <i v-if="!customAvatarBehaviour" class="far fa-circle mr-1"></i>
-        <i v-else class="far fa-dot-circle text-green-400 mr-1"></i>
-        Customize avatar behaviour
-      </button>
+      <span>Footer</span>
     </div>
   </div>
 </template>
@@ -103,6 +92,7 @@ export default {
     FieldHeader
   },
   props: {
+    project: Object,
     value: Object,
     fieldIndex: Number
   },
@@ -118,17 +108,8 @@ export default {
   },
   data() {
     return {
-      amount: 3,
-      checkpoints: [
-        {id: 1, name: 'Baseline'},
-        {id: 2, name: 'Recovery'},
-        {id: 3, name: 'Stressor'},
-      ],
-      forms: [
-        {id: 1, name: 'Fakeform 1'},
-        {id: 2, name: 'Fakeform 2'},
-        {id: 3, name: 'Fakeform 3'},
-      ],
+      checkpoints: this.project.checkpoints,
+      forms: this.project.forms,
       customTaskSettings: false,
       customAvatarBehaviour: false,
       avatarBehaviour: {

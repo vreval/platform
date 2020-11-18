@@ -6,25 +6,13 @@
                 <a href="/projects">My Projects</a> / <a href="{{ $project->path() }}">{{ $project->name }}</a>
                 / {{ $scenario->name }}
             </div>
-            <a href="{{ $project->path() . '/edit' }}" @click.prevent="$modal.show('edit-project')"
-               class="btn btn-gray-outline ml-6">Edit</a>
-        </div>
-        <div class="flex justify-end">
-            <img class="mr-2 rounded-full w-12 border-4 border-green-400" src="{{ gravatar_url($project->owner) }}"
-                 alt="{{ $project->owner->name }}'s avatar" title="{{ $project->owner->name }}">
-
-            @foreach($project->members as $member)
-                <img class="mr-2 rounded-full w-12 border-4 border-gray-600" src="{{ gravatar_url($member) }}"
-                     alt="{{ $member->name }}'s avatar" title="{{ $member->name }}">
-            @endforeach
         </div>
 
         <div class="mt-4">
             <builder-wrapper
                     wrappee="scenario-builder"
                     :project="{{ json_encode($project) }}"
-                    :component="{{ json_encode($scenario) }}"
-                    :data="{{ json_encode($scenario->tasks) }}"
+                    :data="{{ json_encode($scenario->with('fields')->first()) }}"
             ></builder-wrapper>
         </div>
     </div>

@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     isDirty() {
-      return this.form.isDirty() || this.task.isDirty();
+      return this.form.isDirty();
     },
     projectPath() {
       return `/projects/${this.initialForm.project_id}`;

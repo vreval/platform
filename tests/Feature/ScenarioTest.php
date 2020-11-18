@@ -194,7 +194,7 @@ class ScenarioTest extends TestCase
         $scenario = $project->scenarios()->first();
 
         $this->post($scenario->path() . '/tasks', [
-            'tasks' => [
+            'fields' => [
                 [
                     'start_checkpoint_id' => $project->checkpoints[1]->id,
                     'start_form_id' => $project->forms[1]->id,
@@ -216,16 +216,16 @@ class ScenarioTest extends TestCase
             ]
         ])->assertSessionHasNoErrors();
 
-        $this->assertCount(3, $scenario->tasks);
-        $this->assertEquals(0, $scenario->tasks->first()->position);
-        $this->assertEquals(2, $scenario->tasks->last()->position);
+        $this->assertCount(3, $scenario->fields);
+        $this->assertEquals(0, $scenario->fields->first()->position);
+        $this->assertEquals(2, $scenario->fields->last()->position);
 
         // Check the order
         $this->assertEquals(2, $scenario->taskAtPosition(0)->checkpoint->id);
         $this->assertEquals(3, $scenario->taskAtPosition(2)->checkpoint->id);
 
         $this->post($scenario->path() . '/tasks', [
-            'tasks' => [
+            'fields' => [
                 [
                     'start_checkpoint_id' => $project->checkpoints[1]->id,
                     'start_form_id' => $project->forms[1]->id,
@@ -240,7 +240,7 @@ class ScenarioTest extends TestCase
                 ],
             ]
         ]);
-        $this->assertCount(2, $scenario->fresh()->tasks);
+        $this->assertCount(2, $scenario->fresh()->fields);
     }
 
     /** @test */
@@ -258,7 +258,7 @@ class ScenarioTest extends TestCase
         $scenario = $project->scenarios()->first();
 
         $this->post($scenario->path() . '/tasks', [
-            'tasks' => [
+            'fields' => [
                 [
                     'start_checkpoint_id' => $project->checkpoints->first()->id,
                     'start_form_id' => $project->forms->first()->id,
@@ -271,21 +271,21 @@ class ScenarioTest extends TestCase
             ]
         ])->assertSessionHasNoErrors();
 
-        $this->assertEquals(1, $scenario->fresh()->tasks->first()->checkpoint->id);
-        $this->assertEquals(1, $scenario->fresh()->tasks->first()->form->id);
+        $this->assertEquals(1, $scenario->fresh()->fields->first()->checkpoint->id);
+        $this->assertEquals(1, $scenario->fresh()->fields->first()->form->id);
 
         $this->post($scenario->path() . '/tasks', [
-            'tasks' => [
+            'fields' => [
                 [
                     'start_checkpoint_id' => $project->checkpoints->first()->id,
                     'start_form_id' => $project->forms->first()->id,
-                    'type_id' => 6,
+                    'type_id' => 7,
                     'settings' => [
                         'max_walking_distance' => 100,
                         'tracking_interval' => 0.25
                     ]
                 ],
             ]
-        ])->assertSessionHasErrors('tasks.0.type_id');
+        ])->assertSessionHasErrors('fields.0.type_id');
     }
 }

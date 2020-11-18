@@ -11,6 +11,7 @@
           :id="`${index}-${field.type_name}`"
           v-model="fields[index]"
           :field-index="index"
+          :project="project"
           @down="down"
           @duplicate="duplicateField"
           @remove="removeField"
@@ -29,7 +30,6 @@
 </template>
 
 <script>
-import make from "./ScenenarioTaskFactory";
 import BuilderFieldsMixin from "../BuilderFieldsMixin";
 import AnnotationTaskField from "./AnnotationTaskField";
 import TaskSelectionModal from "./TaskSelectionModal";
@@ -39,6 +39,9 @@ export default {
   components: {
     AnnotationTaskField,
     TaskSelectionModal
+  },
+  props: {
+    project: Object
   },
   mixins: [
     BuilderFieldsMixin
