@@ -7,7 +7,7 @@
         class="bg-white mb-4 rounded shadow p-4"
     >
       <component
-          :is="`${field.type_name}-task-field`"
+          :is="`${field.slug}-task-field`"
           :id="`${index}-${field.type_name}`"
           v-model="fields[index]"
           :field-index="index"
@@ -32,12 +32,14 @@
 <script>
 import BuilderFieldsMixin from "../BuilderFieldsMixin";
 import AnnotationTaskField from "./AnnotationTaskField";
+import PointingTaskField from "./PointingTaskField";
 import TaskSelectionModal from "./TaskSelectionModal";
 
 export default {
   name: "ScenarioBuilder",
   components: {
     AnnotationTaskField,
+    PointingTaskField,
     TaskSelectionModal
   },
   props: {

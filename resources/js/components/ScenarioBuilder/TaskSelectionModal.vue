@@ -9,7 +9,7 @@
   >
     <h2 class="text-xl">Choose a method for your task...</h2>
     <ul class="-mx-10">
-      <li v-for="(option, key) in options" :key="key"
+      <li v-for="option in options" :key="option.id"
           class="hover:bg-gray-200 cursor-pointer p-4 flex" @click="select(option)">
         <i :class="option.icon" class="text-gray-600 text-4xl w-1/6 text-center -ml-4 mt-4"></i>
         <div class="w-5/6">
@@ -49,20 +49,14 @@ export default {
   data() {
     return {
       options: [],
-      typeMap: [
-        "annotation",
-        "pointing",
-        "placing",
-        "questionnaire",
-        "wayfinding",
-        "camera-path",
-      ]
     }
   },
   methods: {
     select(type) {
-      type.settings.type_name = this.typeMap[type.id - 1];
-      this.proxyValue.push(JSON.parse(JSON.stringify(type.settings)));
+      this.proxyValue.push(JSON.parse(JSON.stringify({
+        ...type.settings,
+        slug: type.slug
+      })));
       this.$modal.hide('task-selection');
     }
   }

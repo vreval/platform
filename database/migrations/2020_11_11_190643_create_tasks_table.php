@@ -16,6 +16,7 @@ class CreateTasksTable extends Migration
         Schema::create('task_types', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->text('description');
             $table->string('icon');
             $table->text('settings');
