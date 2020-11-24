@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Form;
 use App\Http\Controllers\Controller;
 use App\Project;
 use App\Providers\RouteServiceProvider;
@@ -106,6 +107,14 @@ class RegisterController extends Controller
         $baseline->addCheckpoints(collect([$start, $end]));
         $stressor->addCheckpoints(collect([$start, $st1, $st2, $st3, $end]));
         $recovery->addCheckpoints(collect([$start, $tree, $bench, $end]));
+
+        $form1 = Form::factory()->make(['project_id' => $project->id, 'name' => 'Form 1']);
+        $form2 = Form::factory()->make(['project_id' => $project->id, 'name' => 'Form 2']);
+        $form3 = Form::factory()->make(['project_id' => $project->id, 'name' => 'Form 3']);
+
+        $project->addForm($form1->attributesToArray());
+        $project->addForm($form2->attributesToArray());
+        $project->addForm($form3->attributesToArray());
 
         return $user;
     }
