@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between px-4 pb-4 -mx-4 border-b">
         <h4 class="text-xs font-medium tracking-wider uppercase text-gray-600">{{ title }}<span v-if="required" class="text-red-600"> (*)</span></h4>
         <div class="flex">
             <button @click="$emit('duplicate')" type="button" class="btn btn-icon ml-4"><i class="far fa-copy"></i></button>

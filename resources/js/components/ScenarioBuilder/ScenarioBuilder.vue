@@ -7,15 +7,17 @@
         class="bg-white mb-4 rounded shadow p-4"
     >
       <component
-          :is="`${field.slug}-task-field`"
           :id="`${index}-${field.type_name}`"
-          v-model="fields[index]"
+          :is="`${field.slug}-task-field`"
+          :collapsed="field.collapsed"
           :field-index="index"
           :project="project"
+          v-model="fields[index]"
           @down="down"
           @duplicate="duplicateField"
           @remove="removeField"
           @up="up"
+          @open="open"
       ></component>
     </div>
 
@@ -33,6 +35,7 @@
 import BuilderFieldsMixin from "../BuilderFieldsMixin";
 import AnnotationTaskField from "./AnnotationTaskField";
 import PointingTaskField from "./PointingTaskField";
+import PlacingTaskField from "./PlacingTaskField";
 import TaskSelectionModal from "./TaskSelectionModal";
 
 export default {
@@ -40,6 +43,7 @@ export default {
   components: {
     AnnotationTaskField,
     PointingTaskField,
+    PlacingTaskField,
     TaskSelectionModal
   },
   props: {
@@ -48,11 +52,6 @@ export default {
   mixins: [
     BuilderFieldsMixin
   ],
-  methods: {
-    add(type) {
-      this.fields.push(make(type))
-    }
-  }
 }
 </script>
 

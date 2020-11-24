@@ -55,7 +55,8 @@ export default {
     select(type) {
       this.proxyValue.push(JSON.parse(JSON.stringify({
         ...type.settings,
-        slug: type.slug
+        slug: type.slug,
+        collapsed: false
       })));
       this.$modal.hide('task-selection');
     }
