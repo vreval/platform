@@ -36,6 +36,7 @@ import BuilderFieldsMixin from "../BuilderFieldsMixin";
 import AnnotationTaskField from "./AnnotationTaskField";
 import PointingTaskField from "./PointingTaskField";
 import PlacingTaskField from "./PlacingTaskField";
+import QuestionnaireTaskField from "./QuestionnaireTaskField";
 import TaskSelectionModal from "./TaskSelectionModal";
 
 export default {
@@ -44,7 +45,8 @@ export default {
     AnnotationTaskField,
     PointingTaskField,
     PlacingTaskField,
-    TaskSelectionModal
+    TaskSelectionModal,
+    QuestionnaireTaskField
   },
   props: {
     project: Object

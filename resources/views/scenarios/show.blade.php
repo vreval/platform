@@ -12,7 +12,7 @@
             <builder-wrapper
                     wrappee="scenario-builder"
                     :project="{{ json_encode($project) }}"
-                    :data="{{ json_encode($scenario->with('fields')->first()) }}"
+                    :data="{{ json_encode($scenario->load('fields')) }}"
             ></builder-wrapper>
         </div>
     </div>
