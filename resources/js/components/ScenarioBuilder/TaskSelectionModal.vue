@@ -32,7 +32,6 @@ export default {
   mounted() {
     axios.get('/task-types')
         .then(response => {
-          console.log(response.data)
           this.options = response.data
         });
   },

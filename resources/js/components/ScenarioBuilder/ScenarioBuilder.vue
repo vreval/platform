@@ -37,6 +37,7 @@ import AnnotationTaskField from "./AnnotationTaskField";
 import PointingTaskField from "./PointingTaskField";
 import PlacingTaskField from "./PlacingTaskField";
 import QuestionnaireTaskField from "./QuestionnaireTaskField";
+import WayfindingTaskField from "./WayfindingTaskField";
 import TaskSelectionModal from "./TaskSelectionModal";
 
 export default {
@@ -46,7 +47,8 @@ export default {
     PointingTaskField,
     PlacingTaskField,
     TaskSelectionModal,
-    QuestionnaireTaskField
+    QuestionnaireTaskField,
+    WayfindingTaskField
   },
   props: {
     project: Object
