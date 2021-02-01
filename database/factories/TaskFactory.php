@@ -28,6 +28,7 @@ class TaskFactory extends Factory
             'scenario_id' => Scenario::factory(),
             'start_checkpoint_id' => Checkpoint::factory(),
             'start_form_id' => Form::factory(),
+            'type_id' => $this->faker->numberBetween(1, 6)
         ];
     }
 }

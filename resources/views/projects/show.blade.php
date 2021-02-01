@@ -21,7 +21,7 @@
         <div class="flex flex-wrap -mx-2">
             <section class="w-full lg:w-3/4 px-2">
                 <div class="mb-8">
-                    <h3 class="text-gray-400 font-bold mb-4">Scenarios</h3>
+                    <h3 id="header-scenarios" class="text-gray-400 font-bold mb-4">Scenarios</h3>
                     <data-table
                         :items="{{ $project->scenarios()->with('checkpoints')->get() }}"
                         :options="scenariosTableOptions"
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="mb-8">
-                    <h3 class="text-gray-400 font-bold mb-4">Checkpoints</h3>
+                    <h3 id="header-checkpoints" class="text-gray-400 font-bold mb-4">Checkpoints</h3>
                     <data-table
                         :items="{{ $project->checkpoints }}"
                         :options="checkpointsTableOptions"
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="mb-8">
-                    <h3 class="text-gray-400 font-bold mb-4">Forms</h3>
+                    <h3 id="header-forms" class="text-gray-400 font-bold mb-4">Forms</h3>
                     <data-table
                         :items="{{ $project->forms }}"
                         :options="formsTableOptions"

@@ -2,11 +2,11 @@
   <div>
     <div class="mb-4">
       <label class="input-label">Name</label>
-      <input type="text" class="input text-2xl" v-model="data.name">
+      <input type="text" class="input text-2xl" v-model="form.name">
     </div>
     <div class="mb-4">
       <label class="input-label">Description</label>
-      <textarea class="input" rows="5" v-model="data.description"></textarea>
+      <textarea class="input" rows="5" v-model="form.description"></textarea>
     </div>
     <component :is="wrappee" :project="project" v-model="form.fields"></component>
     <transition name="slide-fade">
@@ -36,6 +36,10 @@ export default {
       type: Object,
       required: true
     },
+    endpoint: {
+      type: String,
+      required: true
+    },
     wrappee: {
       type: String,
       required: true
@@ -52,7 +56,7 @@ export default {
   },
   methods: {
     save() {
-      this.form.submit('/someendpoint');
+      this.form.patch(this.endpoint);
     },
     reset() {
       this.form.reset();

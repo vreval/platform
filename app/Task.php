@@ -17,11 +17,16 @@ class Task extends Model
         'position'
     ];
 
-    protected $appends = ['type_name'];
+    protected $appends = ['type_name', 'settings'];
 
     public function getTypeNameAttribute()
     {
         return $this->type->name;
+    }
+
+    public function getSettingsAttribute()
+    {
+        return $this->type->settings;
     }
 
     public function checkpoint()
@@ -36,6 +41,11 @@ class Task extends Model
 
     public function type()
     {
-        return $this->belongsTo(TaskType::class);
+        return $this->belongsTo(TaskType::class, 'type_id');
+    }
+
+    public function settings()
+    {
+        return (object)$this->type->settings;
     }
 }

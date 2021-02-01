@@ -11,6 +11,7 @@
         <div class="mt-4">
             <builder-wrapper
                     wrappee="scenario-builder"
+                    endpoint="{{ $scenario->path() }}"
                     :project="{{ json_encode($project) }}"
                     :data="{{ json_encode($scenario->load('fields')) }}"
             ></builder-wrapper>

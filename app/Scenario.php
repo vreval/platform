@@ -30,7 +30,7 @@ class Scenario extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function fields()
+    public function tasks()
     {
         return $this->hasMany(Task::class)
             ->orderBy('position');

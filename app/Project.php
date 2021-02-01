@@ -40,17 +40,6 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function addScenario(array $data)
-    {
-        $scenario = $this->scenarios()->create($data);
-
-        if (isset($data['checkpoints'])) {
-            $scenario->addCheckpoints(collect($data['checkpoints']));
-        }
-
-        return $scenario;
-    }
-
     public function scenarios()
     {
         return $this->hasMany(Scenario::class);

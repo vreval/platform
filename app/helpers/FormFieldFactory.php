@@ -4,11 +4,9 @@
 namespace App\helpers;
 
 
-use Illuminate\Support\Str;
-
 class FormFieldFactory
 {
-    public function makeHeader($options = [])
+    public function makeHeader($options = []): array
     {
         return $this->mergeOptions([
             'type' => 'header',
@@ -33,7 +31,7 @@ class FormFieldFactory
         return $defaults;
     }
 
-    public function makeText($options = [])
+    public function makeText($options = []): array
     {
         return $this->mergeOptions([
             'type' => 'text',
@@ -41,12 +39,12 @@ class FormFieldFactory
         ], $options);
     }
 
-    public function makeSection()
+    public function makeSection(): array
     {
         return ['type' => 'section', 'template' => []];
     }
 
-    public function makeSelection($options = [])
+    public function makeSelection($options = []): array
     {
         return $this->mergeOptions([
             'type' => 'selection',
@@ -64,7 +62,7 @@ class FormFieldFactory
         ], $options);
     }
 
-    public function makeRating($options = [])
+    public function makeRating($options = []): array
     {
         return $this->mergeOptions([
             'type' => 'rating',

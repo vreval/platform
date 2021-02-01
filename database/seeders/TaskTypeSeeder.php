@@ -35,7 +35,7 @@ class TaskTypeSeeder extends Seeder
                 'icon' => 'fas fa-hand-point-up',
                 'description' => 'Velit dignissim sodales ut eu sem integer vitae justo eget. Gravida dictum fusce ut placerat orci nulla pellentesque. Proin sagittis nisl rhoncus mattis rhoncus urna neque. Cursus eget nunc scelerisque viverra mauris in. Nulla at volutpat diam ut venenatis tellus in metus.',
                 'settings' => [
-                    'description' => "",
+                    'description' => "Pointing description",
                     'start_checkpoint_id' => null,
                     'start_form_id' => null,
                     'count' => 3,

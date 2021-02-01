@@ -6,6 +6,7 @@ use App\Checkpoint;
 use App\Project;
 use App\Scenario;
 use App\Task;
+use Database\Factories\TaskFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
@@ -117,66 +118,43 @@ class ScenarioTest extends TestCase
     }
 
     /** @test */
-    public function checkpoints_can_be_included_during_scenario_creation()
+    public function tasks_relation_can_be_updated()
     {
-        $user = $this->signIn();
-
-        $project = app(ProjectFactory::class)
-            ->ownedBy($user)
-            ->withCheckpoints(3)
-            ->create();
-
-        $scenario = Scenario::factory()->make([
-            'project_id' => $project->id,
-            'checkpoints' => [
-                $project->checkpoints[1]->attributesToArray(),
-                $project->checkpoints[2]->attributesToArray(),
-                $project->checkpoints[0]->attributesToArray()
-            ]
-        ])->attributesToArray();
-
-        $this->post($project->path() . '/scenarios', $scenario)->assertSessionDoesntHaveErrors();
-
-        $checkpoints = Scenario::first()->checkpoints;
-
-        $this->assertCount(3, $checkpoints);
-        $this->assertEquals(2, $checkpoints[0]->pivot->checkpoint_id);
-        $this->assertEquals(3, $checkpoints[1]->pivot->checkpoint_id);
-        $this->assertEquals(1, $checkpoints[2]->pivot->checkpoint_id);
-    }
-
-    /** @test */
-    public function checkpoints_relation_can_be_updated()
-    {
+        Artisan::call('db:seed', ['--class' => 'TaskTypeSeeder']);
         $user = $this->signIn();
 
         $project = app(ProjectFactory::class)
             ->ownedBy($user)
             ->withScenarios(1)
             ->withCheckpoints(3)
+            ->withForms(3)
             ->create();
 
         $scenario = $project->scenarios()->first();
 
-        $this->assertCount(3, $project->checkpoints);
-        $this->assertCount(0, $scenario->checkpoints);
+        $updatedScenario1 = $scenario->attributesToArray();
+        $tasksToAdd = Task::factory()->count(2)->make([
+            'scenario_id' => 1,
+            'start_checkpoint_id' => 1,
+            'start_form_id' => 1,
+        ]);
 
-        $updatedScenarioData = $scenario->attributesToArray();
-        $updatedScenarioData['checkpoints'] = [
-            $project->checkpoints[1]->attributesToArray(),
-            $project->checkpoints[2]->attributesToArray(),
-            $project->checkpoints[0]->attributesToArray(),
+        $updatedScenario1['tasks'] = [
+            $tasksToAdd[0]->attributesToArray(),
+            $tasksToAdd[1]->attributesToArray()
         ];
 
-        $this->patch($project->path() . '/scenarios/' . $scenario->id, $updatedScenarioData)
+        $this->patch($project->path() . '/scenarios/' . $scenario->id, $updatedScenario1)
             ->assertSessionDoesntHaveErrors();
 
-        $checkpoints = $project->scenarios()->first()->checkpoints;
+        $tasks = $scenario->fresh()->tasks;
 
-        $this->assertCount(3, $checkpoints);
-        $this->assertEquals(2, $checkpoints[0]->pivot->checkpoint_id);
-        $this->assertEquals(3, $checkpoints[1]->pivot->checkpoint_id);
-        $this->assertEquals(1, $checkpoints[2]->pivot->checkpoint_id);
+        $this->assertCount(2, $tasks);
+        $this->assertEquals(1, $tasks[0]->position);
+        $this->assertEquals(2, $tasks[1]->position);
+        $this->assertEquals(1, $tasks[0]->id);
+        $this->assertEquals(2, $tasks[1]->id);
+        $this->assertTrue(is_array($tasks[0]->settings));
     }
 
     /** @test */
