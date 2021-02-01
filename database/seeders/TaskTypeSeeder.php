@@ -82,7 +82,10 @@ class TaskTypeSeeder extends Seeder
                 'slug' => 'camerapath',
                 'icon' => 'fas fa-video',
                 'description' => 'Pellentesque pulvinar pellentesque habitant morbi tristique. Enim nec dui nunc mattis enim ut tellus elementum sagittis. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Eu facilisis sed odio morbi quis commodo. Ornare arcu dui vivamus arcu felis bibendum ut tristique. Consectetur adipiscing elit duis tristique sollicitudin nibh.',
-                'settings' => []
+                'settings' => [
+                    'description' => "",
+                    'route' => [],
+                ]
             ],
         ];
 
