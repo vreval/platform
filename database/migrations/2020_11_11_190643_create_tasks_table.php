@@ -27,7 +27,7 @@ class CreateTasksTable extends Migration
             $table->unsignedBigInteger('scenario_id');
             $table->unsignedBigInteger('start_checkpoint_id');
             $table->unsignedBigInteger('start_form_id');
-            $table->unsignedTinyInteger('position')->unique();
+            $table->unsignedTinyInteger('position');
             $table->unsignedBigInteger('type_id');
             $table->timestamps();
 
