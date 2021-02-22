@@ -13,7 +13,8 @@
                     wrappee="scenario-builder"
                     endpoint="{{ $scenario->path() }}"
                     :project="{{ json_encode($project) }}"
-                    :data="{{ json_encode($scenario->load('fields')) }}"
+                    :data="{{ json_encode($scenario->load('tasks')) }}"
+                    fields-name="tasks"
             ></builder-wrapper>
         </div>
     </div>

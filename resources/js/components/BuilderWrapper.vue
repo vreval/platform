@@ -8,7 +8,7 @@
       <label class="input-label">Description</label>
       <textarea class="input" rows="5" v-model="form.description"></textarea>
     </div>
-    <component :is="wrappee" :project="project" v-model="form.fields"></component>
+    <component :is="wrappee" :project="project" v-model="form[fieldsName]"></component>
     <transition name="slide-fade">
       <div v-if="isDirty" class="fixed bottom-0 right-0 flex items-center justify-between p-4 bg-white w-full">
         <div class="container mx-auto">
@@ -47,14 +47,29 @@ export default {
     data: {
       type: Object,
       required: true
+    },
+    fieldsName: {
+      type: String,
+      default: "fields"
     }
   },
   data() {
     return {
-      form: new VrevalForm(this.data)
+      form: new VrevalForm(this.renameFieldsKey(this.data))
     }
   },
   methods: {
+    renameFieldsKey() {
+      // https://stackoverflow.com/questions/38416020/deep-copy-in-es6-using-the-spread-syntax
+      let localData = JSON.parse(JSON.stringify(this.data));
+
+      // https://stackoverflow.com/questions/4647817/javascript-object-rename-key
+      if (this.fieldsName !== "fields") {
+        Object.defineProperty(localData, "fields", Object.getOwnPropertyDescriptor(localData, this.fieldsName));
+      }
+
+      return localData;
+    },
     save() {
       this.form.patch(this.endpoint);
     },
