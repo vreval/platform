@@ -38,7 +38,7 @@ class Scenario extends Model
 
     public function taskAtPosition($position)
     {
-        return $this->fields->where('position', $position)->first();
+        return $this->tasks->where('position', $position)->first();
     }
 
     public function checkpoints()

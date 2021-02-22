@@ -69,7 +69,7 @@ class ProjectScenariosController extends Controller
         return request()->validate([
             'name' => ['required', 'min:3', 'max:150'],
             'description' => ['min:3', 'max:500'],
-            'tasks' => ['required', 'array'],
+            'tasks' => ['array'],
             'tasks.*.start_checkpoint_id' => ['exists:checkpoints,id'],
             'tasks.*.start_form_id' => ['exists:forms,id'],
             'tasks.*.type_id' => ['required', 'exists:task_types,id'],

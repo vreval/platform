@@ -13,19 +13,19 @@ class TasksController extends Controller
         $this->authorize('manage', $project);
 
         $data = request()->validate([
-            'fields' => ['required', 'array'],
-            'fields.*.start_checkpoint_id' => ['exists:checkpoints,id'],
-            'fields.*.start_form_id' => ['exists:forms,id'],
-            'fields.*.type_id' => ['required', 'exists:task_types,id'],
-            'fields.*.settings' => ['required', 'array']
+            'tasks' => ['required', 'array'],
+            'tasks.*.start_checkpoint_id' => ['exists:checkpoints,id'],
+            'tasks.*.start_form_id' => ['exists:forms,id'],
+            'tasks.*.type_id' => ['required', 'exists:task_types,id'],
+            'tasks.*.settings' => ['required', 'array']
         ]);
 
         // Clear tasks before storing new ones
         Task::where('scenario_id', $scenario->id)->delete();
 
-        foreach($data['fields'] as $key => $task) {
+        foreach($data['tasks'] as $key => $task) {
             $task['position'] = $key;
-            $scenario->fields()->create($task);
+            $scenario->tasks()->create($task);
         }
     }
 }
