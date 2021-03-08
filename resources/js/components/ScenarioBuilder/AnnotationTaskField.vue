@@ -43,7 +43,7 @@
       <div class="-mx-4 p-4 border-b">
         <div class="mb-2">
           <label class="input-label">Description</label>
-          <textarea v-model="proxyValue.description" class="input mb-2"
+          <textarea v-model="proxyValue.settings.description" class="input mb-2"
                     placeholder="Describe the task to your participants in enough detail..."
                     rows="5"></textarea>
         </div>
@@ -62,23 +62,9 @@
         <div class="mb-2">
           <label class="input-label">How many annotations should be placed?</label>
           <div class="relative flex items-center">
-            <span class="input-label mr-2">{{ proxyValue.count }}</span>
-            <input type="range" min="1" max="10" step="1" v-model.number="proxyValue.count">
+            <span class="input-label mr-2">{{ proxyValue.settings.count }}</span>
+            <input type="range" min="1" max="10" step="1" v-model.number="proxyValue.settings.count">
           </div>
-        </div>
-      </div>
-
-      <div class="-mx-4 p-4 border-b">
-        <div class="mb-2">
-          <input id="customize-task-settings" type="checkbox" v-model="customTaskSettings">
-          <label for="customize-task-settings" class="input-label">Customize task defaults</label>
-          <textarea v-if="customTaskSettings" class="input font-mono" rows="5" v-model="taskDefaults"></textarea>
-        </div>
-
-        <div class="mb-2">
-          <input id="customize-avatar-behaviour" type="checkbox" v-model="customAvatarBehaviour">
-          <label for="customize-avatar-behaviour" class="input-label">Customize avatar behaviour</label>
-          <textarea v-if="customAvatarBehaviour" class="input font-mono" rows="5">{{ JSON.stringify(avatarBehaviour, null, 2) }}</textarea>
         </div>
       </div>
     </div>
@@ -120,21 +106,6 @@ export default {
     return {
       checkpoints: this.project.checkpoints,
       forms: this.project.forms,
-      customTaskSettings: false,
-      customAvatarBehaviour: false,
-      avatarBehaviour: {
-        movement: "walking",
-        speed: "default",
-        walking_sound: false
-      },
-      settings: {
-        answer_time_min: 120,
-        answer_time_max: 300,
-        walking_distance_max: 500,
-        walking_perimeter_boundary: false,
-        is_tracking: true,
-        tracking_interval: 0.25
-      }
     }
   }
 }

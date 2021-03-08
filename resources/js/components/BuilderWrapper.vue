@@ -24,6 +24,15 @@
 <script>
 import VrevalForm from "./VrevalForm";
 
+function formSubmissions(builderName)  {
+  const requestTypesByBuilder = {
+    'scenario-builder': 'post',
+    'form-builder': 'patch'
+  }
+
+  return requestTypesByBuilder[builderName];
+}
+
 export default {
   name: "BuilderWrapper",
   computed: {
@@ -71,7 +80,8 @@ export default {
       return localData;
     },
     save() {
-      this.form.patch(this.endpoint);
+      // TODO: Inject a smarter thing to allow for multiple post types
+      this.form.submit(this.endpoint, formSubmissions(this.wrappee));
     },
     reset() {
       this.form.reset();

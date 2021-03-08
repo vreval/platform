@@ -70,22 +70,7 @@
         </div>
 
       </div>
-
-      <div class="-mx-4 p-4 border-b">
-        <KeyValueList v-model="test"></KeyValueList>
-
-        <div class="mb-2">
-          <input id="customize-task-settings" type="checkbox" v-model="customTaskSettings">
-          <label for="customize-task-settings" class="input-label">Customize task defaults</label>
-          <textarea v-if="customTaskSettings" class="input font-mono" rows="5">{{ JSON.stringify(settings, null, 2) }}</textarea>
-        </div>
-
-        <div class="mb-2">
-          <input id="customize-avatar-behaviour" type="checkbox" v-model="customAvatarBehaviour">
-          <label for="customize-avatar-behaviour" class="input-label">Customize avatar behaviour</label>
-          <textarea v-if="customAvatarBehaviour" class="input font-mono" rows="5">{{ JSON.stringify(avatarBehaviour, null, 2) }}</textarea>
-        </div>
-      </div>
+      <WayfindingTaskBehaviour v-model="value.behaviour" />
     </div>
 
     <!-- Footer ------------------------------------------------------------------------------------------------ -->
@@ -98,13 +83,13 @@
 <script>
 import FieldHeader from "../FormBuilder/FieldHeader";
 import BuilderFieldMixin from "../BuilderFieldMixin";
-import KeyValueList from "../KeyValueList";
+import WayfindingTaskBehaviour from "./WayfindingTaskBehaviour";
 
 export default {
   name: "WayfindingTaskField",
   components: {
+    WayfindingTaskBehaviour,
     FieldHeader,
-    KeyValueList
   },
   mixins: [BuilderFieldMixin],
   props: {
@@ -124,24 +109,8 @@ export default {
   },
   data() {
     return {
-      test: [],
       checkpoints: this.project.checkpoints,
       forms: this.project.forms,
-      customTaskSettings: false,
-      customAvatarBehaviour: false,
-      avatarBehaviour: {
-        movement: "walking",
-        speed: "default",
-        walking_sound: false
-      },
-      settings: {
-        answer_time_min: 120,
-        answer_time_max: 300,
-        walking_distance_max: 500,
-        walking_perimeter_boundary: false,
-        is_tracking: true,
-        tracking_interval: 0.25
-      }
     }
   },
   methods: {

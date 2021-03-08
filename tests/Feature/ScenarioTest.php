@@ -137,6 +137,7 @@ class ScenarioTest extends TestCase
             'scenario_id' => 1,
             'start_checkpoint_id' => 1,
             'start_form_id' => 1,
+            'settings' => [ 'tracking_frequency' => 4 ]
         ]);
 
         $updatedScenario1['tasks'] = [
@@ -208,13 +209,13 @@ class ScenarioTest extends TestCase
                     'start_checkpoint_id' => $project->checkpoints[1]->id,
                     'start_form_id' => $project->forms[1]->id,
                     'type_id' => 1,
-                    'settings' => ['tracking_frequency' => 0.25]
+                    'settings' => ['tracking_frequency' => 4]
                 ],
                 [
                     'start_checkpoint_id' => $project->checkpoints[0]->id,
                     'start_form_id' => $project->forms[0]->id,
                     'type_id' => 1,
-                    'settings' => ['tracking_frequency' => 0.25]
+                    'settings' => ['tracking_frequency' => 4]
                 ],
             ]
         ]);

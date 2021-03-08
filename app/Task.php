@@ -14,7 +14,12 @@ class Task extends Model
         'start_checkpoint_id',
         'start_form_id',
         'type_id',
-        'position'
+        'position',
+        'settings'
+    ];
+
+    protected $casts = [
+        'settings' => 'array'
     ];
 
     protected $appends = ['type_name', 'settings'];
@@ -27,6 +32,11 @@ class Task extends Model
     public function getSettingsAttribute()
     {
         return $this->type->settings;
+    }
+
+    public function scenario()
+    {
+        return $this->belongsTo(Scenario::class, 'scenario_id');
     }
 
     public function checkpoint()

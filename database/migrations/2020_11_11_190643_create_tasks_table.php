@@ -29,6 +29,7 @@ class CreateTasksTable extends Migration
             $table->unsignedBigInteger('start_form_id');
             $table->unsignedTinyInteger('position');
             $table->unsignedBigInteger('type_id');
+            $table->text('settings')->nullable();
             $table->timestamps();
 
             $table->foreign('scenario_id')

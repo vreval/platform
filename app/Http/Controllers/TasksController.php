@@ -17,15 +17,19 @@ class TasksController extends Controller
             'tasks.*.start_checkpoint_id' => ['exists:checkpoints,id'],
             'tasks.*.start_form_id' => ['exists:forms,id'],
             'tasks.*.type_id' => ['required', 'exists:task_types,id'],
-            'tasks.*.settings' => ['required', 'array']
+            'tasks.*.settings' => ['required', 'array'],
+            'tasks.*.settings.avatar' => ['array'],
+            'tasks.*.settings.answer_time_limit' => ['array'],
+            'tasks.*.settings.walkable_distance_limit' => ['numeric'],
+            'tasks.*.settings.perimeter_boundary' => ['boolean']
         ]);
-
-        // Clear tasks before storing new ones
-        Task::where('scenario_id', $scenario->id)->delete();
 
         foreach($data['tasks'] as $key => $task) {
             $task['position'] = $key;
-            $scenario->tasks()->create($task);
+            $scenario->tasks()->updateOrCreate(['position' => $key], $task);
         }
+
+        // Clear tasks of higher position then found in request
+        Task::where('position', '>=', count($data['tasks']))->delete();
     }
 }
